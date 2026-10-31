@@ -15,10 +15,11 @@
     return a - -180 < last[0] - a ? anchors[0][1] : last[1];
   }
 
-  // f'den g'ye döngü üzerinde (n kare) en kısa yönden k oranında ilerle
-  function loopStep(f, g, n, k) {
+  // f'den g'ye döngü üzerinde (n kare) en kısa yönden k oranında, en fazla maxStep kare ilerle
+  function loopStep(f, g, n, k, maxStep = Infinity) {
     const d = ((((g - f) % n) + n + n / 2) % n) - n / 2;
-    return (((f + d * k) % n) + n) % n;
+    const step = Math.max(-maxStep, Math.min(maxStep, d * k));
+    return (((f + step) % n) + n) % n;
   }
 
   // w×h dikdörtgeni verilen dörtgene eşleyen CSS matrix3d (Heckbert kareden dörtgene dönüşümü)
@@ -84,26 +85,34 @@
   }
 
   function run(hero, box, video, { fps, frames, front, anchors }) {
-    let target = front, shown = front;
-    let lastMove = performance.now();
+    let target = front, shown = front, response = 1;
+    let lastMove = performance.now(), enteredFace = 0;
 
     hero.addEventListener('pointermove', (e) => {
+      const now = performance.now();
       const head = box.getBoundingClientRect();
       const dx = e.clientX - (head.left + head.width / 2);
       const dy = (head.top + head.height * 0.42) - e.clientY; // yukarı pozitif; yüzün ortası
-      // Fare yüzün üstündeyse kameraya bakar; dışındaysa fareye doğru döner
-      target = Math.hypot(dx, dy) < head.height * 0.3
-        ? front
-        : angleToFrame(anchors, (Math.atan2(dy, dx) * 180) / Math.PI);
-      lastMove = performance.now();
+      const r = Math.hypot(dx, dy) / head.height;
+      // Kafaya yakınken açı küçük hareketlerle çok değişir; tepkiyi yavaşlat
+      response = Math.min(1, Math.max(0.25, r));
+      if (r < 0.3) {
+        // Yüzün üstünden geçerken bakış korunur; ancak imleç orada durursa kameraya döner
+        if (!enteredFace) enteredFace = now;
+      } else {
+        enteredFace = 0;
+        target = angleToFrame(anchors, (Math.atan2(dy, dx) * 180) / Math.PI);
+      }
+      lastMove = now;
     });
 
     const tick = (now) => {
+      if (enteredFace && now - enteredFace > 400) target = front;
       // Boşta: üst yarıda yavaşça sağa sola bakınır
-      const goal = now - lastMove > 3500
-        ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80)
-        : target;
-      shown = loopStep(shown, goal, frames, 0.12);
+      const idle = now - lastMove > 3500;
+      const goal = idle ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80) : target;
+      // En fazla ~1.4 kare/kare: yarım tur yaklaşık 1 saniye, asla zıplamaz
+      shown = loopStep(shown, goal, frames, 0.1 * (idle ? 1 : response), 1.4);
       const t = (Math.round(shown) % frames + 0.25) / fps;
       if (video.duration && !video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
       requestAnimationFrame(tick);

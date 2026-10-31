@@ -53,6 +53,14 @@ test('loopStep: döngüde en kısa yoldan ilerler', () => {
   assert.equal(loopStep(60, 90, 169, 0.5), 75);
 });
 
+test('loopStep: hız sınırı uzak hedefe zıplamayı engeller', () => {
+  const { loopStep } = loadHero();
+  assert.equal(loopStep(0, 60, 169, 0.5, 2), 2);
+  assert.equal(loopStep(10, 0, 169, 0.5, 2), 8);
+  assert.equal(loopStep(168, 2, 169, 1, 2), 1, 'sınır sarmada da geçerli');
+  assert.equal(loopStep(0, 1, 169, 0.5, 2), 0.5, 'yakın hedefte oran geçerli');
+});
+
 test('quadMatrix: dikdörtgenin köşeleri dörtgenin köşelerine gider', () => {
   const { quadMatrix } = loadHero();
   const w = 400, h = 300;
