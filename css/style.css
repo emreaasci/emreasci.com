@@ -56,6 +56,7 @@ body {
 }
 
 img { max-width: 100%; display: block; }
+.nowrap { white-space: nowrap; }
 a { color: inherit; }
 
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -234,6 +235,7 @@ a { color: inherit; }
 @media (max-width: 899px) {
   .projects { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .projects__phone-col { display: none; }
+  .section__lead--desktop { display: none; }
   .projects__list { gap: 20px; padding: 0; }
   .project__mini { display: flex; justify-content: center; height: 420px; margin: 4px 0 16px; }
   .project__mini .phone { transform: scale(.77); transform-origin: top center; box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .5); }
@@ -287,7 +289,8 @@ a { color: inherit; }
   .section { padding: 72px 0; }
 }
 @media (max-width: 600px) {
-  .hero__visual { display: none; }
+  .hero__visual { order: 0; }
+  .hero .phone-stage { padding: 24px 0; transform: scale(.72); margin: -64px 0 -80px; }
   .job, .project, .edu { padding: 22px; }
   .contact { padding: 48px 16px; }
 }
@@ -404,7 +407,7 @@ a { color: inherit; }
   box-shadow: 0 16px 40px -16px rgba(0, 0, 0, .5);
 }
 .float-badge strong { color: var(--accent); font-size: 18px; letter-spacing: -0.02em; }
-.float-badge--1 { left: -36px; top: 9%; }
+.float-badge--1 { left: -60px; top: 1%; }
 .float-badge--2 { right: -40px; top: 56%; }
 .float-badge--2 strong { color: var(--accent-2); }
 .float-badge--3 { left: -28px; bottom: 5%; font-size: 13px; font-weight: 600; }
