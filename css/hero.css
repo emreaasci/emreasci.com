@@ -31,12 +31,12 @@
 
 .hero__head {
   position: absolute;
-  left: calc(562.5 * var(--u));
-  top: calc(187.5 * var(--u));
-  width: calc(315 * var(--u));
-  height: calc(345 * var(--u));
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 47%, #000 72%, transparent 99%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 47%, #000 72%, transparent 99%);
+  left: calc(532.5 * var(--u));
+  top: calc(180 * var(--u));
+  width: calc(375 * var(--u));
+  height: calc(390 * var(--u));
+  -webkit-mask-image: radial-gradient(ellipse 52% 58% at 50% 46%, #000 74%, transparent 98%);
+  mask-image: radial-gradient(ellipse 52% 58% at 50% 46%, #000 74%, transparent 98%);
   pointer-events: none;
 }
 .hero__row {

@@ -90,7 +90,7 @@
     hero.addEventListener('pointermove', (e) => {
       const head = box.getBoundingClientRect();
       const dx = e.clientX - (head.left + head.width / 2);
-      const dy = (head.top + head.height * 0.47) - e.clientY; // yukarı pozitif
+      const dy = (head.top + head.height * 0.42) - e.clientY; // yukarı pozitif; yüzün ortası
       // Fare yüzün üstündeyse kameraya bakar; dışındaysa fareye doğru döner
       target = Math.hypot(dx, dy) < head.height * 0.3
         ? front
