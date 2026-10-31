@@ -19,6 +19,9 @@
     'hero.summary': "I'm a computer engineer with 2+ years of experience building iOS and Android apps with React Native and Expo. From enterprise HR apps to e-commerce, real-time communication to OCR, I turn ideas into products that ship to the stores.",
     'hero.cta.contact': 'Get in touch',
     'hero.cta.projects': 'See projects',
+    'hero.badge.downloads': 'downloads',
+    'hero.badge.users': 'active users',
+    'hero.badge.notify': 'Checked in · 08:59',
 
     'stats.downloads': 'downloads',
     'stats.users': 'active users',

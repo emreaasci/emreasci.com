@@ -1,0 +1,41 @@
+/* Telefon ekran geçişleri */
+.phone { transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.phone__screen {
+  transform: translateY(28px) scale(.97);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .2, 1);
+}
+.phone__screen.is-active { transform: none; }
+.phone__screen.is-leaving { opacity: 0; transform: translateY(-28px) scale(.97); }
+
+/* Hero balonları */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float-badge { animation: float 4s ease-in-out infinite; }
+.float-badge--2 { animation-duration: 4.6s; animation-delay: -1.4s; }
+.float-badge--3 { animation-duration: 5.2s; animation-delay: -2.6s; }
+
+/* Ekran içi küçük hareketler */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 55%, transparent); }
+  100% { box-shadow: 0 0 0 16px transparent; }
+}
+.ui-pin--live { animation: pulse 1.6s ease-out infinite; }
+
+@keyframes dash { to { stroke-dashoffset: -28; } }
+.ui-route { animation: dash 1.2s linear infinite; }
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: .5; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+.ui-typing i { animation: typing 1.2s infinite; }
+.ui-typing i:nth-child(2) { animation-delay: .15s; }
+.ui-typing i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes speaking {
+  0%, 100% { box-shadow: inset 0 0 0 3px #22c55e; }
+  50% { box-shadow: inset 0 0 0 5px #4ade80; }
+}
+.ui-call-tile--speaking { animation: speaking 1.4s ease-in-out infinite; }
