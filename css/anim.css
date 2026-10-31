@@ -39,3 +39,42 @@
   50% { box-shadow: inset 0 0 0 5px #4ade80; }
 }
 .ui-call-tile--speaking { animation: speaking 1.4s ease-in-out infinite; }
+
+/* Kaydırınca belirme (yalnız JS açıkken gizlenir) */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+.hero__copy .reveal:nth-child(2), .stats .stat:nth-child(2), .skill-groups .skill-group:nth-child(2) { transition-delay: .08s; }
+.hero__copy .reveal:nth-child(3), .stats .stat:nth-child(3), .skill-groups .skill-group:nth-child(3) { transition-delay: .16s; }
+.hero__copy .reveal:nth-child(4), .stats .stat:nth-child(4), .skill-groups .skill-group:nth-child(4) { transition-delay: .24s; }
+.hero__copy .reveal:nth-child(5), .skill-groups .skill-group:nth-child(5) { transition-delay: .32s; }
+.skill-groups .skill-group:nth-child(6) { transition-delay: .4s; }
+
+/* Hero telefonu sayfa açılınca yükselir */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+.hero__visual { animation: rise 1s .2s cubic-bezier(.2, .7, .2, 1) both; }
+
+/* Kayan yetenek şeridi */
+@keyframes marquee { to { transform: translateX(-50%); } }
+html.js .marquee__track { animation: marquee 38s linear infinite; }
+html.js .marquee--reverse .marquee__track { animation-direction: reverse; animation-duration: 44s; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee + .marquee { margin-top: 12px; }
+
+/* Hareketi azalt: tüm hareket kapanır, içerik doğrudan görünür */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  html.js .reveal { opacity: 1; transform: none; }
+  .phone { transform: none !important; }
+  .marquee { overflow-x: auto; }
+}
