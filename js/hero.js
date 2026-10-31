@@ -19,10 +19,17 @@
     return i - 1 + (span > 0 ? (p - lut[i - 1]) / span : 0);
   }
 
-  // Dikey bakış v (-1 yukarı, 0 düz, 1 aşağı) → satır opaklıkları
-  function rowWeights(v) {
-    const c = Math.min(1, Math.max(-1, v));
-    return { up: Math.max(0, -c), mid: 1 - Math.abs(c), down: Math.max(0, c) };
+  // Dikey bakış v (-1 yukarı, 0 düz, 1 aşağı) → gösterilecek satır.
+  // Satırlar asla yarı saydam karıştırılmaz (iki farklı kafa pozu üst üste biner);
+  // eşikte titremesin diye çıkış (0.5) ve geri dönüş (0.3) eşikleri farklı.
+  const ROW_ENTER = 0.5, ROW_EXIT = 0.3;
+  function rowForV(v, current, available = ['mid', 'up', 'down']) {
+    const has = (row) => available.includes(row);
+    if (current === 'up' && v < -ROW_EXIT) return 'up';
+    if (current === 'down' && v > ROW_EXIT) return 'down';
+    if (v <= -ROW_ENTER && has('up')) return 'up';
+    if (v >= ROW_ENTER && has('down')) return 'down';
+    return 'mid';
   }
 
   // w×h dikdörtgeni verilen dörtgene eşleyen CSS matrix3d (Heckbert kareden dörtgene dönüşümü)
@@ -38,7 +45,7 @@
     return [a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1];
   }
 
-  global.Hero = { progressForX, frameForProgress, rowWeights, quadMatrix };
+  global.Hero = { progressForX, frameForProgress, rowForV, quadMatrix };
 
   if (typeof document === 'undefined') return;
 
@@ -81,7 +88,7 @@
           const video = loadVideo(rows[name].src);
           video.className = `hero__row hero__row--${name}`;
           box.appendChild(video);
-          const layer = { name, video, lut: rows[name].lut, ready: false, opacity: name === 'mid' ? 1 : 0 };
+          const layer = { name, video, lut: rows[name].lut, ready: false };
           video.addEventListener('seeked', () => {
             if (!layer.ready) { layer.ready = true; video.classList.add('is-ready'); }
           });
@@ -94,8 +101,8 @@
   }
 
   function run(hero, box, layers, fps) {
-    let pointerX = 0.5, pointerV = 0;
-    let shownP = 0.5, shownV = 0;
+    const available = layers.map((l) => l.name);
+    let pointerX = 0.5, pointerV = 0, shownP = 0.5, row = 'mid';
     let lastMove = performance.now();
 
     hero.addEventListener('pointermove', (e) => {
@@ -110,18 +117,14 @@
     const tick = (now) => {
       const idle = now - lastMove > 3500;
       const targetP = idle ? 0.5 + Math.sin((now - lastMove) / 1600) * 0.32 : progressForX(pointerX);
-      const targetV = idle ? 0 : pointerV;
       shownP += (targetP - shownP) * 0.14;
-      shownV += (targetV - shownV) * 0.1;
-      const weights = rowWeights(shownV);
+      row = rowForV(idle ? 0 : pointerV, row, available);
 
       for (const layer of layers) {
         const { video, lut } = layer;
-        if (layer.name !== 'mid') {
-          layer.opacity = weights[layer.name];
-          video.style.opacity = layer.ready ? layer.opacity.toFixed(3) : '0';
-          if (layer.opacity < 0.01) continue; // görünmeyen satırı boşuna çözme
-        }
+        // mid her zaman altta görünür; diğer satır yalnız seçiliyse üstüne kısa bir geçişle gelir.
+        // Gizli satırlar da aynı kareye atlatılır ki geçişte eski kare görünmesin.
+        if (layer.name !== 'mid') video.classList.toggle('is-active', layer.ready && layer.name === row);
         if (!video.duration) continue;
         const t = Math.min(video.duration - 1 / fps, frameForProgress(lut, shownP) / fps);
         if (!video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;

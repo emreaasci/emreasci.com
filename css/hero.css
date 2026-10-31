@@ -49,6 +49,8 @@
 }
 .hero__row--mid { transition: opacity .6s ease; }
 .hero__row--mid.is-ready { opacity: 1; }
+.hero__row--up, .hero__row--down { transition: opacity .12s linear; }
+.hero__row.is-active { opacity: 1; }
 
 /* Başlık bloğu: kafanın üstündeki karanlık boşlukta */
 .hero__copy {

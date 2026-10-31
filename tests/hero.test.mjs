@@ -49,15 +49,19 @@ test('frameForProgress: tabloyu tersine çevirir', () => {
   assert.ok(close(frameForProgress(lut, 0.75), 4.5));
 });
 
-test('rowWeights: yukarı, orta, aşağı karışımı', () => {
-  const { rowWeights: rw } = loadHero();
-  const rowWeights = (v) => ({ ...rw(v) }); // vm nesnesinin prototipi farklı; düz nesneye çevir
-  assert.deepEqual(rowWeights(0), { up: 0, mid: 1, down: 0 });
-  assert.deepEqual(rowWeights(-1), { up: 1, mid: 0, down: 0 });
-  assert.deepEqual(rowWeights(1), { up: 0, mid: 0, down: 1 });
-  const h = rowWeights(-0.5);
-  assert.ok(close(h.up, 0.5) && close(h.mid, 0.5) && h.down === 0);
-  assert.deepEqual(rowWeights(-3), { up: 1, mid: 0, down: 0 }, 'sınırların dışı kırpılır');
+test('rowForV: satırlar karışmaz, eşikte tolerans payı var', () => {
+  const { rowForV } = loadHero();
+  assert.equal(rowForV(0, 'mid'), 'mid');
+  assert.equal(rowForV(-1, 'mid'), 'up');
+  assert.equal(rowForV(1, 'mid'), 'down');
+  // ortadan çıkış eşiği 0.5, geri dönüş eşiği 0.3: arada mevcut satır korunur
+  assert.equal(rowForV(-0.4, 'mid'), 'mid');
+  assert.equal(rowForV(-0.4, 'up'), 'up');
+  assert.equal(rowForV(-0.2, 'up'), 'mid');
+  assert.equal(rowForV(0.4, 'down'), 'down');
+  assert.equal(rowForV(0.2, 'down'), 'mid');
+  // yalnız mevcut satırlar seçilir
+  assert.equal(rowForV(1, 'mid', ['mid', 'up']), 'mid');
 });
 
 test('quadMatrix: dikdörtgenin köşeleri dörtgenin köşelerine gider', () => {
