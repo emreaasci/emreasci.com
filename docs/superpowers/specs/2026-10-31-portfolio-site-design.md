@@ -33,7 +33,7 @@ css/anim.css        Keyframe'ler, reveal, reduced-motion kuralları
 js/i18n.js          EN sözlüğü + dil algılama/değiştirme
 js/phone.js         Telefon ekranlarının döngüsü, eğilme, projeler bölümündeki ekran senkronu
 js/main.js          Reveal (IntersectionObserver), sayaçlar, menü
-assets/             favicon, og-image
+assets/             favicon.svg
 CNAME               emreasci.com
 404.html            Basit yönlendirme sayfası
 ```
