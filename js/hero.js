@@ -1,31 +1,24 @@
 'use strict';
 
 (function (global) {
-  const EDGE = 0.14; // imlecin bu kenar paylarında kafa en uca döner
-
-  // İmlecin yatay konumu (0..1) → dönüş ilerlemesi (0 = sola, 1 = sağa)
-  function progressForX(x) {
-    return Math.min(1, Math.max(0, (x - EDGE) / (1 - 2 * EDGE)));
+  // Bakış döngüsü: kafa önden başlayıp sol → yukarı → sağ → aşağı yuvarlanır ve öne döner.
+  // anchors: [açı (derece; 0 sağ, 90 yukarı, 180 sol, -90 aşağı), kare], açı azalan sırada.
+  function angleToFrame(anchors, deg) {
+    const a = deg <= -180 ? 180 : deg;
+    if (a >= anchors[0][0]) return anchors[0][1];
+    for (let i = 1; i < anchors.length; i++) {
+      const [a0, f0] = anchors[i - 1], [a1, f1] = anchors[i];
+      if (a >= a1) return f0 + ((a0 - a) / (a0 - a1)) * (f1 - f0);
+    }
+    // Son çapa ile -180 arası boşluk: hangisine yakınsa o
+    const last = anchors[anchors.length - 1];
+    return a - -180 < last[0] - a ? anchors[0][1] : last[1];
   }
 
-  // lut[i] = i. karenin dönüş ilerlemesi (monoton). İlerleme → kesirli kare
-  function frameForProgress(lut, p) {
-    let i = 0;
-    while (i < lut.length && lut[i] < p) i++;
-    if (i === 0) return 0;
-    if (i >= lut.length) return lut.length - 1;
-    const span = lut[i] - lut[i - 1];
-    return i - 1 + (span > 0 ? (p - lut[i - 1]) / span : 0);
-  }
-
-  // Bakış atlası: her seviye (0 = en yukarı) düz satırın tüm sütunlarını içerir; seviyeler arası
-  // ara pozlar build-gaze.py ile üretilir. Yatay ilerleme p ve dikey bakış v (-1 yukarı, 1 aşağı) → kare
-  function gazeIndex(gaze, lut, p, v) {
-    const col = Math.min(gaze.cols - 1, Math.max(0, Math.round(frameForProgress(lut, p))));
-    const c = Math.min(1, Math.max(-1, v));
-    const below = gaze.levels - 1 - gaze.mid;
-    const level = c < 0 ? gaze.mid - Math.round(-c * gaze.mid) : gaze.mid + Math.round(c * below);
-    return level * gaze.cols + col;
+  // f'den g'ye döngü üzerinde (n kare) en kısa yönden k oranında ilerle
+  function loopStep(f, g, n, k) {
+    const d = ((((g - f) % n) + n + n / 2) % n) - n / 2;
+    return (((f + d * k) % n) + n) % n;
   }
 
   // w×h dikdörtgeni verilen dörtgene eşleyen CSS matrix3d (Heckbert kareden dörtgene dönüşümü)
@@ -41,7 +34,7 @@
     return [a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1];
   }
 
-  global.Hero = { progressForX, frameForProgress, gazeIndex, quadMatrix };
+  global.Hero = { angleToFrame, loopStep, quadMatrix };
 
   if (typeof document === 'undefined') return;
 
@@ -73,63 +66,46 @@
     return video;
   }
 
-  // Önce yalnız yatay düz satır yüklenir (hızlı açılış); bakış atlası arka planda gelince
-  // onun yerine geçer ve dikey bakış da devreye girer.
   function initHead(hero) {
     const box = document.getElementById('hero-head');
     if (!box) return;
 
-    fetch(box.dataset.rows)
+    fetch(box.dataset.look)
       .then((r) => r.json())
-      .then(({ fps, rows, gaze }) => {
-        const lut = rows.mid.lut;
-        const layer = (src, cls) => {
-          const video = loadVideo(src);
-          video.className = `hero__row ${cls}`;
-          box.appendChild(video);
-          const l = { video, ready: false };
-          video.addEventListener('seeked', () => {
-            if (!l.ready) { l.ready = true; video.classList.add('is-ready'); }
-          });
-          video.addEventListener('loadedmetadata', () => { video.currentTime = 0.5 * video.duration; });
-          return l;
-        };
-        const mid = layer(rows.mid.src, 'hero__row--mid');
-        const atlas = gaze ? layer(gaze.src, 'hero__row--gaze') : null;
-        run(hero, box, { fps, lut, gaze, mid, atlas });
+      .then((look) => {
+        const video = loadVideo(look.src);
+        video.className = 'hero__row hero__row--mid';
+        box.appendChild(video);
+        video.addEventListener('seeked', () => video.classList.add('is-ready'), { once: true });
+        video.addEventListener('loadedmetadata', () => { video.currentTime = 0.25 / look.fps; });
+        run(hero, box, video, look);
       })
       .catch(() => {});
   }
 
-  function run(hero, box, { fps, lut, gaze, mid, atlas }) {
-    let pointerX = 0.5, pointerV = 0, shownP = 0.5, shownV = 0;
+  function run(hero, box, video, { fps, frames, front, anchors }) {
+    let target = front, shown = front;
     let lastMove = performance.now();
 
     hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
       const head = box.getBoundingClientRect();
-      pointerX = (e.clientX - r.left) / r.width;
-      // Kafanın merkezine göre dikey konum; bir kafa yüksekliği yukarı/aşağı tam bakış
-      pointerV = (e.clientY - (head.top + head.height * 0.47)) / (head.height * 0.9);
+      const dx = e.clientX - (head.left + head.width / 2);
+      const dy = (head.top + head.height * 0.47) - e.clientY; // yukarı pozitif
+      // Fare yüzün üstündeyse kameraya bakar; dışındaysa fareye doğru döner
+      target = Math.hypot(dx, dy) < head.height * 0.3
+        ? front
+        : angleToFrame(anchors, (Math.atan2(dy, dx) * 180) / Math.PI);
       lastMove = performance.now();
     });
 
-    const seek = (video, t) => {
-      if (video.duration && !video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
-    };
-
     const tick = (now) => {
-      const idle = now - lastMove > 3500;
-      const targetP = idle ? 0.5 + Math.sin((now - lastMove) / 1600) * 0.32 : progressForX(pointerX);
-      shownP += (targetP - shownP) * 0.14;
-      shownV += ((idle ? 0 : pointerV) - shownV) * 0.12;
-
-      if (atlas && atlas.ready) {
-        // Kare ortasına atla; tam sınıra atlamak bazı tarayıcılarda bir önceki kareyi gösterir
-        seek(atlas.video, (gazeIndex(gaze, lut, shownP, shownV) + 0.25) / fps);
-      } else {
-        seek(mid.video, Math.min(mid.video.duration - 1 / fps, frameForProgress(lut, shownP) / fps));
-      }
+      // Boşta: üst yarıda yavaşça sağa sola bakınır
+      const goal = now - lastMove > 3500
+        ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80)
+        : target;
+      shown = loopStep(shown, goal, frames, 0.12);
+      const t = (Math.round(shown) % frames + 0.25) / fps;
+      if (video.duration && !video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

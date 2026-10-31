@@ -16,52 +16,41 @@ function loadHero() {
 
 const close = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
 
-test('hero sahnesi: plaka ve kafa katmanı', () => {
+test('hero sahnesi: plaka ve bakış döngüsü', () => {
   assert.match(html, /<img[^>]+class="hero__plate"[^>]+src="assets\/hero\/plate\.webp"/);
-  assert.match(html, /id="hero-head"[^>]+data-rows="assets\/hero\/rows\.json"/);
-  assert.doesNotMatch(html, /id="push"|id="monitor-screen"/, 'eski buton/monitör kalmamalı');
+  assert.match(html, /id="hero-head"[^>]+data-look="assets\/hero\/look\.json"/);
 });
 
-test('rows.json: orta satır var ve tablo monoton', () => {
-  const rows = JSON.parse(readFileSync(join(root, 'assets/hero/rows.json'), 'utf8'));
-  // Ara pozlar (build-gaze.py) bazı açılarda yüzü bozduğu için atlas kapalı
-  assert.equal(rows.gaze, undefined);
-  const { lut, src } = rows.rows.mid;
-  assert.equal(src, 'assets/hero/head.mp4');
-  assert.equal(lut[0], 0);
-  assert.equal(lut[lut.length - 1], 1);
-  for (let i = 1; i < lut.length; i++) assert.ok(lut[i] >= lut[i - 1], `kare ${i} geriye gidiyor`);
+test('look.json: döngü videosu ve yön çapaları', () => {
+  const look = JSON.parse(readFileSync(join(root, 'assets/hero/look.json'), 'utf8'));
+  assert.equal(look.src, 'assets/hero/look.mp4');
+  assert.ok(look.frames > 100);
+  for (let i = 1; i < look.anchors.length; i++) {
+    assert.ok(look.anchors[i][0] < look.anchors[i - 1][0], 'açılar azalan sırada');
+    assert.ok(look.anchors[i][1] > look.anchors[i - 1][1], 'kareler artan sırada');
+  }
 });
 
-test('progressForX: kenar payları ve orta', () => {
-  const { progressForX } = loadHero();
-  assert.equal(progressForX(0), 0);
-  assert.equal(progressForX(0.14), 0);
-  assert.ok(close(progressForX(0.5), 0.5));
-  assert.equal(progressForX(0.86), 1);
-  assert.equal(progressForX(1), 1);
+const ANCHORS = [[180, 27], [135, 45], [90, 60], [45, 76], [0, 90], [-45, 106], [-90, 120], [-135, 135], [-150, 144]];
+
+test('angleToFrame: çapalar arasında doğrusal, boşlukta en yakın çapa', () => {
+  const { angleToFrame } = loadHero();
+  assert.equal(angleToFrame(ANCHORS, 180), 27);
+  assert.equal(angleToFrame(ANCHORS, 90), 60);
+  assert.equal(angleToFrame(ANCHORS, -90), 120);
+  assert.ok(close(angleToFrame(ANCHORS, 112.5), 52.5));
+  assert.equal(angleToFrame(ANCHORS, -160), 144);
+  assert.equal(angleToFrame(ANCHORS, -175), 27);
+  assert.equal(angleToFrame(ANCHORS, -180), 27);
 });
 
-test('frameForProgress: tabloyu tersine çevirir', () => {
-  const { frameForProgress } = loadHero();
-  const lut = [0, 0, 0, 0.5, 0.5, 1, 1];
-  assert.equal(frameForProgress(lut, 0), 0);
-  assert.equal(frameForProgress(lut, 1), 5);
-  assert.ok(close(frameForProgress(lut, 0.25), 2.5));
-  assert.ok(close(frameForProgress(lut, 0.75), 4.5));
-});
-
-test('gazeIndex: atlas karesi = seviye * sütun + sütun', () => {
-  const { gazeIndex } = loadHero();
-  const lut = [0, 0.5, 1];
-  const gaze = { cols: 3, levels: 3, mid: 1 }; // seviye 0 yukarı, 1 düz, 2 aşağı
-  assert.equal(gazeIndex(gaze, lut, 0, 0), 3, 'düz, en sol');
-  assert.equal(gazeIndex(gaze, lut, 1, -1), 2, 'yukarı, en sağ');
-  assert.equal(gazeIndex(gaze, lut, 0.5, 1), 7, 'aşağı, orta');
-  assert.equal(gazeIndex(gaze, lut, 0.5, -0.4), 4, 'eşiğin altında düz kalır');
-  assert.equal(gazeIndex(gaze, lut, 0.5, -5), 1, 'sınır dışı kırpılır');
-  // aşağı satır yoksa (mid son seviye) aşağı bakış düzde kalır
-  assert.equal(gazeIndex({ cols: 3, levels: 2, mid: 1 }, lut, 0, 1), 3);
+test('loopStep: döngüde en kısa yoldan ilerler', () => {
+  const { loopStep } = loadHero();
+  assert.equal(loopStep(0, 27, 169, 1), 27);
+  assert.equal(loopStep(160, 5, 169, 1), 5, 'sondan başa sarar');
+  assert.equal(loopStep(160, 5, 169, 0.5), 167);
+  assert.equal(loopStep(5, 160, 169, 0.5), 167, 'baştan sona geri sarar');
+  assert.equal(loopStep(60, 90, 169, 0.5), 75);
 });
 
 test('quadMatrix: dikdörtgenin köşeleri dörtgenin köşelerine gider', () => {
