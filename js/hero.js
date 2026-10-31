@@ -2,7 +2,6 @@
 
 (function (global) {
   const EDGE = 0.14; // imlecin bu kenar paylarında kafa en uca döner
-  const ROW_ORDER = ['mid', 'up', 'down']; // mid alt katman, diğerleri üstüne karışır
 
   // İmlecin yatay konumu (0..1) → dönüş ilerlemesi (0 = sola, 1 = sağa)
   function progressForX(x) {
@@ -19,17 +18,14 @@
     return i - 1 + (span > 0 ? (p - lut[i - 1]) / span : 0);
   }
 
-  // Dikey bakış v (-1 yukarı, 0 düz, 1 aşağı) → gösterilecek satır.
-  // Satırlar asla yarı saydam karıştırılmaz (iki farklı kafa pozu üst üste biner);
-  // eşikte titremesin diye çıkış (0.5) ve geri dönüş (0.3) eşikleri farklı.
-  const ROW_ENTER = 0.5, ROW_EXIT = 0.3;
-  function rowForV(v, current, available = ['mid', 'up', 'down']) {
-    const has = (row) => available.includes(row);
-    if (current === 'up' && v < -ROW_EXIT) return 'up';
-    if (current === 'down' && v > ROW_EXIT) return 'down';
-    if (v <= -ROW_ENTER && has('up')) return 'up';
-    if (v >= ROW_ENTER && has('down')) return 'down';
-    return 'mid';
+  // Bakış atlası: her seviye (0 = en yukarı) düz satırın tüm sütunlarını içerir; seviyeler arası
+  // ara pozlar build-gaze.py ile üretilir. Yatay ilerleme p ve dikey bakış v (-1 yukarı, 1 aşağı) → kare
+  function gazeIndex(gaze, lut, p, v) {
+    const col = Math.min(gaze.cols - 1, Math.max(0, Math.round(frameForProgress(lut, p))));
+    const c = Math.min(1, Math.max(-1, v));
+    const below = gaze.levels - 1 - gaze.mid;
+    const level = c < 0 ? gaze.mid - Math.round(-c * gaze.mid) : gaze.mid + Math.round(c * below);
+    return level * gaze.cols + col;
   }
 
   // w×h dikdörtgeni verilen dörtgene eşleyen CSS matrix3d (Heckbert kareden dörtgene dönüşümü)
@@ -45,7 +41,7 @@
     return [a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1];
   }
 
-  global.Hero = { progressForX, frameForProgress, rowForV, quadMatrix };
+  global.Hero = { progressForX, frameForProgress, gazeIndex, quadMatrix };
 
   if (typeof document === 'undefined') return;
 
@@ -77,32 +73,36 @@
     return video;
   }
 
+  // Önce yalnız yatay düz satır yüklenir (hızlı açılış); bakış atlası arka planda gelince
+  // onun yerine geçer ve dikey bakış da devreye girer.
   function initHead(hero) {
     const box = document.getElementById('hero-head');
     if (!box) return;
 
     fetch(box.dataset.rows)
       .then((r) => r.json())
-      .then(({ fps, rows }) => {
-        const layers = ROW_ORDER.filter((name) => rows[name]).map((name) => {
-          const video = loadVideo(rows[name].src);
-          video.className = `hero__row hero__row--${name}`;
+      .then(({ fps, rows, gaze }) => {
+        const lut = rows.mid.lut;
+        const layer = (src, cls) => {
+          const video = loadVideo(src);
+          video.className = `hero__row ${cls}`;
           box.appendChild(video);
-          const layer = { name, video, lut: rows[name].lut, ready: false };
+          const l = { video, ready: false };
           video.addEventListener('seeked', () => {
-            if (!layer.ready) { layer.ready = true; video.classList.add('is-ready'); }
+            if (!l.ready) { l.ready = true; video.classList.add('is-ready'); }
           });
           video.addEventListener('loadedmetadata', () => { video.currentTime = 0.5 * video.duration; });
-          return layer;
-        });
-        run(hero, box, layers, fps);
+          return l;
+        };
+        const mid = layer(rows.mid.src, 'hero__row--mid');
+        const atlas = gaze ? layer(gaze.src, 'hero__row--gaze') : null;
+        run(hero, box, { fps, lut, gaze, mid, atlas });
       })
       .catch(() => {});
   }
 
-  function run(hero, box, layers, fps) {
-    const available = layers.map((l) => l.name);
-    let pointerX = 0.5, pointerV = 0, shownP = 0.5, row = 'mid';
+  function run(hero, box, { fps, lut, gaze, mid, atlas }) {
+    let pointerX = 0.5, pointerV = 0, shownP = 0.5, shownV = 0;
     let lastMove = performance.now();
 
     hero.addEventListener('pointermove', (e) => {
@@ -114,20 +114,21 @@
       lastMove = performance.now();
     });
 
+    const seek = (video, t) => {
+      if (video.duration && !video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
+    };
+
     const tick = (now) => {
       const idle = now - lastMove > 3500;
       const targetP = idle ? 0.5 + Math.sin((now - lastMove) / 1600) * 0.32 : progressForX(pointerX);
       shownP += (targetP - shownP) * 0.14;
-      row = rowForV(idle ? 0 : pointerV, row, available);
+      shownV += ((idle ? 0 : pointerV) - shownV) * 0.12;
 
-      for (const layer of layers) {
-        const { video, lut } = layer;
-        // mid her zaman altta görünür; diğer satır yalnız seçiliyse üstüne kısa bir geçişle gelir.
-        // Gizli satırlar da aynı kareye atlatılır ki geçişte eski kare görünmesin.
-        if (layer.name !== 'mid') video.classList.toggle('is-active', layer.ready && layer.name === row);
-        if (!video.duration) continue;
-        const t = Math.min(video.duration - 1 / fps, frameForProgress(lut, shownP) / fps);
-        if (!video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
+      if (atlas && atlas.ready) {
+        // Kare ortasına atla; tam sınıra atlamak bazı tarayıcılarda bir önceki kareyi gösterir
+        seek(atlas.video, (gazeIndex(gaze, lut, shownP, shownV) + 0.25) / fps);
+      } else {
+        seek(mid.video, Math.min(mid.video.duration - 1 / fps, frameForProgress(lut, shownP) / fps));
       }
       requestAnimationFrame(tick);
     };

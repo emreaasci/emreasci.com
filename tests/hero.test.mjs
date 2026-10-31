@@ -22,8 +22,10 @@ test('hero sahnesi: plaka ve kafa katmanı', () => {
   assert.doesNotMatch(html, /id="push"|id="monitor-screen"/, 'eski buton/monitör kalmamalı');
 });
 
-test('rows.json: orta satır var ve tablo monoton', () => {
+test('rows.json: orta satır ve bakış atlası var, tablo monoton', () => {
   const rows = JSON.parse(readFileSync(join(root, 'assets/hero/rows.json'), 'utf8'));
+  assert.equal(rows.gaze.src, 'assets/hero/gaze.mp4');
+  assert.ok(rows.gaze.levels > rows.gaze.mid && rows.gaze.cols === rows.rows.mid.lut.length);
   const { lut, src } = rows.rows.mid;
   assert.equal(src, 'assets/hero/head.mp4');
   assert.equal(lut[0], 0);
@@ -49,19 +51,17 @@ test('frameForProgress: tabloyu tersine çevirir', () => {
   assert.ok(close(frameForProgress(lut, 0.75), 4.5));
 });
 
-test('rowForV: satırlar karışmaz, eşikte tolerans payı var', () => {
-  const { rowForV } = loadHero();
-  assert.equal(rowForV(0, 'mid'), 'mid');
-  assert.equal(rowForV(-1, 'mid'), 'up');
-  assert.equal(rowForV(1, 'mid'), 'down');
-  // ortadan çıkış eşiği 0.5, geri dönüş eşiği 0.3: arada mevcut satır korunur
-  assert.equal(rowForV(-0.4, 'mid'), 'mid');
-  assert.equal(rowForV(-0.4, 'up'), 'up');
-  assert.equal(rowForV(-0.2, 'up'), 'mid');
-  assert.equal(rowForV(0.4, 'down'), 'down');
-  assert.equal(rowForV(0.2, 'down'), 'mid');
-  // yalnız mevcut satırlar seçilir
-  assert.equal(rowForV(1, 'mid', ['mid', 'up']), 'mid');
+test('gazeIndex: atlas karesi = seviye * sütun + sütun', () => {
+  const { gazeIndex } = loadHero();
+  const lut = [0, 0.5, 1];
+  const gaze = { cols: 3, levels: 3, mid: 1 }; // seviye 0 yukarı, 1 düz, 2 aşağı
+  assert.equal(gazeIndex(gaze, lut, 0, 0), 3, 'düz, en sol');
+  assert.equal(gazeIndex(gaze, lut, 1, -1), 2, 'yukarı, en sağ');
+  assert.equal(gazeIndex(gaze, lut, 0.5, 1), 7, 'aşağı, orta');
+  assert.equal(gazeIndex(gaze, lut, 0.5, -0.4), 4, 'eşiğin altında düz kalır');
+  assert.equal(gazeIndex(gaze, lut, 0.5, -5), 1, 'sınır dışı kırpılır');
+  // aşağı satır yoksa (mid son seviye) aşağı bakış düzde kalır
+  assert.equal(gazeIndex({ cols: 3, levels: 2, mid: 1 }, lut, 0, 1), 3);
 });
 
 test('quadMatrix: dikdörtgenin köşeleri dörtgenin köşelerine gider', () => {
