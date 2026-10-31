@@ -14,14 +14,10 @@
     'nav.skills': 'Skills',
     'nav.contact': 'Contact',
 
-    'hero.eyebrow': "Hi, I'm",
-    'hero.role': 'React Native Developer',
     'hero.summary': "I'm a computer engineer with 2+ years of experience building iOS and Android apps with React Native and Expo. From enterprise HR apps to e-commerce, real-time communication to OCR, I turn ideas into products that ship to the stores.",
-    'hero.cta.contact': 'Get in touch',
-    'hero.cta.projects': 'See projects',
-    'hero.badge.downloads': 'downloads',
-    'hero.badge.users': 'active users',
-    'hero.badge.notify': 'Checked in · 08:59',
+
+    'hero.hint': 'Move your mouse',
+    'hero.scroll': 'Scroll down',
 
     'stats.downloads': 'downloads',
     'stats.users': 'active users',

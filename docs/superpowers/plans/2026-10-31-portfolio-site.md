@@ -14,7 +14,7 @@
 
 - Harici kütüphane, framework, CDN, build adımı yok. Font: sistem font yığını.
 - Vurgu rengi `#22d3ee`; koyu tema varsayılan, `prefers-color-scheme: light` → açık tema.
-- Telefon numarası (`[gizli]`) ve referans bilgisi (`[gizli] [gizli]`) sitede **asla** geçmez.
+- CV'deki telefon numarası ve referans bilgisi sitede ve repoda **asla** geçmez (test bunları değer yazmadan, desen ve SHA-256 ile arar).
 - İletişim: `emreaasci@gmail.com`, `https://linkedin.com/in/emreaasci`, `https://github.com/emreaasci`.
 - Rakamlar: 20K+ indirme, 10K+ aktif kullanıcı, 2+ yıl, 9 proje.
 - Sadece `transform`/`opacity` animasyonu; `prefers-reduced-motion: reduce` tüm hareketi kapatır.
@@ -47,7 +47,7 @@
   - `tüm bölümler var` → 6 id'nin her biri `id="<x>"` olarak geçer
   - `menü linkleri hedefli` → her `href="#x"` için `id="x"` var
   - `yerel dosyalar mevcut` → her `src=`/`href=` (http/mailto/# olmayan) için `existsSync`
-  - `gizli bilgi yok` → html'de `506`, `133 00`, `[gizli]` geçmez
+  - `gizli bilgi yok` → telefon numarası deseni ve referans adının hash'i hiçbir izlenen dosyada geçmez
   - `404 ana sayfaya link verir` → `404.html` içinde `href="/"`
 - [ ] **Step 2:** `node --test tests/` → FAIL (dosyalar yok)
 - [ ] **Step 3:** İskeleti oluştur: meta (title "Emre Aşcı — React Native Developer", description, og:title/og:description, theme-color `#0b1020`, viewport), boş `<section>`'lar, `css/style.css`'te `:root` token'ları (`--bg`, `--surface`, `--text`, `--muted`, `--accent:#22d3ee`, `--accent-2:#f472b6`, `--radius`) ve light override.

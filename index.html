@@ -13,65 +13,59 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/anim.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <script src="js/i18n.js" defer></script>
   <script src="js/phone.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/hero.js" defer></script>
 </head>
 <body>
-  <header class="header">
-    <div class="container header__inner">
-      <a class="logo" href="#about" aria-label="Emre Aşcı">
-        <span class="logo__mark">EA</span>
-        <span class="logo__name">Emre Aşcı</span>
-      </a>
-      <nav class="nav" id="nav" aria-label="Menü">
-        <a href="#about" data-i18n="nav.about">Hakkımda</a>
-        <a href="#experience" data-i18n="nav.experience">Deneyim</a>
-        <a href="#projects" data-i18n="nav.projects">Projeler</a>
-        <a href="#skills" data-i18n="nav.skills">Yetenekler</a>
-        <a href="#contact" data-i18n="nav.contact">İletişim</a>
-      </nav>
-      <div class="header__actions">
-        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch to English">EN</button>
-        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü">
-          <span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
   <main>
-    <section class="hero" id="about">
-      <div class="container hero__inner">
-        <div class="hero__copy">
-          <p class="eyebrow reveal"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Merhaba, ben</span></p>
-          <h1 class="hero__title reveal">Emre Aşcı</h1>
-          <p class="hero__role reveal"><span data-i18n="hero.role">React Native Developer</span> <span class="hero__role-sep" aria-hidden="true">/</span> <span class="nowrap">iOS &amp; Android</span></p>
-          <p class="hero__summary reveal" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
-          <div class="hero__cta reveal">
-            <a class="btn btn--primary" href="#contact" data-i18n="hero.cta.contact">İletişime geç</a>
-            <a class="btn btn--ghost" href="#projects" data-i18n="hero.cta.projects">Projeleri gör</a>
-          </div>
-        </div>
-        <div class="hero__visual">
-          <div class="phone-stage" id="hero-stage">
-            <div class="phone" id="hero-phone" aria-hidden="true">
-              <div class="phone__notch"></div>
-              <div class="phone__screens">
-                <div class="phone__screen screen--intime-ik is-active" data-screen="intime-ik">
-                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
-                  <div class="ui-bar"><span class="ui-bar__title">Intime İK</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="float-badge float-badge--1"><strong>20K+</strong><span data-i18n="hero.badge.downloads">indirme</span></div>
-            <div class="float-badge float-badge--2"><strong>10K+</strong><span data-i18n="hero.badge.users">aktif kullanıcı</span></div>
-            <div class="float-badge float-badge--3"><span class="float-badge__icon" aria-hidden="true">✓</span><span data-i18n="hero.badge.notify">Giriş yapıldı · 08:59</span></div>
-          </div>
-        </div>
+    <section class="hero" id="about" aria-label="Emre Aşcı">
+      <div class="hero__frame">
+        <img class="hero__plate" src="assets/hero/plate.webp" alt="" width="1670" height="941" fetchpriority="high">
+        <div class="hero__head" id="hero-head" data-rows="assets/hero/rows.json" aria-hidden="true"></div>
+
       </div>
+
+      <div class="hero__copy">
+        <p class="hero__eyebrow">React Native Developer</p>
+        <h1 class="hero__title">EMRE AŞCI</h1>
+      </div>
+      <p class="hero__caption hero__caption--left" data-i18n="hero.hint">Fareni gezdir</p>
+      <a class="hero__caption hero__caption--right" href="https://github.com/emreaasci" target="_blank" rel="noopener">@emreaasci</a>
+
+      <header class="header">
+        <a class="hero__brand" href="#about" aria-label="Emre Aşcı">
+          <span class="hero__disc" aria-hidden="true"></span>
+          <span>Emre Aşcı</span>
+        </a>
+        <div class="hero__actions">
+          <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch to English">EN</button>
+          <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nav" id="nav" aria-label="Menü">
+          <a href="#intro" data-i18n="nav.about">Hakkımda</a>
+          <a href="#experience" data-i18n="nav.experience">Deneyim</a>
+          <a href="#projects" data-i18n="nav.projects">Projeler</a>
+          <a href="#skills" data-i18n="nav.skills">Yetenekler</a>
+          <a href="#contact" data-i18n="nav.contact">İletişim</a>
+        </nav>
+      </header>
+
+      <div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+      <a class="hero__scroll" href="#intro" data-i18n="hero.scroll">Aşağı kaydır</a>
+    </section>
+
+    <section class="section" id="intro">
       <div class="container">
+        <p class="intro__lead reveal" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
         <ul class="stats">
           <li class="stat reveal">
             <span class="stat__num" data-count="20" data-suffix="K+">20K+</span>

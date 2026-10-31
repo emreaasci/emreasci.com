@@ -1,0 +1,213 @@
+/* Hero: 1440×810 çerçeve ekranı kaplar; tüm sahne konumları çerçeve birimi (--u) cinsinden */
+.hero {
+  --u: max(calc(100vw / 1440), calc(100svh / 810));
+  --muted-hero: #cdd2e6;
+  position: relative;
+  height: 100svh;
+  min-height: 520px;
+  overflow: hidden;
+  background: #02040d;
+  color: #fff;
+  font-family: "Urbanist", var(--font);
+  isolation: isolate;
+}
+
+.hero__frame {
+  position: absolute;
+  width: calc(1440 * var(--u));
+  height: calc(810 * var(--u));
+  left: calc(50% - 720 * var(--u));
+  top: calc(50% - 405 * var(--u));
+}
+
+.hero__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+}
+
+.hero__head {
+  position: absolute;
+  left: calc(562.2 * var(--u));
+  top: calc(187.5 * var(--u));
+  width: calc(315.7 * var(--u));
+  height: calc(345 * var(--u));
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 47%, #000 72%, transparent 99%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 47%, #000 72%, transparent 99%);
+  pointer-events: none;
+}
+.hero__row {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0;
+}
+.hero__row--mid { transition: opacity .6s ease; }
+.hero__row--mid.is-ready { opacity: 1; }
+
+/* Başlık bloğu: kafanın üstündeki karanlık boşlukta */
+.hero__copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 405 * var(--u) + 92 * var(--u));
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+.hero__eyebrow {
+  margin: 0;
+  font-weight: 700;
+  font-size: min(calc(16 * var(--u)), 1.9vw);
+  letter-spacing: .46em;
+  text-transform: uppercase;
+  color: var(--muted-hero);
+  padding-left: .46em;
+}
+.hero__title {
+  margin: calc(6 * var(--u)) 0 0;
+  font-family: "Archivo", var(--font);
+  font-style: italic;
+  font-weight: 900;
+  font-stretch: 94%;
+  font-variation-settings: "wdth" 94;
+  font-size: min(calc(92 * var(--u)), 10.5vw);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow:
+    0 0 calc(14 * var(--u)) rgba(255, 255, 255, .55),
+    0 0 calc(34 * var(--u)) rgba(170, 200, 255, .55),
+    0 0 calc(70 * var(--u)) rgba(80, 120, 255, .6);
+}
+
+.hero__caption {
+  position: absolute;
+  z-index: 2;
+  bottom: max(20px, calc(50% - 405 * var(--u) + 40 * var(--u)));
+  margin: 0;
+  font-weight: 700;
+  font-size: max(12px, calc(13 * var(--u)));
+  letter-spacing: .04em;
+  color: var(--muted-hero);
+  text-decoration: none;
+}
+.hero__caption--left { left: max(16px, calc(50% - 720 * var(--u) + 55 * var(--u))); }
+.hero__caption--right { right: max(16px, calc(50% - 720 * var(--u) + 55 * var(--u))); }
+.hero__caption--right:hover { color: #fff; }
+
+.hero__scroll {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted-hero);
+  text-decoration: none;
+  opacity: .8;
+}
+.hero__scroll::after { content: " ↓"; }
+
+/* Üst bar: hero'nun içinde, sayfayla birlikte kayar */
+.hero .header {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(18px, calc(36 * var(--u))) max(16px, calc(55 * var(--u)));
+  background: none;
+  border: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.hero__brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 600; font-size: max(18px, calc(26 * var(--u))); }
+.hero__disc {
+  width: max(26px, calc(34 * var(--u)));
+  height: max(26px, calc(34 * var(--u)));
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, #22d3ee, #3b82f6, #8b5cf6, #ec4899, #22d3ee);
+  box-shadow: 0 0 20px rgba(139, 92, 246, .5);
+}
+.hero__actions { display: flex; align-items: center; gap: 10px; }
+.hero .lang-toggle { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .2); color: #fff; }
+.hero .menu-toggle {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  gap: 5px;
+  background: transparent;
+  border: 0;
+}
+.hero .menu-toggle span { width: 24px; height: 2px; background: #fff; }
+.hero .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(7px) rotate(45deg); }
+.hero .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hero .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-7px) rotate(-45deg); }
+.hero .nav {
+  position: absolute;
+  top: calc(100% - 8px);
+  right: max(16px, calc(55 * var(--u)));
+  left: auto;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(10, 14, 32, .92);
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+.hero .nav.is-open { display: flex; }
+.hero .nav a { color: #e6ebf5; font-size: 17px; padding: 10px 14px; }
+.hero .nav a:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+
+/* Özel imleç (yalnız ince işaretçide) */
+.cursor { display: none; }
+.hero.has-cursor { cursor: none; }
+.hero.has-cursor a, .hero.has-cursor button { cursor: none; }
+.hero.has-cursor .cursor { display: block; }
+.cursor__dot, .cursor__ring {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.cursor__dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: #fff; }
+.cursor__ring { width: 44px; height: 44px; margin: -22px 0 0 -22px; border: 1.5px solid #fff; }
+
+#intro .intro__lead {
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  max-width: 30em;
+  margin: 0;
+}
+#intro .stats { margin-top: 48px; }
+
+/* Dar/dikey pencerelerde başlık üst barın altına iner */
+@media (max-aspect-ratio: 7/5) {
+  .hero__copy { top: max(calc(50% - 405 * var(--u) + 44 * var(--u)), 84px); }
+}
+
+/* Telefonlar */
+@media (max-width: 820px) {
+  .hero__copy { top: 92px; }
+  .hero__eyebrow { font-size: 13px; }
+  .hero__title { font-size: clamp(40px, 12vw, 64px); margin-top: 8px; }
+  .hero__caption--left { display: none; }
+}
+
