@@ -19,17 +19,343 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header class="header"></header>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="#about" aria-label="Emre Aşcı">
+        <span class="logo__mark">EA</span>
+        <span class="logo__name">Emre Aşcı</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Menü">
+        <a href="#about" data-i18n="nav.about">Hakkımda</a>
+        <a href="#experience" data-i18n="nav.experience">Deneyim</a>
+        <a href="#projects" data-i18n="nav.projects">Projeler</a>
+        <a href="#skills" data-i18n="nav.skills">Yetenekler</a>
+        <a href="#contact" data-i18n="nav.contact">İletişim</a>
+      </nav>
+      <div class="header__actions">
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menü">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
   <main>
-    <section class="hero" id="about"></section>
-    <section class="section" id="experience"></section>
-    <section class="section" id="projects"></section>
-    <section class="section" id="skills"></section>
-    <section class="section" id="education"></section>
-    <section class="section" id="contact"></section>
+    <section class="hero" id="about">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow reveal"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Merhaba, ben</span></p>
+          <h1 class="hero__title reveal">Emre Aşcı</h1>
+          <p class="hero__role reveal"><span data-i18n="hero.role">React Native Developer</span> <span class="hero__role-sep" aria-hidden="true">/</span> <span>iOS &amp; Android</span></p>
+          <p class="hero__summary reveal" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
+          <div class="hero__cta reveal">
+            <a class="btn btn--primary" href="#contact" data-i18n="hero.cta.contact">İletişime geç</a>
+            <a class="btn btn--ghost" href="#projects" data-i18n="hero.cta.projects">Projeleri gör</a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="phone-stage" id="hero-stage">
+            <div class="phone" id="hero-phone" aria-hidden="true">
+              <div class="phone__notch"></div>
+              <div class="phone__screens">
+                <div class="phone__screen screen--intime-ik is-active" data-screen="intime-ik">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">Intime İK</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <ul class="stats">
+          <li class="stat reveal">
+            <span class="stat__num" data-count="20" data-suffix="K+">20K+</span>
+            <span class="stat__label" data-i18n="stats.downloads">indirme</span>
+          </li>
+          <li class="stat reveal">
+            <span class="stat__num" data-count="10" data-suffix="K+">10K+</span>
+            <span class="stat__label" data-i18n="stats.users">aktif kullanıcı</span>
+          </li>
+          <li class="stat reveal">
+            <span class="stat__num" data-count="2" data-suffix="+">2+</span>
+            <span class="stat__label" data-i18n="stats.years">yıl deneyim</span>
+          </li>
+          <li class="stat reveal">
+            <span class="stat__num" data-count="9" data-suffix="">9</span>
+            <span class="stat__label" data-i18n="stats.projects">yayınlanan proje</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="kicker"><span class="kicker__num">01</span><span data-i18n="experience.kicker">Deneyim</span></p>
+          <h2 data-i18n="experience.title">Nerede çalışıyorum</h2>
+        </header>
+        <article class="job reveal">
+          <div class="job__head">
+            <div>
+              <h3 class="job__role">React Native Developer</h3>
+              <p class="job__company">Intime Info Yazılım Çözümleri A.Ş.</p>
+            </div>
+            <p class="job__date"><span data-i18n="experience.date">09/2024 — Devam ediyor</span> · <span data-i18n="experience.location">İstanbul</span></p>
+          </div>
+          <ul class="job__list">
+            <li data-i18n="experience.b1">PDKS, izin, masraf ve avans dahil 20 modüllü Intime İK uygulamasını geliştirdim: 20.000+ indirme, 10.000+ aktif kullanıcı.</li>
+            <li data-i18n="experience.b2">PaddleOCR'ı fine-tune ederek fiş fotoğrafından işyeri, tarih ve tutarı otomatik çıkaran masraf özelliğini yaptım.</li>
+            <li data-i18n="experience.b3">AdilPazar e-ticaret uygulamasını iOS ve Android için sıfırdan tek başıma geliştirip yayına aldım (10.000+ indirme).</li>
+            <li data-i18n="experience.b4">SignalR/WebSocket ile gerçek zamanlı mesajlaşma, Linphone SDK ile VoIP ve uygulama kapalıyken çalışan konum takibi geliştirdim.</li>
+            <li data-i18n="experience.b5">Whisper'ı fine-tune ederek santral görüşmelerini metne çeviren bir STT modeli eğittim; EAS, TestFlight ve Google Play yayın süreçlerini yönettim.</li>
+          </ul>
+          <ul class="tags">
+            <li>React Native</li><li>Expo</li><li>TypeScript</li><li>Redux Toolkit</li><li>Firebase</li><li>SignalR</li><li>PaddleOCR</li><li>Whisper</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="kicker"><span class="kicker__num">02</span><span data-i18n="projects.kicker">Projeler</span></p>
+          <h2 data-i18n="projects.title">Mağazada yayında olan işlerim</h2>
+          <p class="section__lead" data-i18n="projects.lead">Kaydırdıkça telefondaki ekran projeye göre değişiyor.</p>
+        </header>
+        <div class="projects">
+          <div class="projects__phone-col">
+            <div class="phone phone--sticky" id="projects-phone" aria-hidden="true">
+              <div class="phone__notch"></div>
+              <div class="phone__screens">
+                <div class="phone__screen screen--intime-ik is-active" data-screen="intime-ik">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">Intime İK</span></div>
+                </div>
+                <div class="phone__screen screen--adilpazar" data-screen="adilpazar">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">AdilPazar</span></div>
+                </div>
+                <div class="phone__screen screen--yeni-nesil-ik" data-screen="yeni-nesil-ik">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">Yeni Nesil İK</span></div>
+                </div>
+                <div class="phone__screen screen--nika-ik" data-screen="nika-ik">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">Nika İK</span></div>
+                </div>
+                <div class="phone__screen screen--intime-takip" data-screen="intime-takip">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">Intime Takip</span></div>
+                </div>
+                <div class="phone__screen screen--zaferzone" data-screen="zaferzone">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">ZaferZone</span></div>
+                </div>
+                <div class="phone__screen screen--nikachat" data-screen="nikachat">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">NikaChat</span></div>
+                </div>
+                <div class="phone__screen screen--nikaconnect" data-screen="nikaconnect">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">NikaConnect</span></div>
+                </div>
+                <div class="phone__screen screen--nikaphone" data-screen="nikaphone">
+                  <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
+                  <div class="ui-bar"><span class="ui-bar__title">NikaPhone</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- /projects-phone -->
+          </div>
+
+          <div class="projects__list">
+            <article class="project project--featured reveal" data-project="intime-ik">
+              <div class="project__meta"><span class="project__index">01</span><span class="badge" data-i18n="projects.featured">Öne çıkan</span></div>
+              <h3 class="project__title">Intime İK</h3>
+              <p class="project__desc" data-i18n="projects.intime-ik.desc">PDKS, izin, masraf ve avans dahil 20 modüllü insan kaynakları uygulaması. Masraf modülünde fiş fotoğrafından OCR ile otomatik masraf girişi.</p>
+              <ul class="project__kpis">
+                <li><strong>20K+</strong> <span data-i18n="projects.kpi.downloads">indirme</span></li>
+                <li><strong>10K+</strong> <span data-i18n="projects.kpi.users">aktif kullanıcı</span></li>
+              </ul>
+              <ul class="tags"><li>React Native</li><li>Expo</li><li>PaddleOCR</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/i-ntime-i-k/id6476069338" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </article>
+
+            <article class="project project--featured reveal" data-project="adilpazar">
+              <div class="project__meta"><span class="project__index">02</span><span class="badge" data-i18n="projects.featured">Öne çıkan</span></div>
+              <h3 class="project__title">AdilPazar</h3>
+              <p class="project__desc" data-i18n="projects.adilpazar.desc">iOS ve Android e-ticaret uygulaması. Sıfırdan tek başıma geliştirip yayına aldım; Firebase ve Meta Ads entegrasyonuyla kampanyalar ölçülebilir hale geldi.</p>
+              <ul class="project__kpis">
+                <li><strong>10K+</strong> <span data-i18n="projects.kpi.downloads">indirme</span></li>
+                <li><strong>Solo</strong> <span data-i18n="projects.kpi.solo">geliştirme</span></li>
+              </ul>
+              <ul class="tags"><li>React Native</li><li>Expo</li><li>Firebase</li><li>Meta SDK</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/adilpazar/id6621252954" target="_blank" rel="noopener">App Store</a>
+                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.adilpazar.adilpazarapp" target="_blank" rel="noopener">Google Play</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="yeni-nesil-ik">
+              <div class="project__meta"><span class="project__index">03</span></div>
+              <h3 class="project__title">Yeni Nesil İK</h3>
+              <p class="project__desc" data-i18n="projects.yeni-nesil-ik.desc">Intime İK kod tabanını farklı bir markaya uyarlayarak ayrı bir ürün olarak çıkardığım İK uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li>Expo</li><li>White-label</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/yeni-nesil-ik/id6748312376" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="nika-ik">
+              <div class="project__meta"><span class="project__index">04</span></div>
+              <h3 class="project__title">Nika İK</h3>
+              <p class="project__desc" data-i18n="projects.nika-ik.desc">Aynı kod tabanından türetilen, kendi markasıyla yayında olan bir başka İK uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li>Expo</li><li>White-label</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/nika-ik/id6743707363" target="_blank" rel="noopener">App Store</a>
+                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikaik" target="_blank" rel="noopener">Google Play</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="intime-takip">
+              <div class="project__meta"><span class="project__index">05</span></div>
+              <h3 class="project__title">Intime Takip</h3>
+              <p class="project__desc" data-i18n="projects.intime-takip.desc">Saha çalışanlarını mesai saatlerinde, uygulama kapalıyken bile konum güncellemeleriyle takip eden uygulama.</p>
+              <ul class="tags"><li>React Native</li><li data-i18n="projects.tag.bglocation">Arka plan konum</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/intimetakip-saha-y%C3%B6netimi/id6748349379" target="_blank" rel="noopener">App Store</a>
+                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.developerintime.intimetakip" target="_blank" rel="noopener">Google Play</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="zaferzone">
+              <div class="project__meta"><span class="project__index">06</span></div>
+              <h3 class="project__title">ZaferZone</h3>
+              <p class="project__desc" data-i18n="projects.zaferzone.desc">Okul giriş-çıkış ve geç kalma bilgisini velilere anında bildiren, veli, öğrenci, öğretmen ve güvenlik rollerine sahip okul uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li data-i18n="projects.tag.push">Push bildirim</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/zafer-zone/id6808615714" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="nikachat">
+              <div class="project__meta"><span class="project__index">07</span></div>
+              <h3 class="project__title">NikaChat</h3>
+              <p class="project__desc" data-i18n="projects.nikachat.desc">Gerçek zamanlı mesajlaşma ve dosya paylaşımı uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li>SignalR</li><li>WebSocket</li></ul>
+              <div class="project__links">
+                <a class="store-link" href="https://apps.apple.com/tr/app/nikachat/id6761252189" target="_blank" rel="noopener">App Store</a>
+                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikachat" target="_blank" rel="noopener">Google Play</a>
+              </div>
+            </article>
+
+            <article class="project reveal" data-project="nikaconnect">
+              <div class="project__meta"><span class="project__index">08</span></div>
+              <h3 class="project__title">NikaConnect</h3>
+              <p class="project__desc" data-i18n="projects.nikaconnect.desc">Mesajlaşma, sesli ve görüntülü görüşmeyi bir arada sunan iletişim uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li>WebRTC</li><li>LiveKit</li></ul>
+            </article>
+
+            <article class="project reveal" data-project="nikaphone">
+              <div class="project__meta"><span class="project__index">09</span><span class="badge badge--muted">Demo</span></div>
+              <h3 class="project__title">NikaPhone</h3>
+              <p class="project__desc" data-i18n="projects.nikaphone.desc">Asterisk santraline SIP ile bağlanan, native modül tabanlı sesli ve görüntülü görüşme uygulaması.</p>
+              <ul class="tags"><li>React Native</li><li>Linphone SDK</li><li>Asterisk</li><li>SIP</li></ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="kicker"><span class="kicker__num">03</span><span data-i18n="skills.kicker">Yetenekler</span></p>
+          <h2 data-i18n="skills.title">Kullandığım araçlar</h2>
+        </header>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <ul class="marquee__track">
+          <li>React Native</li><li>Expo</li><li>TypeScript</li><li>JavaScript</li><li>Swift</li><li>Kotlin</li><li>Expo Router</li><li>Reanimated</li><li>Skia</li><li>NativeWind</li><li>Redux Toolkit</li><li>Zustand</li><li>TanStack Query</li>
+        </ul>
+      </div>
+      <div class="marquee marquee--reverse" aria-hidden="true">
+        <ul class="marquee__track">
+          <li>SignalR</li><li>WebSocket</li><li>WebRTC</li><li>LiveKit</li><li>CallKit</li><li>PushKit</li><li>Firebase</li><li>Sentry</li><li>EAS Build</li><li>TestFlight</li><li>Docker</li><li>GitHub Actions</li><li>PaddleOCR</li><li>Whisper</li>
+        </ul>
+      </div>
+      <div class="container">
+        <div class="skill-groups">
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.mobile">Mobil</h3>
+            <p>React Native, Expo, TypeScript, Swift, Kotlin, Expo Modules API, Config Plugins, Expo Router</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.ui">Arayüz ve durum</h3>
+            <p>Reanimated, Skia, Lottie, NativeWind, React Native Paper, Redux Toolkit, Zustand, TanStack Query</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.realtime">Gerçek zamanlı iletişim</h3>
+            <p>SignalR, WebSocket, WebRTC, LiveKit, SIP / Linphone, Asterisk, CallKit, PushKit</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.device">Cihaz özellikleri</h3>
+            <p data-i18n="skills.device.list">Bluetooth Low Energy, NFC (HCE), kamera ve QR, harita, arka plan konum, SQLite ile çevrimdışı</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.devops">Yayın ve DevOps</h3>
+            <p>EAS Build / Submit / Update, App Store Connect, Google Play Console, Docker, Nginx, GitLab CI, GitHub Actions</p>
+          </div>
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.ai">Yapay zekâ</h3>
+            <p data-i18n="skills.ai.list">Python, PaddleOCR, Whisper ve Faster-Whisper fine-tuning, Claude Code ile yapay zekâ destekli geliştirme</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="kicker"><span class="kicker__num">04</span><span data-i18n="education.kicker">Eğitim</span></p>
+          <h2 data-i18n="education.title">Nerede okudum</h2>
+        </header>
+        <article class="edu reveal">
+          <div>
+            <h3 class="edu__degree" data-i18n="education.degree">Bilgisayar Mühendisliği, Lisans</h3>
+            <p class="edu__school">Bandırma Onyedi Eylül Üniversitesi</p>
+          </div>
+          <p class="edu__date">2020 — 2024 · Balıkesir</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--contact" id="contact">
+      <div class="container">
+        <div class="contact reveal">
+          <p class="kicker"><span class="kicker__num">05</span><span data-i18n="contact.kicker">İletişim</span></p>
+          <h2 class="contact__title" data-i18n="contact.title">Birlikte bir şey yapalım</h2>
+          <p class="contact__lead" data-i18n="contact.lead">Yeni bir uygulama fikri, iş teklifi ya da sadece merhaba demek için yazabilirsin.</p>
+          <a class="contact__email" href="mailto:emreaasci@gmail.com">emreaasci@gmail.com</a>
+          <div class="contact__links">
+            <a class="btn btn--ghost" href="https://linkedin.com/in/emreaasci" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn--ghost" href="https://github.com/emreaasci" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer"></footer>
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Emre Aşcı</p>
+      <!-- Uygulamalar / Gizlilik politikası linkleri buraya gelecek -->
+      <a href="#about" data-i18n="footer.top">Başa dön ↑</a>
+    </div>
+  </footer>
 </body>
 </html>

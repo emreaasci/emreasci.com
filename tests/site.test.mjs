@@ -47,3 +47,32 @@ test('gizli bilgi yok', () => {
 test('404 ana sayfaya link verir', () => {
   assert.ok(read('404.html').includes('href="/"'));
 });
+
+const SLUGS = ['intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik', 'intime-takip', 'zaferzone', 'nikachat', 'nikaconnect', 'nikaphone'];
+
+test('9 proje kartı', () => {
+  const found = [...readHtml().matchAll(/data-project="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(found, SLUGS);
+});
+
+test('rakamlar', () => {
+  const found = [...readHtml().matchAll(/data-count="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(found, ['20', '10', '2', '9']);
+});
+
+test('iletişim linkleri', () => {
+  const html = readHtml();
+  for (const s of ['mailto:emreaasci@gmail.com', 'linkedin.com/in/emreaasci', 'github.com/emreaasci']) {
+    assert.ok(html.includes(s), `${s} eksik`);
+  }
+});
+
+test('projeler telefonu 9 ekran', () => {
+  const html = readHtml();
+  const start = html.indexOf('id="projects-phone"');
+  assert.ok(start > -1, '#projects-phone yok');
+  const end = html.indexOf('<!-- /projects-phone -->', start);
+  assert.ok(end > -1, 'projects-phone bitiş işareti yok');
+  const screens = [...html.slice(start, end).matchAll(/data-screen="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(screens, SLUGS);
+});
