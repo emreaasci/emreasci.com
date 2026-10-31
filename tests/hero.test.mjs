@@ -22,10 +22,10 @@ test('hero sahnesi: plaka ve kafa katmanı', () => {
   assert.doesNotMatch(html, /id="push"|id="monitor-screen"/, 'eski buton/monitör kalmamalı');
 });
 
-test('rows.json: orta satır ve bakış atlası var, tablo monoton', () => {
+test('rows.json: orta satır var ve tablo monoton', () => {
   const rows = JSON.parse(readFileSync(join(root, 'assets/hero/rows.json'), 'utf8'));
-  assert.equal(rows.gaze.src, 'assets/hero/gaze.mp4');
-  assert.ok(rows.gaze.levels > rows.gaze.mid && rows.gaze.cols === rows.rows.mid.lut.length);
+  // Ara pozlar (build-gaze.py) bazı açılarda yüzü bozduğu için atlas kapalı
+  assert.equal(rows.gaze, undefined);
   const { lut, src } = rows.rows.mid;
   assert.equal(src, 'assets/hero/head.mp4');
   assert.equal(lut[0], 0);
