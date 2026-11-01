@@ -62,7 +62,8 @@
     const finePointer = global.matchMedia('(pointer: fine)').matches;
 
     if (!reducedMotion) {
-      initHead(hero);
+      // Kafa fareyi takip eder; dokunmatik ekranda takip edecek imleç yok, plakadaki sabit yüz kalır
+      if (finePointer) initHead(hero);
       entrance(hero);
     }
     initStory(hero, reducedMotion);

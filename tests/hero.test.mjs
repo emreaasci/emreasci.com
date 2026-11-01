@@ -50,6 +50,12 @@ test('Safari çubukları: şeritler görselin üst kenarının rengini alır, sa
   assert.ok(!/uFull = [^;]*window\.innerHeight/.test(js), 'uzak masa karesi yalnız görünen alanı kaplıyor');
 });
 
+test('kafa yalnız fareli cihazlarda hareket eder; mobilde kareler hiç yüklenmez', () => {
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  const boot = js.slice(js.indexOf("addEventListener('DOMContentLoaded'"), js.indexOf('function loadFrames'));
+  assert.match(boot, /if \(finePointer\) initHead\(hero\)/, 'kafa dokunmatik ekranda da başlıyor');
+});
+
 test('kafa kendi kendine bakınmaz: imleç/dokunma yokken kameraya dönüp sabit durur', () => {
   const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
   const run = js.slice(js.indexOf('function run('), js.indexOf('function initStory'));
