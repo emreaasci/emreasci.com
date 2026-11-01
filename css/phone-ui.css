@@ -282,7 +282,7 @@
 .lock__time {
   margin: -6px 0 0;
   font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 108px;
+  font-size: 130px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -290,7 +290,7 @@
   color: rgba(138, 160, 255, .78);
   -webkit-text-stroke: 1px rgba(225, 232, 255, .45);
   text-shadow: 0 2px 10px rgba(10, 20, 90, .35);
-  transform: scaleY(1.9);
+  transform: scaleY(1.4);
   transform-origin: 50% 0;
 }
 .lock__bottom { width: 100%; margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 0 22px 40px; }
