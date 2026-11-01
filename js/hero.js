@@ -175,7 +175,11 @@
       const r = story.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight)));
       const st = storyState(p, camReady);
-      fading.forEach((el) => { el.style.opacity = st.copy; });
+      fading.forEach((el) => {
+        el.style.opacity = st.copy;
+        // Tamamen solmuş üst bar ve yazılar altındaki telefonun tıklamalarını yutmasın
+        el.style.visibility = st.copy > 0.01 ? '' : 'hidden';
+      });
       if (head) head.style.opacity = st.head;
       if (camReady) {
         cam.style.opacity = p > 0.005 && st.desk < 1 ? '1' : '0';
