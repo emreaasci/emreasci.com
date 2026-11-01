@@ -32,6 +32,32 @@ test('look.json: tek dosyada paketlenmiş WebP kareleri ve yön çapaları', () 
   }
 });
 
+test('Safari çubukları: şeritler görselin üst kenarının rengini alır, sahne çubuğun altına uzanır', () => {
+  const css = readFileSync(join(root, 'css/hero.css'), 'utf8');
+  // Yeni Safari çubukların arkasını sayfanın arka plan rengiyle düz boyar; siyah/açık şerit gibi duruyordu
+  assert.match(css, /html, body \{ background: #040922; \}/, 'sayfa arka planı görselin üst kenarına uymuyor');
+  assert.match(html, /<meta name="theme-color" content="#040922">/, 'theme-color sahneyle aynı değil');
+  // Kaydırınca adres çubuğu küçülür, ekran uzar; 100svh sahnenin altında boşluk açılıyordu
+  const hero = css.slice(css.indexOf('.hero {'), css.indexOf('}', css.indexOf('.hero {')));
+  assert.match(hero, /height:\s*100lvh/, 'sahne uzayan ekranı kaplamıyor');
+  assert.match(hero, /--u:[^;]*100lvh/, 'görsel tam yüksekliği kaplamıyor');
+  // Alttaki yazılar açık adres çubuğunun arkasında kalmasın
+  for (const sel of ['.hero__scroll {', '.hero__caption {']) {
+    const rule = css.slice(css.indexOf(sel), css.indexOf('}', css.indexOf(sel)));
+    assert.match(rule, /bottom:[^;]*100lvh - 100svh/, `${sel} çubuk payı kadar yukarı alınmamış`);
+  }
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  assert.ok(!/uFull = [^;]*window\.innerHeight/.test(js), 'uzak masa karesi yalnız görünen alanı kaplıyor');
+});
+
+test('kafa kendi kendine bakınmaz: imleç/dokunma yokken kameraya dönüp sabit durur', () => {
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  const run = js.slice(js.indexOf('function run('), js.indexOf('function initStory'));
+  // Telefonda imleç olmadığı için kafa hiç durmadan sağa sola bakınıyordu
+  assert.ok(!/Math\.sin/.test(run), 'kafa hâlâ kendi kendine bakınıyor');
+  assert.match(run, /idle \? front : target/, 'boştayken kafa kameraya dönmüyor');
+});
+
 function checkPacked(metaPath, minFrames) {
   const meta = JSON.parse(readFileSync(join(root, metaPath), 'utf8'));
   assert.ok(meta.frames >= minFrames);

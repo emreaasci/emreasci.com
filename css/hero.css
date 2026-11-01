@@ -1,12 +1,18 @@
-/* Hero: 1440×810 çerçeve ekranı kaplar; tüm sahne konumları çerçeve birimi (--u) cinsinden */
+/* Safari saat ve adres çubuklarının arkasını sayfanın arka plan rengiyle düz boyar; görselin üst
+   kenarının rengi olsun ki şeritler sahneyle birleşsin. Sahnenin altındaki footer da bu yüzden hep koyu. */
+html, body { background: #040922; }
+.footer { --muted: #9aa6bf; --border: rgba(148, 163, 184, .16); }
+
+/* Hero: 1440×810 çerçeve ekranı kaplar; tüm sahne konumları çerçeve birimi (--u) cinsinden.
+   Yükseklik 100lvh: kaydırınca adres çubuğu küçülüp ekran uzadığında altta boşluk kalmaz. */
 .hero {
-  --u: max(calc(100vw / 1440), calc(100svh / 810));
+  --u: max(calc(100vw / 1440), calc(100lvh / 810));
   --muted-hero: #cdd2e6;
   position: relative;
-  height: 100svh;
+  height: 100lvh;
   min-height: 520px;
   overflow: hidden;
-  background: #02040d;
+  background: #040922;
   color: #fff;
   font-family: "Urbanist", var(--font);
   isolation: isolate;
@@ -90,7 +96,8 @@
 .hero__caption {
   position: absolute;
   z-index: 2;
-  bottom: max(20px, calc(50% - 405 * var(--u) + 40 * var(--u)));
+  /* 100lvh - 100svh: açık adres çubuğunun kapladığı pay; yazı onun arkasında kalmaz */
+  bottom: calc(max(20px, calc(50% - 405 * var(--u) + 40 * var(--u))) + 100lvh - 100svh);
   margin: 0;
   font-weight: 700;
   font-size: max(12px, calc(13 * var(--u)));
@@ -106,7 +113,7 @@
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: 18px;
+  bottom: calc(18px + 100lvh - 100svh);
   transform: translateX(-50%);
   font-size: 13px;
   font-weight: 700;

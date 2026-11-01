@@ -124,7 +124,7 @@
   function run(hero, box, draw, { frames, front, anchors }) {
     let target = front, shown = front, response = 1;
     let lastMove = performance.now(), enteredFace = 0;
-    let pointerInside = false; // fare sahnedeyken (dursa bile) kafa kendi kendine bakınmaz
+    let pointerInside = false; // fare sahnedeyken (dursa bile) kafa imlece bakmaya devam eder
 
     hero.addEventListener('pointermove', (e) => {
       const now = performance.now();
@@ -155,9 +155,9 @@
 
     const tick = (now) => {
       if (enteredFace && now - enteredFace > 400) target = front;
-      // Fare yokken (sahne dışında, ya da dokunmatik ekranda dokunma bitince) üst yarıda yavaşça bakınır
+      // Fare yokken (sahne dışında, ya da dokunmatik ekranda dokunma bitince) kameraya dönüp sabit durur
       const idle = !pointerInside && now - lastMove > 3500;
-      const goal = idle ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80) : target;
+      const goal = idle ? front : target;
       // En fazla ~1.4 kare/kare: yarım tur yaklaşık 1 saniye, asla zıplamaz
       shown = loopStep(shown, goal, frames, 0.1 * (idle ? 1 : response), 1.4);
       draw(Math.round(shown) % frames);
@@ -217,7 +217,8 @@
 
       // Yakınlaşma: düzen telefon yakın planında; başta tüm kare ekranı kaplayacak şekilde küçültülür
       const uPhone = frame.offsetWidth / 1440;
-      const uFull = Math.max(window.innerWidth / 1440, window.innerHeight / 810);
+      // Masa katmanı adres çubuğunun altına da uzanır (100lvh); tam kare onu kaplasın
+      const uFull = Math.max(window.innerWidth / 1440, desk.offsetHeight / 810);
       const s0 = Math.min(1, uFull / uPhone);
       const k = 1 - st.zoom;
       const s = s0 + (1 - s0) * st.zoom;
