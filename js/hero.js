@@ -104,6 +104,7 @@
   function run(hero, box, video, { fps, frames, front, anchors }) {
     let target = front, shown = front, response = 1;
     let lastMove = performance.now(), enteredFace = 0;
+    let pointerInside = false; // fare sahnedeyken (dursa bile) kafa kendi kendine bakınmaz
 
     hero.addEventListener('pointermove', (e) => {
       const now = performance.now();
@@ -121,12 +122,17 @@
         target = angleToFrame(anchors, (Math.atan2(dy, dx) * 180) / Math.PI);
       }
       lastMove = now;
+      pointerInside = true;
+    });
+    hero.addEventListener('pointerleave', () => {
+      pointerInside = false;
+      lastMove = performance.now();
     });
 
     const tick = (now) => {
       if (enteredFace && now - enteredFace > 400) target = front;
-      // Boşta: üst yarıda yavaşça sağa sola bakınır
-      const idle = now - lastMove > 3500;
+      // Fare yokken (sahne dışında, ya da dokunmatik ekranda dokunma bitince) üst yarıda yavaşça bakınır
+      const idle = !pointerInside && now - lastMove > 3500;
       const goal = idle ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80) : target;
       // En fazla ~1.4 kare/kare: yarım tur yaklaşık 1 saniye, asla zıplamaz
       shown = loopStep(shown, goal, frames, 0.1 * (idle ? 1 : response), 1.4);
