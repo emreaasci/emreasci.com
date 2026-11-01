@@ -50,7 +50,8 @@
   height: 870px;
   transform-origin: 0 0;
   overflow: hidden;
-  border-radius: 34px;
+  /* Görseldeki ekranın köşe yarıçapı ~58px (bu tuvalde); kenardan 2px içeride ince siyah çerçeve kalır */
+  clip-path: inset(2px round 56px);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font);
   font-size: 15px;
