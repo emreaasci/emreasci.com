@@ -186,7 +186,7 @@
       const s0 = Math.min(1, uFull / uPhone);
       const k = 1 - st.zoom;
       const s = s0 + (1 - s0) * st.zoom;
-      frame.style.transform = `translate(${(-1.7 * uPhone * s0 * k).toFixed(2)}px, ${(110.2 * uPhone * s0 * k).toFixed(2)}px) scale(${s.toFixed(4)})`;
+      frame.style.transform = `translate(${(-1.5 * uPhone * s0 * k).toFixed(2)}px, ${(111.7 * uPhone * s0 * k).toFixed(2)}px) scale(${s.toFixed(4)})`;
       global.Story = { p, interactive: st.interactive };
     }
     const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };

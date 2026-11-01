@@ -74,3 +74,12 @@ test('eski bölümler kaldırıldı', () => {
     assert.ok(!html.includes(`id="${id}"`), `#${id} hâlâ var`);
   }
 });
+
+test('masa katmanı 12 uygulamayı içerir, üst bar ve başlık dışında kalır', () => {
+  const desk = block('id', 'desk-layer');
+  assert.equal([...desk.matchAll(/data-app-screen="/g)].length, 12);
+  assert.ok(!desk.includes('class="header"'), 'üst bar masanın içine düşmüş');
+  assert.ok(!desk.includes('class="hero__copy"'), 'başlık masanın içine düşmüş');
+  const hero = block('class', 'hero');
+  assert.ok(hero.includes('id="desk-layer"') && hero.includes('class="header"'));
+});

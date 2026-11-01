@@ -20,9 +20,9 @@
   position: absolute;
   width: calc(1440 * var(--u));
   height: calc(810 * var(--u));
-  left: calc(50% - 718.3 * var(--u));
-  top: calc(50% - 515.2 * var(--u));
-  transform-origin: calc(718.3 * var(--u)) calc(515.2 * var(--u));
+  left: calc(50% - 718.5 * var(--u));
+  top: calc(50% - 516.7 * var(--u));
+  transform-origin: calc(718.5 * var(--u)) calc(516.7 * var(--u));
   will-change: transform;
 }
 .desk__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; }
