@@ -1,7 +1,26 @@
 'use strict';
 
-// Masadaki telefonun arayüzü: tuvali ekranın köşelerine oturtur, uygulamaları açıp kapatır.
-(function () {
+// Masadaki telefonun arayüzü: tuvali ekranın köşelerine oturtur, kilit ekranını yukarı kaydırarak
+// açtırır, uygulamaları açıp kapatır.
+(function (global) {
+  const LOCALE = { tr: 'tr-TR', en: 'en-US' };
+
+  function formatLockDate(date, lang) {
+    return new Intl.DateTimeFormat(LOCALE[lang] || LOCALE.tr, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
+  }
+
+  function formatClock(date) {
+    return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  }
+
+  // dy: sürükleme mesafesi (yukarı negatif, tuval px), velocity: px/ms, height: tuval yüksekliği
+  function shouldUnlock(dy, velocity, height) {
+    return dy < 0 && (-dy > height / 3 || velocity < -0.5);
+  }
+
+  global.PhoneLock = { formatLockDate, formatClock, shouldUnlock };
+  if (typeof document === 'undefined') return;
+
   document.addEventListener('DOMContentLoaded', () => {
     const screen = document.getElementById('desk-screen');
     const ui = document.getElementById('phone-ui');
@@ -88,13 +107,99 @@
       link.addEventListener('click', () => {
         const started = performance.now();
         const wait = () => {
-          if ((window.Story && window.Story.interactive) || performance.now() - started > 4000) openApp(link.dataset.openApp);
+          if ((window.Story && window.Story.interactive) || performance.now() - started > 4000) { unlock(); openApp(link.dataset.openApp); }
           else setTimeout(wait, 100);
         };
         wait();
       });
     });
 
-    window.PhoneUI = { openApp, closeApp };
+    // Kilit ekranı: canlı saat ve tarih, yukarı sürükleyerek açma, uzaklaşınca tekrar kilitlenme
+    const lock = document.getElementById('lock-screen');
+    const home = ui.querySelector('.home');
+    const clocks = ui.querySelectorAll('.lock__time, .phone-ui__clock');
+    const dateEl = lock && lock.querySelector('.lock__date');
+    let locked = true;
+
+    const tickClock = () => {
+      const now = new Date();
+      clocks.forEach((el) => { el.textContent = formatClock(now); });
+      if (dateEl) dateEl.textContent = formatLockDate(now, document.documentElement.lang);
+    };
+    tickClock();
+    setInterval(tickClock, 15000);
+    new MutationObserver(tickClock).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+    const setDrag = (dy) => {
+      // tuval biriminde; yukarı sürükledikçe ana ekran arkadan yaklaşır
+      const t = Math.min(1, -dy / ui.offsetHeight);
+      lock.style.transform = `translateY(${Math.min(0, dy)}px)`;
+      lock.style.opacity = String(1 - t * 0.6);
+      home.style.transform = `scale(${0.92 + 0.08 * t})`;
+      home.style.opacity = String(0.4 + 0.6 * t);
+    };
+
+    function unlock() {
+      if (!locked) return;
+      locked = false;
+      const from = lock.style.transform || 'translateY(0)';
+      const duration = reducedMotion ? 0 : 380;
+      lock.animate([{ transform: from }, { transform: 'translateY(-100%)' }], { duration, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' })
+        .onfinish = () => { lock.hidden = true; };
+      home.animate([{ transform: home.style.transform || 'scale(.92)', opacity: home.style.opacity || 0.4 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      home.style.transform = '';
+      home.style.opacity = '';
+      ui.classList.add('is-unlocked');
+    }
+
+    function relock() {
+      if (locked) return;
+      locked = true;
+      closeApp();
+      lock.getAnimations().forEach((a) => a.cancel());
+      lock.hidden = false;
+      lock.style.transform = '';
+      lock.style.opacity = '';
+      home.style.transform = 'scale(.92)';
+      home.style.opacity = '0.4';
+      ui.classList.remove('is-unlocked');
+    }
+
+    if (lock) {
+      home.style.transform = 'scale(.92)';
+      home.style.opacity = '0.4';
+      let start = null;
+      lock.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('.lock__unlock')) return;
+        const scale = ui.getBoundingClientRect().height / ui.offsetHeight; // ekran px → tuval px
+        start = { y: e.clientY, t: performance.now(), scale, lastY: e.clientY, lastT: performance.now(), v: 0 };
+        lock.setPointerCapture(e.pointerId);
+        lock.getAnimations().forEach((a) => a.cancel());
+      });
+      lock.addEventListener('pointermove', (e) => {
+        if (!start) return;
+        const now = performance.now();
+        start.v = ((e.clientY - start.lastY) / start.scale) / Math.max(1, now - start.lastT);
+        start.lastY = e.clientY; start.lastT = now;
+        setDrag((e.clientY - start.y) / start.scale);
+      });
+      const end = (e) => {
+        if (!start) return;
+        const dy = (e.clientY - start.y) / start.scale;
+        const v = start.v;
+        start = null;
+        if (shouldUnlock(dy, v, ui.offsetHeight)) return unlock();
+        // geri yaylan
+        const from = lock.style.transform || 'translateY(0)';
+        lock.animate([{ transform: from }, { transform: 'translateY(0)' }], { duration: reducedMotion ? 0 : 260, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        setDrag(0);
+      };
+      lock.addEventListener('pointerup', end);
+      lock.addEventListener('pointercancel', end);
+      lock.querySelector('.lock__unlock').addEventListener('click', unlock);
+    }
+
+    window.PhoneUI = { openApp, closeApp, unlock, relock, isLocked: () => locked };
   });
-})();
+})(window);

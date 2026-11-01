@@ -61,6 +61,11 @@
     'contact.title': "Let's build something together",
     'contact.lead': 'Write to me about a new app idea, a job offer, or just to say hi.',
 
+    'lock.hint': "Swipe up to open",
+    'lock.note1': "20,000+ downloads and 10,000+ active users",
+    'lock.note2': "Live on the App Store and Google Play",
+    'lock.now': "now",
+    'lock.ago': "2m",
     'phone.back': 'Back',
     'phone.tab.app': 'App',
     'phone.tab.info': 'About',

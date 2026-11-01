@@ -185,6 +185,8 @@
       desk.style.opacity = st.desk;
       if (phone) phone.style.opacity = st.phone;
       desk.classList.toggle('is-interactive', st.interactive);
+      // Telefondan uzaklaşınca ekran kararır ve telefon tekrar kilitlenir
+      if (st.phone < 0.3 && global.PhoneUI && !global.PhoneUI.isLocked()) global.PhoneUI.relock();
 
       // Yakınlaşma: düzen telefon yakın planında; başta tüm kare ekranı kaplayacak şekilde küçültülür
       const uPhone = frame.offsetWidth / 1440;

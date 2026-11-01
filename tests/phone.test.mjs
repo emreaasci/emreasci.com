@@ -83,3 +83,43 @@ test('masa katmanı 12 uygulamayı içerir, üst bar ve başlık dışında kal�
   const hero = block('class', 'hero');
   assert.ok(hero.includes('id="desk-layer"') && hero.includes('class="header"'));
 });
+
+import vm from 'node:vm';
+function loadLock() {
+  const window = {};
+  vm.runInNewContext(readFileSync(join(root, 'js/phone-ui.js'), 'utf8'), { window, Intl });
+  return window.PhoneLock;
+}
+
+test('kilit ekranı telefonun içinde, ana ekranın üstünde', () => {
+  const ui = block('id', 'phone-ui');
+  const lock = block('id', 'lock-screen');
+  assert.ok(lock, 'kilit ekranı yok');
+  assert.ok(ui.includes('id="lock-screen"'));
+  assert.match(lock, /class="lock__time"/);
+  assert.match(lock, /class="lock__date"/);
+  assert.match(lock, /data-i18n="lock\.hint"/);
+  assert.match(lock, /<button[^>]+class="lock__unlock"/, 'klavye ile açmak için düğme yok');
+});
+
+test('formatLockDate: TR ve EN', () => {
+  const { formatLockDate } = loadLock();
+  const d = new Date(2026, 10, 1, 21, 5); // 1 Kasım 2026, Pazar
+  assert.equal(formatLockDate(d, 'tr'), '1 Kasım Pazar');
+  assert.equal(formatLockDate(d, 'en'), 'Sunday, November 1');
+});
+
+test('formatClock: iki haneli saat', () => {
+  const { formatClock } = loadLock();
+  assert.equal(formatClock(new Date(2026, 10, 1, 9, 5)), '09:05');
+  assert.equal(formatClock(new Date(2026, 10, 1, 21, 40)), '21:40');
+});
+
+test('shouldUnlock: mesafe ya da hız eşiği', () => {
+  const { shouldUnlock } = loadLock();
+  const H = 870;
+  assert.equal(shouldUnlock(-300, 0, H), true, 'ekranın üçte birinden fazla');
+  assert.equal(shouldUnlock(-100, 0, H), false, 'kısa ve yavaş');
+  assert.equal(shouldUnlock(-80, -0.9, H), true, 'kısa ama hızlı fırlatma');
+  assert.equal(shouldUnlock(40, -2, H), false, 'aşağı çekmek açmaz');
+});

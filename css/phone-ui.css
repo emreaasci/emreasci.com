@@ -61,7 +61,11 @@
     radial-gradient(90% 50% at 100% 100%, rgba(34, 211, 238, .28), transparent 60%),
     linear-gradient(180deg, #0d1330, #070a18);
   -webkit-font-smoothing: antialiased;
+  /* gerçek telefondaki gibi: sürüklerken metin seçilmez (uygulama gövdeleri hariç) */
+  user-select: none;
+  -webkit-user-select: none;
 }
+.phone-ui .app__body, .phone-ui .app__page { user-select: text; -webkit-user-select: text; }
 .phone-ui button { font: inherit; color: inherit; }
 
 .phone-ui__status {
@@ -264,6 +268,86 @@
 }
 .contact-app__btn--mail { background: var(--accent); color: var(--accent-ink); overflow-wrap: anywhere; }
 
+
+/* Kilit ekranı: ana ekranın üstünde; yukarı sürüklenince açılır */
+.lock {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 58px 22px 0;
+  background:
+    radial-gradient(90% 55% at 30% 15%, rgba(124, 92, 255, .55), transparent 65%),
+    radial-gradient(80% 45% at 85% 90%, rgba(34, 211, 238, .35), transparent 60%),
+    linear-gradient(180deg, #151b46, #070a18);
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lock[hidden] { display: none; }
+.lock:active { cursor: grabbing; }
+.lock__icon { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.lock__date { margin: 14px 0 0; font-size: 19px; font-weight: 600; color: rgba(255, 255, 255, .9); text-transform: capitalize; }
+.lock__time {
+  margin: -6px 0 0;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.lock__notes { width: 100%; margin-top: auto; margin-bottom: 26px; display: flex; flex-direction: column; gap: 8px; }
+.note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .1);
+}
+.note__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: var(--c);
+  font-size: 13px;
+  font-weight: 800;
+}
+.note__body { flex: 1; min-width: 0; }
+.note__body strong { display: block; font-size: 14px; }
+.note__body span { display: block; font-size: 13px; color: rgba(255, 255, 255, .8); }
+.note__time { align-self: flex-start; font-size: 12px; color: rgba(255, 255, 255, .6); }
+.lock__bottom { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 34px; }
+.lock__btn {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .16);
+}
+.lock__btn svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linejoin: round; }
+.lock__unlock {
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  font-size: 14px !important;
+  font-weight: 500;
+  color: rgba(255, 255, 255, .85) !important;
+  cursor: pointer;
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+@keyframes shimmer { 50% { opacity: .45; } }
+
 @media (prefers-reduced-motion: reduce) {
   .app-icon__tile { transition: none; }
+  .lock__unlock { animation: none; }
 }
