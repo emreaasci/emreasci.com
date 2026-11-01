@@ -65,7 +65,7 @@
   user-select: none;
   -webkit-user-select: none;
 }
-.phone-ui .app__body, .phone-ui .app__page { user-select: text; -webkit-user-select: text; }
+.phone-ui .app__body { user-select: text; -webkit-user-select: text; }
 .phone-ui button { font: inherit; color: inherit; }
 
 .phone-ui__status {
@@ -194,41 +194,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.app__body, .app__page { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 20px 40px; overscroll-behavior: contain; }
-.app__page { display: none; }
-.app__page.is-active { display: block; }
-
-.app__tabs {
-  flex: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 12px 20px 0;
-  padding: 3px;
-  border-radius: 9px;
-  background: rgba(118, 118, 128, .24);
-}
-.app__tabs button { padding: 6px 0; border: 0; border-radius: 7px; background: none; font-size: 14px !important; font-weight: 600; color: var(--muted) !important; cursor: pointer; }
-.app__tabs button.is-active { background: #636366; color: #fff !important; box-shadow: 0 3px 8px rgba(0, 0, 0, .25); }
-
-/* Proje uygulamasının arayüz sayfası: eski stilize ekranlar 1.4 kat büyütülür */
-.app__device {
-  position: relative;
-  width: 240px;
-  height: 500px;
-  margin: 0 auto;
-  zoom: 1.4;
-  border-radius: 20px;
-  overflow: hidden;
-}
-.app__device .phone__screen { padding-top: 14px; }
-.app__device .ui-status { display: none; }
-.app__device .ui-map { margin-top: -14px; }
-.app__page[data-page="ui"] { padding: 12px 0 30px; }
+.app__body { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 20px 40px; overscroll-behavior: contain; }
 
 /* iOS dili: siyah zemin, gruplu listeler, gri bölüm başlıkları, tek vurgu rengi (iOS mavisi) */
 .app { background: #000; }
 .app__bar { background: rgba(28, 28, 30, .94); border-bottom: .5px solid rgba(84, 84, 88, .65); }
-.app__body, .app__page[data-page="info"] { padding: 8px 16px 40px; font-size: 16px; }
+.app__body { padding: 8px 16px 40px; font-size: 16px; }
 .ios-sec {
   margin: 26px 16px 7px;
   font-size: 13px;
@@ -382,69 +353,10 @@
   .lock__unlock { animation: none; }
 }
 
-/* Gerçek ekran görüntülü uygulamalar: tam ekran, yana kaydırmalı; son sayfa uygulama bilgisi */
-.phone-ui.is-fullscreen-app .phone-ui__status { opacity: 0; }
-.phone-ui.is-fullscreen-app .phone-ui__homebar { background: transparent; }
-.app--shots { background: #fff; }
-.shots {
-  flex: 1;
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-}
-.shots::-webkit-scrollbar { display: none; }
-.shots__slide {
-  flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-img.shots__slide { display: block; object-fit: cover; object-position: top center; cursor: pointer; -webkit-user-drag: none; }
-.shots__info { overflow-y: auto; padding-top: 60px !important; background: #000; }
-.app__back--float {
-  position: absolute;
-  z-index: 3;
-  top: 12px;
-  left: 16px;
-  padding: 4px 10px 4px 4px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, .38);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  color: #fff !important;
-  font-size: 14px !important;
-  font-weight: 600;
-}
-.app__back--float svg { width: 18px; height: 18px; }
-.shots__dots {
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  top: 14px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 10px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, .38);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  transform: translateX(-50%);
-}
-.shots__dots button { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .45); cursor: pointer; }
-.shots__dots button.is-active { background: #fff; }
-.shots__dots .shots__dot-info {
-  display: grid;
-  place-items: center;
-  width: 14px;
-  height: 14px;
-  font: italic 700 10px/1 Georgia, serif !important;
-  color: #000 !important;
-}
 .phone-ui__homebar { pointer-events: none; }
 .phone-ui.has-app .phone-ui__homebar { pointer-events: auto; cursor: pointer; touch-action: none; }
 .phone-ui__homebar::before { content: ""; position: absolute; inset: -16px -24px -9px; }
+
+/* Mağazadaki gerçek uygulama ikonları */
+.app-icon__tile--img { overflow: hidden; padding: 0; background: #fff; }
+.app-icon__tile--img img { display: block; width: 100%; height: 100%; object-fit: cover; }

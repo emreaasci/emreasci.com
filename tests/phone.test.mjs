@@ -48,25 +48,24 @@ test('her ikonun bir uygulama ekranı var', () => {
   for (const id of APPS) assert.ok(block('data-app-screen', id), `${id} ekranı yok`);
 });
 
-test('proje uygulamaları: arayüz ve bilgi sayfası', () => {
+test('proje uygulamaları doğrudan bilgi sayfası açar', () => {
   for (const slug of PROJECTS) {
     const app = block('data-app-screen', slug);
-    const shots = app.includes('data-shots');
-    assert.ok(shots || app.includes(`data-screen="${slug}"`), `${slug}: ne gerçek ekran ne stilize arayüz var`);
     assert.match(app, new RegExp(`data-i18n="projects\\.${slug}\\.desc"`), `${slug}: açıklama yok`);
+    assert.match(app, /class="app__body"/, `${slug}: bilgi gövdesi yok`);
+    assert.ok(!/data-tab=|data-screen=|data-shots/.test(app), `${slug}: eski arayüz/sekme kalmış`);
   }
 });
 
-test('gerçek ekranlı uygulamalar: görseller var, her görsele bir nokta, ayrıca bilgi sayfası', () => {
-  const app = block('data-app-screen', 'adilpazar');
-  const imgs = [...app.matchAll(/<img class="shots__slide" src="([^"]+)"/g)].map((m) => m[1]);
-  assert.equal(imgs.length, 5);
-  for (const src of imgs) assert.ok(existsSync(join(root, src)), `${src} yok`);
-  const dots = block('class', 'shots__dots');
-  assert.equal([...app.matchAll(/class="shots__slide/g)].length, [...app.slice(app.indexOf('shots__dots')).matchAll(/<button/g)].length);
-  assert.match(app, /class="shots__slide shots__info/);
-  assert.match(app, /data-close-app/, 'geri düğmesi yok');
-  assert.ok(dots);
+test('mağazadaki uygulamalar gerçek ikonlarını kullanır', () => {
+  const home = block('class', 'home__grid');
+  for (const slug of ['intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik', 'intime-takip', 'zaferzone', 'nikachat']) {
+    const src = `assets/icons/${slug}.webp`;
+    assert.ok(existsSync(join(root, src)), `${src} yok`);
+    assert.match(block('data-app', slug), new RegExp(`src="${src}"`), `${slug}: ana ekran ikonu gerçek değil`);
+    assert.match(block('data-app-screen', slug), new RegExp(`src="${src}"`), `${slug}: bilgi sayfası ikonu gerçek değil`);
+  }
+  assert.ok(home);
 });
 
 test('hakkımda: rakamlar ve avatar', () => {

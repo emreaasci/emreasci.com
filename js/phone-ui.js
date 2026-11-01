@@ -59,11 +59,8 @@
       if (current && current !== app) current.hidden = true;
       app.hidden = false;
       current = app;
-      const body = app.querySelector('.app__body, .app__page.is-active');
+      const body = app.querySelector('.app__body');
       if (body) body.scrollTop = 0;
-      const shots = app.querySelector('[data-shots]');
-      if (shots) shots.scrollLeft = 0;
-      ui.classList.toggle('is-fullscreen-app', Boolean(shots));
       ui.classList.add('has-app');
       if (!reducedMotion) {
         app.style.transformOrigin = originFor(id);
@@ -80,7 +77,7 @@
       const app = current;
       const id = app.dataset.appScreen;
       current = null;
-      ui.classList.remove('is-fullscreen-app', 'has-app');
+      ui.classList.remove('has-app');
       const done = () => { app.hidden = true; iconOf(id)?.focus({ preventScroll: true }); };
       if (reducedMotion) return done();
       app.style.transformOrigin = originFor(id);
@@ -93,38 +90,9 @@
     ui.addEventListener('click', (e) => {
       const icon = e.target.closest('.app-icon');
       if (icon) return openApp(icon.dataset.app);
-      if (e.target.closest('[data-close-app]')) return closeApp();
-      const tab = e.target.closest('[data-tab]');
-      if (tab) {
-        const app = tab.closest('.app');
-        app.querySelectorAll('[data-tab]').forEach((b) => {
-          const on = b === tab;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-selected', String(on));
-        });
-        app.querySelectorAll('.app__page').forEach((p) => p.classList.toggle('is-active', p.dataset.page === tab.dataset.tab));
-      }
+      if (e.target.closest('[data-close-app]')) closeApp();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeApp(); });
-
-    // Gerçek ekran görüntüleri: yana kaydırılır; görsele tıklamak, noktalar ve ok tuşları da sayfa değiştirir.
-    ui.querySelectorAll('[data-shots]').forEach((shots) => {
-      const app = shots.closest('.app');
-      const dots = [...app.querySelectorAll('.shots__dots button')];
-      const slides = [...shots.children];
-      const index = () => Math.round(shots.scrollLeft / shots.clientWidth);
-      const go = (i) => shots.scrollTo({ left: Math.max(0, Math.min(slides.length - 1, i)) * shots.clientWidth, behavior: reducedMotion ? 'auto' : 'smooth' });
-      shots.addEventListener('scroll', () => {
-        const i = index();
-        dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
-      }, { passive: true });
-      dots.forEach((d, n) => d.addEventListener('click', () => go(n)));
-      shots.addEventListener('click', (e) => { if (e.target.matches('img.shots__slide')) go(index() + 1); });
-      app.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') go(index() + 1);
-        if (e.key === 'ArrowLeft') go(index() - 1);
-      });
-    });
 
     // iOS gibi: alttaki ev çubuğuna dokunmak ya da yukarı kaydırmak uygulamayı kapatır
     const homebar = ui.querySelector('.phone-ui__homebar');

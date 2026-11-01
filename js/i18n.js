@@ -72,8 +72,6 @@
     'about.years': 'Years of experience',
     'about.projects': 'Shipped projects',
     'phone.back': 'Back',
-    'phone.tab.app': 'App',
-    'phone.tab.info': 'About',
     'phone.hint': 'Tap an app',
 
     'footer.top': 'Back to top ↑',
