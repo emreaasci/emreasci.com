@@ -128,20 +128,12 @@
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: max(18px, calc(36 * var(--u))) max(16px, calc(55 * var(--u)));
   background: none;
   border: 0;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-}
-.hero__brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 600; font-size: max(18px, calc(26 * var(--u))); }
-.hero__disc {
-  width: max(26px, calc(34 * var(--u)));
-  height: max(26px, calc(34 * var(--u)));
-  border-radius: 50%;
-  background: conic-gradient(from 210deg, #22d3ee, #3b82f6, #8b5cf6, #ec4899, #22d3ee);
-  box-shadow: 0 0 20px rgba(139, 92, 246, .5);
 }
 .hero__actions { display: flex; align-items: center; gap: 10px; }
 .hero .lang-toggle { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .2); color: #fff; }
