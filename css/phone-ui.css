@@ -204,11 +204,11 @@
   grid-template-columns: 1fr 1fr;
   margin: 12px 20px 0;
   padding: 3px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, .08);
+  border-radius: 9px;
+  background: rgba(118, 118, 128, .24);
 }
-.app__tabs button { padding: 7px 0; border: 0; border-radius: 8px; background: none; font-size: 14px !important; font-weight: 600; color: var(--muted) !important; cursor: pointer; }
-.app__tabs button.is-active { background: #fff; color: #0b1020 !important; }
+.app__tabs button { padding: 6px 0; border: 0; border-radius: 7px; background: none; font-size: 14px !important; font-weight: 600; color: var(--muted) !important; cursor: pointer; }
+.app__tabs button.is-active { background: #636366; color: #fff !important; box-shadow: 0 3px 8px rgba(0, 0, 0, .25); }
 
 /* Proje uygulamasının arayüz sayfası: eski stilize ekranlar 1.4 kat büyütülür */
 .app__device {
@@ -225,49 +225,79 @@
 .app__device .ui-map { margin-top: -14px; }
 .app__page[data-page="ui"] { padding: 12px 0 30px; }
 
-.project-app__desc { margin: 0 0 16px; color: var(--muted); }
-.project-app .project__kpis { list-style: none; margin: 0 0 16px; padding: 0; display: flex; gap: 20px; color: var(--muted); }
-.project-app .project__kpis strong { color: var(--text); font-size: 22px; }
-.project-app .project__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-
-/* Hakkımda */
-.about__head { text-align: center; margin-bottom: 12px; }
-.about__avatar { width: 96px; height: 96px; border-radius: 50%; background: #e2e8f0; margin: 4px auto 10px; }
-.about__name { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
-.about__role { margin: 2px 0 0; color: var(--accent); font-size: 14px; font-weight: 600; }
-.about__summary { color: var(--muted); margin: 0 0 18px; }
-.phone-ui .stats { grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 16px; }
-.phone-ui .stat { padding: 14px; }
-.phone-ui .stat__num { font-size: 28px; }
-.phone-ui .stat__label { font-size: 13px; }
-.phone-ui .edu { padding: 16px; border-radius: 16px; margin-bottom: 16px; flex-direction: column; align-items: flex-start; gap: 4px; }
-.phone-ui .edu__degree { font-size: 16px; }
-.phone-ui .skill-groups { grid-template-columns: 1fr; gap: 10px; margin: 0; }
-.phone-ui .skill-group { padding: 14px 16px; }
-.phone-ui .skill-group h3 { font-size: 15px; }
-.phone-ui .skill-group p { font-size: 13.5px; }
-
-/* Deneyim */
-.phone-ui .job { padding: 18px; border-radius: 18px; }
-.phone-ui .job__head { flex-direction: column; gap: 4px; margin-bottom: 14px; }
-.phone-ui .job__role { font-size: 18px; }
-.phone-ui .job__list li { font-size: 14px; }
-
-/* İletişim */
-.contact-app { display: flex; flex-direction: column; gap: 12px; padding-top: 40px; text-align: center; }
-.contact-app__title { margin: 0; font-size: 28px; line-height: 1.15; letter-spacing: -0.02em; }
-.contact-app__lead { margin: 0 0 18px; color: var(--muted); }
-.contact-app__btn {
-  display: block;
-  padding: 15px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, .08);
-  color: var(--text);
-  font-weight: 600;
-  text-decoration: none;
+/* iOS dili: siyah zemin, gruplu listeler, gri bölüm başlıkları, tek vurgu rengi (iOS mavisi) */
+.app { background: #000; }
+.app__bar { background: rgba(28, 28, 30, .94); border-bottom: .5px solid rgba(84, 84, 88, .65); }
+.app__body, .app__page[data-page="info"] { padding: 8px 16px 40px; font-size: 16px; }
+.ios-sec {
+  margin: 26px 16px 7px;
+  font-size: 13px;
+  color: #8e8e93;
+  text-transform: uppercase;
+  letter-spacing: .02em;
 }
-.contact-app__btn--mail { background: var(--accent); color: var(--accent-ink); overflow-wrap: anywhere; }
+.ios-group { list-style: none; margin: 0; padding: 0; border-radius: 12px; overflow: hidden; background: #1c1c1e; }
+.ios-group + .ios-group { margin-top: 16px; }
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  padding: 11px 16px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+.row + .row::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; border-top: .5px solid rgba(84, 84, 88, .65); }
+.row__value { color: #8e8e93; font-variant-numeric: tabular-nums; }
+/* sayma animasyonu için stat__num sınıfı taşınıyor; sitenin büyük rakam stilini ezer */
+.phone-ui .row__value.stat__num { display: inline; font: inherit; letter-spacing: 0; line-height: inherit; color: #8e8e93; }
+.row--stack { flex-direction: column; align-items: flex-start; gap: 2px; }
+.row__sub { font-size: 14px; color: #8e8e93; line-height: 1.35; }
+.row__label { font-size: 13px; color: #fff; }
+.row--text { display: block; font-size: 15px; line-height: 1.4; color: #e5e5ea; }
+.row__link { color: var(--ios-blue); text-decoration: none; font-size: 16px; }
+.row__link--full { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.row__chev { width: 18px; height: 18px; fill: none; stroke: #48484a; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.ios-note { margin: 4px 4px 0; font-size: 15px; line-height: 1.45; color: #aeaeb2; }
 
+/* Kişi kartı (Hakkımda, İletişim) */
+.contact-card { text-align: center; padding: 18px 0 14px; }
+.contact-card__avatar { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 10px; background: #2c2c2e; object-fit: cover; }
+.contact-card__name { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+.contact-card__sub { margin: 2px 20px 0; font-size: 15px; color: #8e8e93; }
+.ios-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 18px; }
+.ios-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 0 9px;
+  border-radius: 12px;
+  background: #1c1c1e;
+  color: var(--ios-blue);
+  text-decoration: none;
+  font-size: 12px;
+}
+.ios-action svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Deneyim başlığı */
+.exp-head { display: flex; gap: 14px; align-items: center; padding: 16px 4px 2px; }
+.exp-head__logo {
+  flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 13px;
+  background: #0a66c2; font-size: 24px; font-weight: 700; color: #fff;
+}
+.exp-head h2 { margin: 0; font-size: 20px; font-weight: 700; }
+.exp-head p { margin: 1px 0 0; font-size: 15px; color: #e5e5ea; }
+.exp-head .exp-head__meta { font-size: 13px; color: #8e8e93; }
+
+/* Proje bilgi sayfası (App Store sayfası gibi) */
+.store-head { display: flex; gap: 14px; align-items: center; padding: 16px 4px 10px; }
+.store-head .app-icon__tile { width: 72px; height: 72px; border-radius: 16px; font-size: 26px; }
+.store-head h2 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.store-head p { margin: 2px 0 0; font-size: 14px; color: #8e8e93; }
+.store-head + .ios-note { margin-bottom: 16px; }
 
 /* Kilit ekranı: ana ekranın üstünde; yukarı sürüklenince açılır */
 .lock {

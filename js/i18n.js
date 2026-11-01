@@ -19,10 +19,6 @@
     'hero.hint': 'Move your mouse',
     'hero.scroll': 'Scroll down',
 
-    'stats.downloads': 'downloads',
-    'stats.users': 'active users',
-    'stats.years': 'years of experience',
-    'stats.projects': 'shipped projects',
 
     'experience.date': '09/2024 — Present',
     'experience.location': 'Istanbul',
@@ -58,7 +54,6 @@
 
     'education.degree': "Computer Engineering, Bachelor's",
 
-    'contact.title': "Let's build something together",
     'contact.lead': 'Write to me about a new app idea, a job offer, or just to say hi.',
 
     'lock.hint': "Swipe up to open",
@@ -66,6 +61,16 @@
     'lock.note2': "Live on the App Store and Google Play",
     'lock.now': "now",
     'lock.ago': "2m",
+    'phone.sec.numbers': 'Numbers',
+    'phone.sec.education': 'Education',
+    'phone.sec.skills': 'Skills',
+    'phone.sec.work': 'What I did',
+    'phone.sec.stack': 'Tech stack',
+    'phone.act.mail': 'email',
+    'about.downloads': 'Downloads',
+    'about.users': 'Active users',
+    'about.years': 'Years of experience',
+    'about.projects': 'Shipped projects',
     'phone.back': 'Back',
     'phone.tab.app': 'App',
     'phone.tab.info': 'About',

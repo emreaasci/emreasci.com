@@ -11,18 +11,18 @@
   <meta property="og:url" content="https://emreasci.com/">
   <meta name="theme-color" content="#0b1020">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=20261101120501">
-  <link rel="stylesheet" href="css/anim.css?v=20261101120501">
-  <link rel="stylesheet" href="css/hero.css?v=20261101120501">
-  <link rel="stylesheet" href="css/phone-ui.css?v=20261101120501">
+  <link rel="stylesheet" href="css/style.css?v=20261101120830">
+  <link rel="stylesheet" href="css/anim.css?v=20261101120830">
+  <link rel="stylesheet" href="css/hero.css?v=20261101120830">
+  <link rel="stylesheet" href="css/phone-ui.css?v=20261101120830">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="js/i18n.js?v=20261101120501" defer></script>
-  <script src="js/main.js?v=20261101120501" defer></script>
-  <script src="js/hero.js?v=20261101120501" defer></script>
-  <script src="js/phone-ui.js?v=20261101120501" defer></script>
+  <script src="js/i18n.js?v=20261101120830" defer></script>
+  <script src="js/main.js?v=20261101120830" defer></script>
+  <script src="js/hero.js?v=20261101120830" defer></script>
+  <script src="js/phone-ui.js?v=20261101120830" defer></script>
 </head>
 <body>
   <main>
@@ -99,121 +99,97 @@
                 <p class="home__hint" data-i18n="phone.hint">Bir uygulamaya dokun</p>
               </div>
               <div class="apps">
-                <section class="app" data-app-screen="about" aria-label="Hakkımda" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title" data-i18n="nav.about">Hakkımda</span>
-                  </header>
-                  <div class="app__body">
-                    <div class="about__head">
-                      <img class="about__avatar" src="assets/desk/avatar.webp" alt="Emre Aşcı" width="96" height="96">
-                      <h2 class="about__name">Emre Aşcı</h2>
-                      <p class="about__role">React Native Developer · İstanbul</p>
-                    </div>
-                    <p class="about__summary" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
-                    <ul class="stats">
-                      <li class="stat">
-                        <span class="stat__num" data-count="20" data-suffix="K+">20K+</span>
-                        <span class="stat__label" data-i18n="stats.downloads">indirme</span>
-                      </li>
-                      <li class="stat">
-                        <span class="stat__num" data-count="10" data-suffix="K+">10K+</span>
-                        <span class="stat__label" data-i18n="stats.users">aktif kullanıcı</span>
-                      </li>
-                      <li class="stat">
-                        <span class="stat__num" data-count="2" data-suffix="+">2+</span>
-                        <span class="stat__label" data-i18n="stats.years">yıl deneyim</span>
-                      </li>
-                      <li class="stat">
-                        <span class="stat__num" data-count="9" data-suffix="">9</span>
-                        <span class="stat__label" data-i18n="stats.projects">yayınlanan proje</span>
-                      </li>
-                    </ul>
-                    <article class="edu">
-                      <div>
-                        <h3 class="edu__degree" data-i18n="education.degree">Bilgisayar Mühendisliği, Lisans</h3>
-                        <p class="edu__school">Bandırma Onyedi Eylül Üniversitesi</p>
-                      </div>
-                      <p class="edu__date">2020 — 2024 · Balıkesir</p>
-                    </article>
-                    <div class="skill-groups">
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.mobile">Mobil</h3>
-                        <p>React Native, Expo, TypeScript, Swift, Kotlin, Expo Modules API, Config Plugins, Expo Router</p>
-                      </div>
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.ui">Arayüz ve durum</h3>
-                        <p>Reanimated, Skia, Lottie, NativeWind, React Native Paper, Redux Toolkit, Zustand, TanStack Query</p>
-                      </div>
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.realtime">Gerçek zamanlı iletişim</h3>
-                        <p>SignalR, WebSocket, WebRTC, LiveKit, SIP / Linphone, Asterisk, CallKit, PushKit</p>
-                      </div>
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.device">Cihaz özellikleri</h3>
-                        <p data-i18n="skills.device.list">Bluetooth Low Energy, NFC (HCE), kamera ve QR, harita, arka plan konum, SQLite ile çevrimdışı</p>
-                      </div>
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.devops">Yayın ve DevOps</h3>
-                        <p>EAS Build / Submit / Update, App Store Connect, Google Play Console, Docker, Nginx, GitLab CI, GitHub Actions</p>
-                      </div>
-                      <div class="skill-group">
-                        <h3 data-i18n="skills.ai">Yapay zekâ</h3>
-                        <p data-i18n="skills.ai.list">Python, PaddleOCR, Whisper ve Faster-Whisper fine-tuning, Claude Code ile yapay zekâ destekli geliştirme</p>
-                      </div>
-                    </div>
+              <section class="app" data-app-screen="about" aria-label="Hakkımda" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title" data-i18n="nav.about">Hakkımda</span>
+                </header>
+                <div class="app__body">
+                  <div class="contact-card">
+                    <img class="contact-card__avatar" src="assets/desk/avatar.webp" alt="Emre Aşcı" width="96" height="96">
+                    <h2 class="contact-card__name">Emre Aşcı</h2>
+                    <p class="contact-card__sub">React Native Developer</p>
                   </div>
-                </section>
-                <section class="app" data-app-screen="experience" aria-label="Deneyim" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title" data-i18n="nav.experience">Deneyim</span>
-                  </header>
-                  <div class="app__body">
-                    <article class="job">
-                      <div class="job__head">
-                        <div>
-                          <h3 class="job__role">React Native Developer</h3>
-                          <p class="job__company">Intime Info Yazılım Çözümleri A.Ş.</p>
-                        </div>
-                        <p class="job__date"><span data-i18n="experience.date">09/2024 — Devam ediyor</span> · <span data-i18n="experience.location">İstanbul</span></p>
-                      </div>
-                      <ul class="job__list">
-                        <li data-i18n="experience.b1">PDKS, izin, masraf ve avans dahil 20 modüllü Intime İK uygulamasını geliştirdim: 20.000+ indirme, 10.000+ aktif kullanıcı.</li>
-                        <li data-i18n="experience.b2">PaddleOCR'ı fine-tune ederek fiş fotoğrafından işyeri, tarih ve tutarı otomatik çıkaran masraf özelliğini yaptım.</li>
-                        <li data-i18n="experience.b3">AdilPazar e-ticaret uygulamasını iOS ve Android için sıfırdan tek başıma geliştirip yayına aldım (10.000+ indirme).</li>
-                        <li data-i18n="experience.b4">SignalR/WebSocket ile gerçek zamanlı mesajlaşma, Linphone SDK ile VoIP ve uygulama kapalıyken çalışan konum takibi geliştirdim.</li>
-                        <li data-i18n="experience.b5">Whisper'ı fine-tune ederek santral görüşmelerini metne çeviren bir STT modeli eğittim; EAS, TestFlight ve Google Play yayın süreçlerini yönettim.</li>
-                      </ul>
-                      <ul class="tags">
-                        <li>React Native</li><li>Expo</li><li>TypeScript</li><li>Redux Toolkit</li><li>Firebase</li><li>SignalR</li><li>PaddleOCR</li><li>Whisper</li>
-                      </ul>
-                    </article>
+                  <p class="ios-note" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.numbers">Rakamlar</p>
+                  <ul class="ios-group">
+                    <li class="row"><span data-i18n="about.downloads">İndirme</span><span class="row__value stat__num" data-count="20" data-suffix="K+">20K+</span></li>
+                    <li class="row"><span data-i18n="about.users">Aktif kullanıcı</span><span class="row__value stat__num" data-count="10" data-suffix="K+">10K+</span></li>
+                    <li class="row"><span data-i18n="about.years">Yıl deneyim</span><span class="row__value stat__num" data-count="2" data-suffix="+">2+</span></li>
+                    <li class="row"><span data-i18n="about.projects">Yayınlanan proje</span><span class="row__value stat__num" data-count="9" data-suffix="">9</span></li>
+                  </ul>
+                  <p class="ios-sec" data-i18n="phone.sec.education">Eğitim</p>
+                  <ul class="ios-group">
+                    <li class="row row--stack"><span data-i18n="education.degree">Bilgisayar Mühendisliği, Lisans</span><span class="row__sub">Bandırma Onyedi Eylül Üniversitesi · 2020–2024</span></li>
+                  </ul>
+                  <p class="ios-sec" data-i18n="phone.sec.skills">Yetenekler</p>
+                  <ul class="ios-group">
+                    <li class="row row--stack"><span data-i18n="skills.mobile">Mobil</span><span class="row__sub">React Native, Expo, TypeScript, Swift, Kotlin, Expo Modules API, Config Plugins, Expo Router</span></li>
+                    <li class="row row--stack"><span data-i18n="skills.ui">Arayüz ve durum</span><span class="row__sub">Reanimated, Skia, Lottie, NativeWind, React Native Paper, Redux Toolkit, Zustand, TanStack Query</span></li>
+                    <li class="row row--stack"><span data-i18n="skills.realtime">Gerçek zamanlı iletişim</span><span class="row__sub">SignalR, WebSocket, WebRTC, LiveKit, SIP / Linphone, Asterisk, CallKit, PushKit</span></li>
+                    <li class="row row--stack"><span data-i18n="skills.device">Cihaz özellikleri</span><span class="row__sub" data-i18n="skills.device.list">Bluetooth Low Energy, NFC (HCE), kamera ve QR, harita, arka plan konum, SQLite ile çevrimdışı</span></li>
+                    <li class="row row--stack"><span data-i18n="skills.devops">Yayın ve DevOps</span><span class="row__sub">EAS Build / Submit / Update, App Store Connect, Google Play Console, Docker, Nginx, GitLab CI, GitHub Actions</span></li>
+                    <li class="row row--stack"><span data-i18n="skills.ai">Yapay zekâ</span><span class="row__sub" data-i18n="skills.ai.list">Python, PaddleOCR, Whisper ve Faster-Whisper fine-tuning, Claude Code ile yapay zekâ destekli geliştirme</span></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app" data-app-screen="experience" aria-label="Deneyim" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title" data-i18n="nav.experience">Deneyim</span>
+                </header>
+                <div class="app__body">
+                  <div class="exp-head">
+                    <span class="exp-head__logo" aria-hidden="true">in</span>
+                    <div><h2>React Native Developer</h2><p>Intime Info Yazılım Çözümleri A.Ş.</p><p class="exp-head__meta"><span data-i18n="experience.date">09/2024 — Devam ediyor</span> · <span data-i18n="experience.location">İstanbul</span></p></div>
                   </div>
-                </section>
-                <section class="app" data-app-screen="contact" aria-label="İletişim" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title" data-i18n="nav.contact">İletişim</span>
-                  </header>
-                  <div class="app__body contact-app">
-                    <h2 class="contact-app__title" data-i18n="contact.title">Birlikte bir şey yapalım</h2>
-                    <p class="contact-app__lead" data-i18n="contact.lead">Yeni bir uygulama fikri, iş teklifi ya da sadece merhaba demek için yazabilirsin.</p>
-                    <a class="contact-app__btn contact-app__btn--mail" href="mailto:emreaasci@gmail.com">emreaasci@gmail.com</a>
-                    <a class="contact-app__btn" href="https://linkedin.com/in/emreaasci" target="_blank" rel="noopener">LinkedIn</a>
-                    <a class="contact-app__btn" href="https://github.com/emreaasci" target="_blank" rel="noopener">GitHub</a>
+                  <p class="ios-sec" data-i18n="phone.sec.work">Yaptıklarım</p>
+                  <ul class="ios-group">
+                    <li class="row row--text" data-i18n="experience.b1">PDKS, izin, masraf ve avans dahil 20 modüllü Intime İK uygulamasını geliştirdim: 20.000+ indirme, 10.000+ aktif kullanıcı.</li>
+                    <li class="row row--text" data-i18n="experience.b2">PaddleOCR'ı fine-tune ederek fiş fotoğrafından işyeri, tarih ve tutarı otomatik çıkaran masraf özelliğini yaptım.</li>
+                    <li class="row row--text" data-i18n="experience.b3">AdilPazar e-ticaret uygulamasını iOS ve Android için sıfırdan tek başıma geliştirip yayına aldım (10.000+ indirme).</li>
+                    <li class="row row--text" data-i18n="experience.b4">SignalR/WebSocket ile gerçek zamanlı mesajlaşma, Linphone SDK ile VoIP ve uygulama kapalıyken çalışan konum takibi geliştirdim.</li>
+                    <li class="row row--text" data-i18n="experience.b5">Whisper'ı fine-tune ederek santral görüşmelerini metne çeviren bir STT modeli eğittim; EAS, TestFlight ve Google Play yayın süreçlerini yönettim.</li>
+                  </ul>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · TypeScript · Redux Toolkit · Firebase · SignalR · PaddleOCR · Whisper</li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app" data-app-screen="contact" aria-label="İletişim" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title" data-i18n="nav.contact">İletişim</span>
+                </header>
+                <div class="app__body">
+                  <div class="contact-card">
+                    <img class="contact-card__avatar" src="assets/desk/avatar.webp" alt="" width="96" height="96">
+                    <h2 class="contact-card__name">Emre Aşcı</h2>
+                    <p class="contact-card__sub" data-i18n="contact.lead">Yeni bir uygulama fikri, iş teklifi ya da sadece merhaba demek için yazabilirsin.</p>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="intime-ik" aria-label="Intime İK" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">Intime İK</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                  <div class="ios-actions">
+                    <a class="ios-action" href="mailto:emreaasci@gmail.com"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l9 6 9-6"/></svg><span data-i18n="phone.act.mail">e-posta</span></a>
+                    <a class="ios-action" href="https://linkedin.com/in/emreaasci" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M6 9v9M6 6v.01M10 18v-5a3 3 0 0 1 6 0v5M10 10v8"/></svg><span>LinkedIn</span></a>
+                    <a class="ios-action" href="https://github.com/emreaasci" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5m12 4.5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><span>GitHub</span></a>
                   </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <ul class="ios-group">
+                    <li class="row row--stack"><span class="row__label" data-i18n="phone.act.mail">e-posta</span><a class="row__link" href="mailto:emreaasci@gmail.com">emreaasci@gmail.com</a></li>
+                    <li class="row row--stack"><span class="row__label">LinkedIn</span><a class="row__link" href="https://linkedin.com/in/emreaasci" target="_blank" rel="noopener">linkedin.com/in/emreaasci</a></li>
+                    <li class="row row--stack"><span class="row__label">GitHub</span><a class="row__link" href="https://github.com/emreaasci" target="_blank" rel="noopener">github.com/emreaasci</a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="intime-ik" aria-label="Intime İK" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">Intime İK</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--hr is-active" data-screen="intime-ik" style="--brand:#0284c7">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -234,28 +210,35 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.intime-ik.desc">PDKS, izin, masraf ve avans dahil 20 modüllü insan kaynakları uygulaması. Masraf modülünde fiş fotoğrafından OCR ile otomatik masraf girişi.</p>
-                      <ul class="project__kpis">
-                        <li><strong>20K+</strong> <span data-i18n="projects.kpi.downloads">indirme</span></li>
-                        <li><strong>10K+</strong> <span data-i18n="projects.kpi.users">aktif kullanıcı</span></li>
-                      </ul>
-                      <ul class="tags"><li>React Native</li><li>Expo</li><li>PaddleOCR</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/i-ntime-i-k/id6476069338" target="_blank" rel="noopener">App Store</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#0284c7">İK</span>
+                    <div><h2>Intime İK</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="adilpazar" aria-label="AdilPazar" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">AdilPazar</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.intime-ik.desc">PDKS, izin, masraf ve avans dahil 20 modüllü insan kaynakları uygulaması. Masraf modülünde fiş fotoğrafından OCR ile otomatik masraf girişi.</p>
+                  <ul class="ios-group">
+                    <li class="row"><span data-i18n="projects.kpi.downloads">indirme</span><span class="row__value">20K+</span></li>
+                    <li class="row"><span data-i18n="projects.kpi.users">aktif kullanıcı</span><span class="row__value">10K+</span></li>
+                  </ul>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · PaddleOCR</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/i-ntime-i-k/id6476069338" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="adilpazar" aria-label="AdilPazar" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">AdilPazar</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--shop is-active" data-screen="adilpazar" style="--brand:#ea580c">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -272,29 +255,36 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.adilpazar.desc">iOS ve Android e-ticaret uygulaması. Sıfırdan tek başıma geliştirip yayına aldım; Firebase ve Meta Ads entegrasyonuyla kampanyalar ölçülebilir hale geldi.</p>
-                      <ul class="project__kpis">
-                        <li><strong>10K+</strong> <span data-i18n="projects.kpi.downloads">indirme</span></li>
-                        <li><strong>Solo</strong> <span data-i18n="projects.kpi.solo">geliştirme</span></li>
-                      </ul>
-                      <ul class="tags"><li>React Native</li><li>Expo</li><li>Firebase</li><li>Meta SDK</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/adilpazar/id6621252954" target="_blank" rel="noopener">App Store</a>
-                        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.adilpazar.adilpazarapp" target="_blank" rel="noopener">Google Play</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#ea580c">AP</span>
+                    <div><h2>AdilPazar</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="yeni-nesil-ik" aria-label="Yeni Nesil İK" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">Yeni Nesil İK</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.adilpazar.desc">iOS ve Android e-ticaret uygulaması. Sıfırdan tek başıma geliştirip yayına aldım; Firebase ve Meta Ads entegrasyonuyla kampanyalar ölçülebilir hale geldi.</p>
+                  <ul class="ios-group">
+                    <li class="row"><span data-i18n="projects.kpi.downloads">indirme</span><span class="row__value">10K+</span></li>
+                    <li class="row"><span data-i18n="projects.kpi.solo">geliştirme</span><span class="row__value">Solo</span></li>
+                  </ul>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · Firebase · Meta SDK</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/adilpazar/id6621252954" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                    <li class="row"><a class="row__link row__link--full" href="https://play.google.com/store/apps/details?id=com.adilpazar.adilpazarapp" target="_blank" rel="noopener">Google Play<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="yeni-nesil-ik" aria-label="Yeni Nesil İK" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">Yeni Nesil İK</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--hr is-active" data-screen="yeni-nesil-ik" style="--brand:#059669">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -315,24 +305,31 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.yeni-nesil-ik.desc">Intime İK kod tabanını farklı bir markaya uyarlayarak ayrı bir ürün olarak çıkardığım İK uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li>Expo</li><li>White-label</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/yeni-nesil-ik/id6748312376" target="_blank" rel="noopener">App Store</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#059669">YN</span>
+                    <div><h2>Yeni Nesil İK</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="nika-ik" aria-label="Nika İK" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">Nika İK</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.yeni-nesil-ik.desc">Intime İK kod tabanını farklı bir markaya uyarlayarak ayrı bir ürün olarak çıkardığım İK uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · White-label</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/yeni-nesil-ik/id6748312376" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="nika-ik" aria-label="Nika İK" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">Nika İK</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--hr is-active" data-screen="nika-ik" style="--brand:#7c3aed">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -353,25 +350,32 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.nika-ik.desc">Aynı kod tabanından türetilen, kendi markasıyla yayında olan bir başka İK uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li>Expo</li><li>White-label</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/nika-ik/id6743707363" target="_blank" rel="noopener">App Store</a>
-                        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikaik" target="_blank" rel="noopener">Google Play</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#7c3aed">Nİ</span>
+                    <div><h2>Nika İK</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="intime-takip" aria-label="Intime Takip" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">Intime Takip</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.nika-ik.desc">Aynı kod tabanından türetilen, kendi markasıyla yayında olan bir başka İK uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · White-label</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/nika-ik/id6743707363" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                    <li class="row"><a class="row__link row__link--full" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikaik" target="_blank" rel="noopener">Google Play<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="intime-takip" aria-label="Intime Takip" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">Intime Takip</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--map is-active" data-screen="intime-takip" style="--brand:#0d9488">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -391,25 +395,32 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.intime-takip.desc">Saha çalışanlarını mesai saatlerinde, uygulama kapalıyken bile konum güncellemeleriyle takip eden uygulama.</p>
-                      <ul class="tags"><li>React Native</li><li data-i18n="projects.tag.bglocation">Arka plan konum</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/intimetakip-saha-y%C3%B6netimi/id6748349379" target="_blank" rel="noopener">App Store</a>
-                        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.developerintime.intimetakip" target="_blank" rel="noopener">Google Play</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#0d9488">IT</span>
+                    <div><h2>Intime Takip</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="zaferzone" aria-label="ZaferZone" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">ZaferZone</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.intime-takip.desc">Saha çalışanlarını mesai saatlerinde, uygulama kapalıyken bile konum güncellemeleriyle takip eden uygulama.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · <span data-i18n="projects.tag.bglocation">Arka plan konum</span></li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/intimetakip-saha-y%C3%B6netimi/id6748349379" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                    <li class="row"><a class="row__link row__link--full" href="https://play.google.com/store/apps/details?id=com.developerintime.intimetakip" target="_blank" rel="noopener">Google Play<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="zaferzone" aria-label="ZaferZone" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">ZaferZone</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--notify is-active" data-screen="zaferzone" style="--brand:#dc2626">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -422,24 +433,31 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.zaferzone.desc">Okul giriş-çıkış ve geç kalma bilgisini velilere anında bildiren, veli, öğrenci, öğretmen ve güvenlik rollerine sahip okul uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li data-i18n="projects.tag.push">Push bildirim</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/zafer-zone/id6808615714" target="_blank" rel="noopener">App Store</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#dc2626">ZZ</span>
+                    <div><h2>ZaferZone</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="nikachat" aria-label="NikaChat" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">NikaChat</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.zaferzone.desc">Okul giriş-çıkış ve geç kalma bilgisini velilere anında bildiren, veli, öğrenci, öğretmen ve güvenlik rollerine sahip okul uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · <span data-i18n="projects.tag.push">Push bildirim</span></li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/zafer-zone/id6808615714" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="nikachat" aria-label="NikaChat" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">NikaChat</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--chat is-active" data-screen="nikachat" style="--brand:#4f46e5">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -455,25 +473,32 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.nikachat.desc">Gerçek zamanlı mesajlaşma ve dosya paylaşımı uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li>SignalR</li><li>WebSocket</li></ul>
-                      <div class="project__links">
-                        <a class="store-link" href="https://apps.apple.com/tr/app/nikachat/id6761252189" target="_blank" rel="noopener">App Store</a>
-                        <a class="store-link" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikachat" target="_blank" rel="noopener">Google Play</a>
-                      </div>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#4f46e5">NC</span>
+                    <div><h2>NikaChat</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="nikaconnect" aria-label="NikaConnect" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">NikaConnect</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.nikachat.desc">Gerçek zamanlı mesajlaşma ve dosya paylaşımı uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · SignalR · WebSocket</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="https://apps.apple.com/tr/app/nikachat/id6761252189" target="_blank" rel="noopener">App Store<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                    <li class="row"><a class="row__link row__link--full" href="https://play.google.com/store/apps/details?id=com.nikateknoloji.nikachat" target="_blank" rel="noopener">Google Play<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="nikaconnect" aria-label="NikaConnect" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">NikaConnect</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--call is-active" data-screen="nikaconnect" style="--brand:#2563eb">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -487,21 +512,28 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.nikaconnect.desc">Mesajlaşma, sesli ve görüntülü görüşmeyi bir arada sunan iletişim uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li>WebRTC</li><li>LiveKit</li></ul>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#2563eb">NX</span>
+                    <div><h2>NikaConnect</h2><p>React Native</p></div>
                   </div>
-                </section>
-                <section class="app app--project" data-app-screen="nikaphone" aria-label="NikaPhone" hidden>
-                  <header class="app__bar">
-                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                    <span class="app__title">NikaPhone</span>
-                  </header>
-                  <div class="app__tabs" role="tablist">
-                    <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                    <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                  </div>
-                  <div class="app__page is-active" data-page="ui">
+                  <p class="ios-note" data-i18n="projects.nikaconnect.desc">Mesajlaşma, sesli ve görüntülü görüşmeyi bir arada sunan iletişim uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · WebRTC · LiveKit</li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="nikaphone" aria-label="NikaPhone" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">NikaPhone</span>
+                </header>
+                <div class="app__tabs" role="tablist">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
+                </div>
+                <div class="app__page is-active" data-page="ui">
                     <div class="app__device phone__screens">
                       <div class="phone__screen screen--dialer is-active" data-screen="nikaphone" style="--brand:#16a34a">
                         <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
@@ -514,12 +546,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="app__page project-app" data-page="info">
-                      <p class="project-app__desc" data-i18n="projects.nikaphone.desc">Asterisk santraline SIP ile bağlanan, native modül tabanlı sesli ve görüntülü görüşme uygulaması.</p>
-                      <ul class="tags"><li>React Native</li><li>Linphone SDK</li><li>Asterisk</li><li>SIP</li></ul>
+                <div class="app__page" data-page="info">
+                  <div class="store-head">
+                    <span class="app-icon__tile" style="--c:#16a34a">NP</span>
+                    <div><h2>NikaPhone</h2><p>React Native</p></div>
                   </div>
-                </section>
-              </div>
+                  <p class="ios-note" data-i18n="projects.nikaphone.desc">Asterisk santraline SIP ile bağlanan, native modül tabanlı sesli ve görüntülü görüşme uygulaması.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Linphone SDK · Asterisk · SIP</li>
+                  </ul>
+                </div>
+              </section>
+            </div>
               <div class="lock" id="lock-screen">
               <svg class="lock__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z"/></svg>
               <p class="lock__date">1 Kasım Pazar</p>
