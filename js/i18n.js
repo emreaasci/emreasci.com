@@ -42,6 +42,7 @@
     'projects.nikachat.desc': 'A real-time messaging and file sharing app.',
     'projects.nikaconnect.desc': 'A communication app combining messaging, voice and video calls.',
     'projects.nikaphone.desc': 'A native-module based voice and video calling app that connects to an Asterisk PBX over SIP.',
+    'projects.waddle.desc': "A weather app that isn't boring: every kind of weather gets its own scene, drawn with Skia and full of effects. Home screen widgets, a morning summary and rain alerts, in 12 languages.",
 
     'skills.mobile': 'Mobile',
     'skills.ui': 'UI and state',
@@ -62,6 +63,7 @@
     'phone.sec.skills': 'Skills',
     'phone.sec.work': 'What I did',
     'phone.sec.stack': 'Tech stack',
+    'phone.privacy': 'Privacy Policy',
     'phone.act.mail': 'email',
     'about.downloads': 'Downloads',
     'about.users': 'Active users',

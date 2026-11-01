@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Waddle — Privacy Policy</title>
+  <meta name="description" content="How the Waddle weather app handles your data.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f6f8fc; --surface: #fff; --text: #0f172a; --muted: #526079;
+      --border: rgba(15, 23, 42, .1); --accent: #0e7490;
+      color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #070a18; --surface: #111831; --text: #e6ebf5; --muted: #9aa6bf; --border: rgba(148, 163, 184, .16); --accent: #22d3ee; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+    .back { color: var(--muted); text-decoration: none; font-size: 15px; }
+    .back:hover { color: var(--text); }
+    .langs { display: flex; gap: 4px; padding: 3px; border-radius: 9px; background: var(--border); }
+    .langs a { padding: 4px 12px; border-radius: 7px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; }
+    .langs a[aria-current="true"] { background: var(--surface); color: var(--text); }
+    .head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+    .head img { width: 64px; height: 64px; border-radius: 15px; }
+    h1 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -0.02em; }
+    .date { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+    h2 { margin: 32px 0 8px; font-size: 19px; letter-spacing: -0.01em; }
+    p, li { color: var(--text); }
+    ul { padding-left: 20px; }
+    li + li { margin-top: 6px; }
+    .summary { padding: 16px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+    .summary ul { margin: 0; }
+    a { color: var(--accent); }
+    section + section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+    html.one section + section { margin-top: 0; padding-top: 0; border-top: 0; }
+    html.one section[hidden] { display: none; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="/">← emreasci.com</a>
+    <nav class="langs" aria-label="Language">
+      <a href="#en" data-lang="en">English</a>
+      <a href="#tr" data-lang="tr">Türkçe</a>
+    </nav>
+  </div>
+
+  <section id="en" lang="en">
+    <div class="head">
+      <img src="/assets/icons/waddle.webp" alt="" width="64" height="64">
+      <h1>Waddle Privacy Policy</h1>
+    </div>
+    <p class="date">Last updated: November 1, 2026</p>
+
+    <p>Waddle is a weather app made by Emre Aşcı, an independent developer. This policy explains what data the app uses, why, and what happens to it.</p>
+
+    <div class="summary">
+      <ul>
+        <li>No account, no sign-in.</li>
+        <li>No ads, no analytics and no tracking tools. Your data is never sold or shared for advertising.</li>
+        <li>Location is used only while you use the app, only approximately, and only to show the weather where you are.</li>
+      </ul>
+    </div>
+
+    <h2>Location</h2>
+    <p>If you allow it, Waddle reads your <strong>approximate</strong> location (reduced accuracy on iOS, coarse location on Android) <strong>only while the app is in use</strong>. It never reads your location in the background. Your device's own system service (from Apple or Google) turns the coordinates into a city name. The coordinates are then sent to Waddle's weather server to get the forecast for that place; they are not stored together with anything that identifies you.</p>
+    <p>You can say no, or turn location access off at any time in your device settings. You can still add cities by searching for them.</p>
+
+    <h2>Weather and city search</h2>
+    <p>To show the weather, the app sends Waddle's server the coordinates of a city, its time zone, its country code and your language. The server gets the forecast from <strong>Apple WeatherKit</strong> and keeps it in a short-lived cache keyed by place, not by person, so the same request is not repeated. When you search for a city, the text you type is sent to the server, which looks it up in <strong>GeoNames</strong>.</p>
+
+    <h2>Notifications (optional)</h2>
+    <p>If you turn on the morning summary or rain alerts and allow notifications, the app sends Waddle's server:</p>
+    <ul>
+      <li>your device's push token from Expo, which lets a notification reach this device,</li>
+      <li>the city the notifications are about (its name, coordinates, time zone and country code),</li>
+      <li>your language, temperature and wind units, 12/24-hour clock, and your notification settings (such as the morning summary time).</li>
+    </ul>
+    <p>This is stored in Waddle's database only to send you those notifications through the <strong>Expo</strong> push service, which delivers them via Apple or Google. It is deleted when you turn notifications off in the app, when the device is no longer registered for notifications (for example after you delete the app), or automatically after 90 days without an update.</p>
+
+    <h2>Data kept on your device</h2>
+    <p>Your saved cities and settings are stored on your device. They are shared with Waddle's home screen widgets on the same device and are not sent anywhere except as described above.</p>
+
+    <h2>Service providers</h2>
+    <ul>
+      <li><strong>Cloudflare</strong> runs Waddle's server. Like any web service, it handles your IP address to deliver requests; Waddle does not store IP addresses in its database.</li>
+      <li><strong>Apple WeatherKit</strong> provides the weather data.</li>
+      <li><strong>GeoNames</strong> provides city search.</li>
+      <li><strong>Expo</strong> delivers notifications.</li>
+    </ul>
+
+    <h2>Children</h2>
+    <p>Waddle is not directed at children under 13 and does not knowingly collect personal information from them.</p>
+
+    <h2>Your choices</h2>
+    <ul>
+      <li>Deny or revoke location access in your device settings.</li>
+      <li>Turn notifications off in the app; the data stored for them is deleted.</li>
+      <li>Delete the app to remove everything stored on your device.</li>
+      <li>Email me with any question or request about your data.</li>
+    </ul>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the new version will be posted on this page with a new date.</p>
+
+    <h2>Contact</h2>
+    <p>Emre Aşcı — <a href="mailto:emreaasci@gmail.com">emreaasci@gmail.com</a></p>
+  </section>
+
+  <section id="tr" lang="tr">
+    <div class="head">
+      <img src="/assets/icons/waddle.webp" alt="" width="64" height="64">
+      <h1>Waddle Gizlilik Politikası</h1>
+    </div>
+    <p class="date">Son güncelleme: 1 Kasım 2026</p>
+
+    <p>Waddle, bağımsız geliştirici Emre Aşcı'nın yaptığı bir hava durumu uygulamasıdır. Bu politika, uygulamanın hangi verileri neden kullandığını ve bu verilere ne olduğunu açıklar.</p>
+
+    <div class="summary">
+      <ul>
+        <li>Hesap yok, giriş yok.</li>
+        <li>Reklam, analiz ya da takip aracı yok. Verilerin satılmaz ve reklam için paylaşılmaz.</li>
+        <li>Konum yalnız uygulamayı kullanırken, yalnız yaklaşık olarak ve yalnız bulunduğun yerin havasını göstermek için kullanılır.</li>
+      </ul>
+    </div>
+
+    <h2>Konum</h2>
+    <p>İzin verirsen Waddle <strong>yaklaşık</strong> konumunu (iOS'ta azaltılmış doğruluk, Android'de yaklaşık konum) <strong>yalnız uygulama kullanılırken</strong> okur. Arka planda konum okumaz. Koordinatları şehir adına cihazının kendi sistem hizmeti (Apple ya da Google) çevirir. Koordinatlar, o yerin hava tahminini almak için Waddle'ın hava sunucusuna gönderilir; seni tanımlayan bir bilgiyle birlikte saklanmaz.</p>
+    <p>İzni vermeyebilir ya da istediğin zaman cihaz ayarlarından kapatabilirsin. Şehirleri arayarak eklemeye yine devam edebilirsin.</p>
+
+    <h2>Hava durumu ve şehir arama</h2>
+    <p>Havayı göstermek için uygulama Waddle sunucusuna şehrin koordinatlarını, saat dilimini, ülke kodunu ve dilini gönderir. Sunucu tahmini <strong>Apple WeatherKit</strong>'ten alır ve aynı istek tekrarlanmasın diye kişiye göre değil yere göre tutulan kısa ömürlü bir önbellekte saklar. Şehir aradığında yazdığın metin sunucuya gönderilir, sunucu da onu <strong>GeoNames</strong>'te arar.</p>
+
+    <h2>Bildirimler (isteğe bağlı)</h2>
+    <p>Sabah özetini ya da yağmur uyarılarını açıp bildirimlere izin verirsen uygulama Waddle sunucusuna şunları gönderir:</p>
+    <ul>
+      <li>cihazının Expo bildirim anahtarı (bildirimin bu cihaza ulaşmasını sağlar),</li>
+      <li>bildirimlerin ilgili olduğu şehir (adı, koordinatları, saat dilimi ve ülke kodu),</li>
+      <li>dilin, sıcaklık ve rüzgâr birimlerin, 12/24 saat biçimi ve bildirim ayarların (ör. sabah özetinin saati).</li>
+    </ul>
+    <p>Bunlar Waddle'ın veritabanında yalnız sana bu bildirimleri <strong>Expo</strong> bildirim hizmetiyle (Apple ya da Google üzerinden) göndermek için saklanır. Uygulamada bildirimleri kapattığında, cihaz artık bildirim almıyorsa (ör. uygulamayı sildiğinde) ya da 90 gün boyunca güncellenmezse otomatik olarak silinir.</p>
+
+    <h2>Cihazında kalan veriler</h2>
+    <p>Kaydettiğin şehirler ve ayarların cihazında saklanır. Aynı cihazdaki Waddle widget'larıyla paylaşılır; yukarıda anlatılanlar dışında hiçbir yere gönderilmez.</p>
+
+    <h2>Hizmet sağlayıcılar</h2>
+    <ul>
+      <li><strong>Cloudflare</strong> Waddle'ın sunucusunu çalıştırır. Her web hizmeti gibi istekleri iletmek için IP adresini işler; Waddle IP adreslerini veritabanında saklamaz.</li>
+      <li><strong>Apple WeatherKit</strong> hava durumu verisini sağlar.</li>
+      <li><strong>GeoNames</strong> şehir aramasını sağlar.</li>
+      <li><strong>Expo</strong> bildirimleri iletir.</li>
+    </ul>
+
+    <h2>Çocuklar</h2>
+    <p>Waddle 13 yaş altındaki çocuklara yönelik değildir ve onlardan bilerek kişisel bilgi toplamaz.</p>
+
+    <h2>Seçeneklerin</h2>
+    <ul>
+      <li>Konum iznini cihaz ayarlarından vermeyebilir ya da geri alabilirsin.</li>
+      <li>Bildirimleri uygulamada kapatabilirsin; onlar için saklanan veriler silinir.</li>
+      <li>Uygulamayı silerek cihazındaki her şeyi kaldırabilirsin.</li>
+      <li>Verilerinle ilgili her soru ya da istek için bana e-posta gönderebilirsin.</li>
+    </ul>
+
+    <h2>Değişiklikler</h2>
+    <p>Bu politika değişirse yeni hali yeni tarihle bu sayfada yayımlanır.</p>
+
+    <h2>İletişim</h2>
+    <p>Emre Aşcı — <a href="mailto:emreaasci@gmail.com">emreaasci@gmail.com</a></p>
+  </section>
+</main>
+<script>
+  // JS varsa tek dil gösterilir: adresteki #tr/#en, yoksa tarayıcı dili. JS yoksa iki dil alt alta görünür.
+  (function () {
+    var root = document.documentElement;
+    var sections = { en: document.getElementById('en'), tr: document.getElementById('tr') };
+    var links = document.querySelectorAll('.langs a');
+    function show(lang) {
+      root.classList.add('one');
+      root.lang = lang;
+      Object.keys(sections).forEach(function (k) { sections[k].hidden = k !== lang; });
+      links.forEach(function (a) { a.setAttribute('aria-current', String(a.dataset.lang === lang)); });
+      document.title = lang === 'tr' ? 'Waddle — Gizlilik Politikası' : 'Waddle — Privacy Policy';
+    }
+    function pick() {
+      var hash = location.hash.slice(1);
+      if (sections[hash]) return hash;
+      return /^tr\b/i.test(navigator.language || '') ? 'tr' : 'en';
+    }
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', '#' + a.dataset.lang); show(a.dataset.lang); window.scrollTo(0, 0); });
+    });
+    window.addEventListener('hashchange', function () { show(pick()); window.scrollTo(0, 0); });
+    show(pick());
+    // #tr ile açılınca tarayıcı bölüme atlar; tek dil gösterildiği için sayfa üstten başlasın
+    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+  })();
+</script>
+</body>
+</html>

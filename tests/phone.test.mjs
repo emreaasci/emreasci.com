@@ -10,7 +10,7 @@ const html = readFileSync(join(root, 'index.html'), 'utf8');
 const APPS = [
   'about', 'experience', 'contact',
   'intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik',
-  'intime-takip', 'zaferzone', 'nikachat', 'nikaconnect', 'nikaphone',
+  'intime-takip', 'zaferzone', 'nikachat', 'nikaconnect', 'nikaphone', 'waddle',
 ];
 const PROJECTS = APPS.slice(3);
 
@@ -37,7 +37,7 @@ test('masa sahnesi: tepeden kare ve telefon arayüzü', () => {
   assert.match(html, /id="phone-ui"/);
 });
 
-test('ana ekranda 12 uygulama ikonu doğru sırada', () => {
+test('ana ekranda tüm uygulama ikonları doğru sırada', () => {
   const home = block('class', 'home__grid');
   const icons = [...home.matchAll(/data-app="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(icons, APPS);
@@ -59,7 +59,7 @@ test('proje uygulamaları doğrudan bilgi sayfası açar', () => {
 
 test('mağazadaki uygulamalar gerçek ikonlarını kullanır', () => {
   const home = block('class', 'home__grid');
-  for (const slug of ['intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik', 'intime-takip', 'zaferzone', 'nikachat']) {
+  for (const slug of ['intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik', 'intime-takip', 'zaferzone', 'nikachat', 'waddle']) {
     const src = `assets/icons/${slug}.webp`;
     assert.ok(existsSync(join(root, src)), `${src} yok`);
     assert.match(block('data-app', slug), new RegExp(`src="${src}"`), `${slug}: ana ekran ikonu gerçek değil`);
@@ -87,9 +87,9 @@ test('eski bölümler kaldırıldı', () => {
   }
 });
 
-test('masa katmanı 12 uygulamayı içerir, üst bar ve başlık dışında kalır', () => {
+test('masa katmanı 13 uygulamayı içerir, üst bar ve başlık dışında kalır', () => {
   const desk = block('id', 'desk-layer');
-  assert.equal([...desk.matchAll(/data-app-screen="/g)].length, 12);
+  assert.equal([...desk.matchAll(/data-app-screen="/g)].length, APPS.length);
   assert.ok(!desk.includes('class="header"'), 'üst bar masanın içine düşmüş');
   assert.ok(!desk.includes('class="hero__copy"'), 'başlık masanın içine düşmüş');
   const hero = block('class', 'hero');
@@ -151,4 +151,16 @@ test('telefon sahnesi bittikten sonra footer hemen gelmez: bekleme payı', () =>
   assert.match(css, /\.story \{[^}]*height:\s*calc\(380svh \+ var\(--hold\)\)/);
   assert.match(css, /\.story__end \{[^}]*height:\s*calc\(100svh \+ var\(--hold\)\)/, '#desk linki beklemenin başına gitmeli');
   assert.match(readFileSync(join(root, 'js/hero.js'), 'utf8'), /hold/, 'ilerleme hesabı beklemeyi düşmüyor');
+});
+
+test('Waddle: Hakkında sayfasında yeni sekmede açılan gizlilik politikası', () => {
+  const app = block('data-app-screen', 'waddle');
+  assert.match(app, /<a[^>]+href="apps\/waddle\/privacy\/"[^>]+target="_blank"/, 'gizlilik linki yeni sekmede açılmıyor');
+  assert.match(app, /data-i18n="phone\.privacy"/);
+  const page = readFileSync(join(root, 'apps/waddle/privacy/index.html'), 'utf8');
+  for (const s of ['lang="en"', 'emreaasci@gmail.com', 'WeatherKit', 'GeoNames', 'Expo', '90']) {
+    assert.ok(page.includes(s), `gizlilik metninde ${s} yok`);
+  }
+  assert.match(page, /id="tr"/, 'Türkçe bölüm yok');
+  assert.match(page, /href="\/"/, 'siteye dönüş linki yok');
 });

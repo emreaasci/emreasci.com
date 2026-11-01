@@ -11,18 +11,18 @@
   <meta property="og:url" content="https://emreasci.com/">
   <meta name="theme-color" content="#0b1020">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=20261101125101">
-  <link rel="stylesheet" href="css/anim.css?v=20261101125101">
-  <link rel="stylesheet" href="css/hero.css?v=20261101125101">
-  <link rel="stylesheet" href="css/phone-ui.css?v=20261101125101">
+  <link rel="stylesheet" href="css/style.css?v=20261101130534">
+  <link rel="stylesheet" href="css/anim.css?v=20261101130534">
+  <link rel="stylesheet" href="css/hero.css?v=20261101130534">
+  <link rel="stylesheet" href="css/phone-ui.css?v=20261101130534">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="js/i18n.js?v=20261101125101" defer></script>
-  <script src="js/main.js?v=20261101125101" defer></script>
-  <script src="js/hero.js?v=20261101125101" defer></script>
-  <script src="js/phone-ui.js?v=20261101125101" defer></script>
+  <script src="js/i18n.js?v=20261101130534" defer></script>
+  <script src="js/main.js?v=20261101130534" defer></script>
+  <script src="js/hero.js?v=20261101130534" defer></script>
+  <script src="js/phone-ui.js?v=20261101130534" defer></script>
 </head>
 <body>
   <main>
@@ -90,6 +90,10 @@
                 <button class="app-icon" type="button" data-app="nikaphone">
                   <span class="app-icon__tile" style="--c:#16a34a">NP</span>
                   <span class="app-icon__label">NikaPhone</span>
+                </button>
+                <button class="app-icon" type="button" data-app="waddle">
+                  <span class="app-icon__tile app-icon__tile--img"><img src="assets/icons/waddle.webp" alt="" width="64" height="64"></span>
+                  <span class="app-icon__label">Waddle</span>
                 </button>
                 </div>
                 <p class="home__hint" data-i18n="phone.hint">Bir uygulamaya dokun</p>
@@ -359,6 +363,26 @@
                   <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
                   <ul class="ios-group">
                     <li class="row row--text">React Native · Linphone SDK · Asterisk · SIP</li>
+                  </ul>
+                </div>
+              </section>
+              <section class="app app--project" data-app-screen="waddle" aria-label="Waddle" hidden>
+                <header class="app__bar">
+                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                  <span class="app__title">Waddle</span>
+                </header>
+                <div class="app__body">
+                  <div class="store-head">
+                    <span class="app-icon__tile app-icon__tile--img"><img src="assets/icons/waddle.webp" alt="" width="64" height="64"></span>
+                    <div><h2>Waddle</h2><p>React Native</p></div>
+                  </div>
+                  <p class="ios-note" data-i18n="projects.waddle.desc">Hava durumunu sıkıcı olmaktan çıkaran bir uygulama: her hava için Skia ile çizilmiş, efektli ayrı bir sahne. Ana ekran widget'ları, sabah özeti ve yağmur bildirimleri; 12 dilde.</p>
+                  <p class="ios-sec" data-i18n="phone.sec.stack">Teknolojiler</p>
+                  <ul class="ios-group">
+                    <li class="row row--text">React Native · Expo · Skia · Reanimated · WeatherKit · Cloudflare Workers</li>
+                  </ul>
+                  <ul class="ios-group">
+                    <li class="row"><a class="row__link row__link--full" href="apps/waddle/privacy/" target="_blank" rel="noopener"><span data-i18n="phone.privacy">Gizlilik Politikası</span><svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
                   </ul>
                 </div>
               </section>

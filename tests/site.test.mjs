@@ -64,7 +64,7 @@ test('repoda telefon numarası ve referans adı yok', () => {
 
 test('Pages yalnız site dosyalarını yayınlar', () => {
   const wf = read('.github/workflows/pages.yml');
-  for (const f of ['index.html', '404.html', 'CNAME', 'css', 'js', 'assets']) assert.ok(wf.includes(f), `${f} kopyalanmıyor`);
+  for (const f of ['index.html', '404.html', 'CNAME', 'css', 'js', 'assets', 'apps']) assert.ok(wf.includes(f), `${f} kopyalanmıyor`);
   assert.ok(wf.includes('path: _site'), 'yalnız _site yüklenmeli');
   assert.ok(!/cp[^\n]*\bdocs\b/.test(wf) && !/cp[^\n]*\btests\b/.test(wf), 'docs/tests yayınlanmamalı');
 });
