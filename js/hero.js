@@ -152,6 +152,7 @@
     const phone = document.getElementById('phone-ui');
     const head = document.getElementById('hero-head');
     const cam = document.getElementById('hero-camera');
+    const end = document.getElementById('desk');
     if (!story || !desk || !frame) return;
     const fading = hero.querySelectorAll('.hero__copy, .hero__caption, .hero__scroll, .hero > .header');
     const fps = 24;
@@ -173,7 +174,9 @@
     function update() {
       queued = false;
       const r = story.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight)));
+      // sonundaki bekleme payı (--hold) ilerlemeye sayılmaz: orada telefon hazır bekler
+      const hold = end ? end.offsetHeight - window.innerHeight : 0;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight - hold)));
       const st = storyState(p, camReady);
       fading.forEach((el) => {
         el.style.opacity = st.copy;

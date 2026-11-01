@@ -1,7 +1,8 @@
 /* Kaydırma hikâyesi: hero sahnesi sabit kalır, kaydırdıkça kamera iner ve masa katmanı gelir. */
-.story { position: relative; height: 380svh; }
+/* --hold: animasyon bittikten sonra telefon bir süre yerinde kalır, footer biraz daha kaydırınca gelir */
+.story { --hold: 80svh; position: relative; height: calc(380svh + var(--hold)); }
 .story > .hero { position: sticky; top: 0; }
-.story__end { position: absolute; left: 0; bottom: 0; width: 1px; height: 100svh; pointer-events: none; }
+.story__end { position: absolute; left: 0; bottom: 0; width: 1px; height: calc(100svh + var(--hold)); pointer-events: none; }
 
 /* Masa katmanı: tepeden kare, telefona yakınlaşmış halde yerleşir (telefon ekran yüksekliğinin ~%88'i).
    Yakınlaşma öncesi tam kare görünümü JS'in transform'uyla verilir; düzen hep aynı kalır. */

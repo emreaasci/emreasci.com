@@ -144,3 +144,11 @@ test('duvar kağıdı: kilit ve ana ekran aynı görseli kullanır, kilitte bild
   assert.ok(uses.length >= 1, 'duvar kağıdı CSS\'te kullanılmıyor');
   assert.ok(!block('id', 'lock-screen').includes('class="note"'), 'kilitte eski bildirimler kalmış');
 });
+
+test('telefon sahnesi bittikten sonra footer hemen gelmez: bekleme payı', () => {
+  const css = readFileSync(join(root, 'css/phone-ui.css'), 'utf8');
+  assert.match(css, /\.story \{[^}]*--hold:\s*\d+svh/, '.story için --hold yok');
+  assert.match(css, /\.story \{[^}]*height:\s*calc\(380svh \+ var\(--hold\)\)/);
+  assert.match(css, /\.story__end \{[^}]*height:\s*calc\(100svh \+ var\(--hold\)\)/, '#desk linki beklemenin başına gitmeli');
+  assert.match(readFileSync(join(root, 'js/hero.js'), 'utf8'), /hold/, 'ilerleme hesabı beklemeyi düşmüyor');
+});
