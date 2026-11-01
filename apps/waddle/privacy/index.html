@@ -7,41 +7,25 @@
   <meta name="description" content="How the Waddle weather app handles your data.">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --bg: #f6f8fc; --surface: #fff; --text: #0f172a; --muted: #526079;
-      --border: rgba(15, 23, 42, .1); --accent: #0e7490;
-      color-scheme: light dark;
-    }
+    :root { color-scheme: light dark; --text: #1a1a1a; --muted: #6b6b6b; --line: #e2e2e2; --bg: #fff; --link: #1a0dab; }
     @media (prefers-color-scheme: dark) {
-      :root { --bg: #070a18; --surface: #111831; --text: #e6ebf5; --muted: #9aa6bf; --border: rgba(148, 163, 184, .16); --accent: #22d3ee; }
+      :root { --text: #e8e8e8; --muted: #9a9a9a; --line: #333; --bg: #121212; --link: #8ab4f8; }
     }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
-    main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
-    .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
-    .back { color: var(--muted); text-decoration: none; font-size: 15px; }
-    .back:hover { color: var(--text); }
-    .langs { display: flex; gap: 4px; padding: 3px; border-radius: 9px; background: var(--border); }
-    .langs a { padding: 4px 12px; border-radius: 7px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; }
-    .langs a[aria-current="true"] { background: var(--surface); color: var(--text); }
-    .head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-    .head img { width: 64px; height: 64px; border-radius: 15px; }
-    h1 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -0.02em; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 680px; margin: 0 auto; padding: 24px 16px 64px; }
+    .top { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); }
+    .top a { color: var(--muted); }
+    .langs a[aria-current="true"] { color: var(--text); text-decoration: none; font-weight: 600; }
+    h1 { margin: 32px 0 4px; font-size: 26px; line-height: 1.25; }
     .date { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
-    h2 { margin: 32px 0 8px; font-size: 19px; letter-spacing: -0.01em; }
-    p, li { color: var(--text); }
-    ul { padding-left: 20px; }
-    li + li { margin-top: 6px; }
-    .summary { padding: 16px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
-    .summary ul { margin: 0; }
-    a { color: var(--accent); }
-    section + section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
-    h3 { margin: 22px 0 6px; font-size: 16px; }
-    .table { overflow-x: auto; margin: 12px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
-    table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.5; }
-    th, td { padding: 10px 12px; text-align: left; vertical-align: top; }
-    th { color: var(--muted); font-weight: 600; font-size: 13px; }
-    tr + tr td, thead + tbody tr:first-child td { border-top: 1px solid var(--border); }
+    h2 { margin: 32px 0 8px; font-size: 19px; }
+    h3 { margin: 20px 0 4px; font-size: 16px; }
+    ul { padding-left: 22px; }
+    a { color: var(--link); }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14.5px; line-height: 1.45; }
+    th, td { padding: 8px 10px 8px 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { font-weight: 600; }
+    section + section { margin-top: 48px; padding-top: 8px; border-top: 1px solid var(--line); }
     html.one section + section { margin-top: 0; padding-top: 0; border-top: 0; }
     html.one section[hidden] { display: none; }
   </style>
@@ -49,26 +33,21 @@
 <body>
 <main>
   <div class="top">
-    <a class="back" href="/">← emreasci.com</a>
+    <a href="/">emreasci.com</a>
     <nav class="langs" aria-label="Language">
-      <a href="#en" data-lang="en">English</a>
+      <a href="#en" data-lang="en">English</a> ·
       <a href="#tr" data-lang="tr">Türkçe</a>
     </nav>
   </div>
 
   <section id="en" lang="en">
-    <div class="head">
-      <img src="/assets/icons/waddle.webp" alt="" width="64" height="64">
-      <h1>Waddle Privacy Policy</h1>
-    </div>
+    <h1>Waddle Privacy Policy</h1>
     <p class="date">Effective date: 1 November 2026</p>
 
     <p>This policy explains what information the Waddle weather app (iOS and Android) uses, where that information goes, how long it is kept, and what you can do about it.</p>
 
-    <div class="summary">
-      <p><strong>In short:</strong></p>
-      <ul><li>Waddle has no accounts. We never ask for your name, email address or phone number.</li><li>We use no advertising, no analytics tools and no tracking. We do not sell your data or share it with anyone for marketing.</li><li>Your location is used only while the app is open, only approximately, and only to show you the weather.</li><li>If you turn notifications on, our server keeps a notification address and a single city. Turning notifications off deletes that record at once.</li></ul>
-    </div>
+    <p>In short:</p>
+    <ul><li>Waddle has no accounts. We never ask for your name, email address or phone number.</li><li>We use no advertising, no analytics tools and no tracking. We do not sell your data or share it with anyone for marketing.</li><li>Your location is used only while the app is open, only approximately, and only to show you the weather.</li><li>If you turn notifications on, our server keeps a notification address and a single city. Turning notifications off deletes that record at once.</li></ul>
 
     <h2>1. Who is responsible, and how to reach us</h2>
     <p>Waddle is developed and published by independent developer Emre Aşcı (“we” in this policy).</p>
@@ -112,7 +91,7 @@
 
     <h2>4. Service providers the information goes to</h2>
     <p>The app relies on the following services. Each receives only what its own job needs:</p>
-    <div class="table"><table><thead><tr><th>Service</th><th>What for</th><th>What it receives</th></tr></thead><tbody><tr><td>Cloudflare (Workers, D1)</td><td>The infrastructure our server and database run on</td><td>The requests and records described in this policy; IP address</td></tr><tr><td>Apple WeatherKit</td><td>Weather data</td><td>Coordinates rounded to about 5 km, language, country code (from our server)</td></tr><tr><td>GeoNames</td><td>City search</td><td>The search text (from our server)</td></tr><tr><td>Expo (650 Industries, Inc.)</td><td>Sending notifications</td><td>Notification address and notification text</td></tr><tr><td>Apple Push Notification service</td><td>Delivering the notification to your iPhone</td><td>Notification address and notification text</td></tr></tbody></table></div>
+    <table><thead><tr><th>Service</th><th>What for</th><th>What it receives</th></tr></thead><tbody><tr><td>Cloudflare (Workers, D1)</td><td>The infrastructure our server and database run on</td><td>The requests and records described in this policy; IP address</td></tr><tr><td>Apple WeatherKit</td><td>Weather data</td><td>Coordinates rounded to about 5 km, language, country code (from our server)</td></tr><tr><td>GeoNames</td><td>City search</td><td>The search text (from our server)</td></tr><tr><td>Expo (650 Industries, Inc.)</td><td>Sending notifications</td><td>Notification address and notification text</td></tr><tr><td>Apple Push Notification service</td><td>Delivering the notification to your iPhone</td><td>Notification address and notification text</td></tr></tbody></table>
     <p>These services may run on servers outside your country, for example in the United States or the European Union, so your information may be transferred abroad. Their own policies:</p>
     <ul><li>Apple: <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">https://www.apple.com/legal/privacy/</a></li><li>Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">https://www.cloudflare.com/privacypolicy/</a></li><li>Expo: <a href="https://expo.dev/privacy" target="_blank" rel="noopener">https://expo.dev/privacy</a></li></ul>
     <p>The “details” links in weather alerts and the Apple Weather data-source link open other websites in your browser. Those sites have their own privacy policies.</p>
@@ -121,7 +100,7 @@
     <ul><li><strong>Location:</strong> Used only with your explicit permission and consent, which you can withdraw at any time.</li><li><strong>Notification record:</strong> Used to provide the service you asked for by turning notifications on. Turning notifications off deletes it.</li><li><strong>Weather and search requests, IP address:</strong> Needed for the app to work and to protect the service against abuse (legitimate interest).</li></ul>
 
     <h2>6. How long information is kept (summary)</h2>
-    <div class="table"><table><thead><tr><th>Information</th><th>Where</th><th>How long</th></tr></thead><tbody><tr><td>Cities, settings, weather</td><td>Your phone</td><td>Until you delete them or remove the app</td></tr><tr><td>Weather answer (tied to an area)</td><td>Server</td><td>1 hour</td></tr><tr><td>City search result</td><td>Server</td><td>7 days</td></tr><tr><td>Notification record</td><td>Server</td><td>Until you turn notifications off; at most 90 days without an update</td></tr><tr><td>IP address</td><td>Server</td><td>Not stored; used only in the moment</td></tr></tbody></table></div>
+    <table><thead><tr><th>Information</th><th>Where</th><th>How long</th></tr></thead><tbody><tr><td>Cities, settings, weather</td><td>Your phone</td><td>Until you delete them or remove the app</td></tr><tr><td>Weather answer (tied to an area)</td><td>Server</td><td>1 hour</td></tr><tr><td>City search result</td><td>Server</td><td>7 days</td></tr><tr><td>Notification record</td><td>Server</td><td>Until you turn notifications off; at most 90 days without an update</td></tr><tr><td>IP address</td><td>Server</td><td>Not stored; used only in the moment</td></tr></tbody></table>
 
     <h2>7. Your rights</h2>
     <p>Depending on where you live, the law gives you rights. Examples are Turkey’s Law No. 6698 (KVKK), the GDPR in Europe and the CCPA/CPRA in California. These rights include:</p>
@@ -141,18 +120,13 @@
   </section>
 
   <section id="tr" lang="tr">
-    <div class="head">
-      <img src="/assets/icons/waddle.webp" alt="" width="64" height="64">
-      <h1>Waddle Gizlilik Politikası</h1>
-    </div>
+    <h1>Waddle Gizlilik Politikası</h1>
     <p class="date">Yürürlük tarihi: 1 Kasım 2026</p>
 
     <p>Bu politika, Waddle hava durumu uygulamasının (iOS ve Android) hangi bilgileri kullandığını, bu bilgilerin nereye gittiğini, ne kadar süre tutulduğunu ve bu konuda neler yapabileceğinizi anlatır.</p>
 
-    <div class="summary">
-      <p><strong>Kısaca:</strong></p>
-      <ul><li>Waddle’da hesap yok. Adınızı, e-postanızı ya da telefon numaranızı hiçbir zaman istemeyiz.</li><li>Reklam, analiz aracı ya da izleme (tracking) kullanmayız. Verilerinizi satmayız ve kimseyle pazarlama amacıyla paylaşmayız.</li><li>Konumunuz yalnızca uygulama açıkken ve yaklaşık olarak kullanılır. Yalnızca hava durumunu göstermek için kullanılır.</li><li>Bildirimleri açarsanız sunucumuz bir bildirim adresi ve tek bir şehir saklar. Bildirimleri kapattığınızda bu kayıt hemen silinir.</li></ul>
-    </div>
+    <p>Kısaca:</p>
+    <ul><li>Waddle’da hesap yok. Adınızı, e-postanızı ya da telefon numaranızı hiçbir zaman istemeyiz.</li><li>Reklam, analiz aracı ya da izleme (tracking) kullanmayız. Verilerinizi satmayız ve kimseyle pazarlama amacıyla paylaşmayız.</li><li>Konumunuz yalnızca uygulama açıkken ve yaklaşık olarak kullanılır. Yalnızca hava durumunu göstermek için kullanılır.</li><li>Bildirimleri açarsanız sunucumuz bir bildirim adresi ve tek bir şehir saklar. Bildirimleri kapattığınızda bu kayıt hemen silinir.</li></ul>
 
     <h2>1. Sorumlu kişi ve iletişim</h2>
     <p>Waddle’ı bağımsız geliştirici Emre Aşcı geliştirir ve yayınlar. Bu politikada “biz” dendiğinde o kastedilir.</p>
@@ -196,7 +170,7 @@
 
     <h2>4. Bilgilerin gittiği hizmet sağlayıcılar</h2>
     <p>Uygulamanın çalışması için şu hizmetleri kullanıyoruz. Her biri yalnızca kendi işi için gereken bilgiyi alır:</p>
-    <div class="table"><table><thead><tr><th>Hizmet</th><th>Ne için</th><th>Aldığı bilgi</th></tr></thead><tbody><tr><td>Cloudflare (Workers, D1)</td><td>Sunucumuzun ve veritabanımızın çalıştığı altyapı</td><td>Bu politikada anlatılan istekler ve kayıtlar, IP adresi</td></tr><tr><td>Apple WeatherKit</td><td>Hava durumu verisi</td><td>Yaklaşık 5 km’ye yuvarlanmış koordinatlar, dil, ülke kodu (sunucumuzdan)</td></tr><tr><td>GeoNames</td><td>Şehir araması</td><td>Arama metni (sunucumuzdan)</td></tr><tr><td>Expo (650 Industries, Inc.)</td><td>Bildirimlerin gönderilmesi</td><td>Bildirim adresi ve bildirim metni</td></tr><tr><td>Apple Push Notification service</td><td>Bildirimin iPhone’a ulaştırılması</td><td>Bildirim adresi ve bildirim metni</td></tr></tbody></table></div>
+    <table><thead><tr><th>Hizmet</th><th>Ne için</th><th>Aldığı bilgi</th></tr></thead><tbody><tr><td>Cloudflare (Workers, D1)</td><td>Sunucumuzun ve veritabanımızın çalıştığı altyapı</td><td>Bu politikada anlatılan istekler ve kayıtlar, IP adresi</td></tr><tr><td>Apple WeatherKit</td><td>Hava durumu verisi</td><td>Yaklaşık 5 km’ye yuvarlanmış koordinatlar, dil, ülke kodu (sunucumuzdan)</td></tr><tr><td>GeoNames</td><td>Şehir araması</td><td>Arama metni (sunucumuzdan)</td></tr><tr><td>Expo (650 Industries, Inc.)</td><td>Bildirimlerin gönderilmesi</td><td>Bildirim adresi ve bildirim metni</td></tr><tr><td>Apple Push Notification service</td><td>Bildirimin iPhone’a ulaştırılması</td><td>Bildirim adresi ve bildirim metni</td></tr></tbody></table>
     <p>Bu hizmetlerin sunucuları Türkiye dışında, örneğin ABD’de ya da Avrupa Birliği’nde bulunabilir. Bilgileriniz bu nedenle yurt dışına aktarılabilir. Kendi politikaları:</p>
     <ul><li>Apple: <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">https://www.apple.com/legal/privacy/</a></li><li>Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">https://www.cloudflare.com/privacypolicy/</a></li><li>Expo: <a href="https://expo.dev/privacy" target="_blank" rel="noopener">https://expo.dev/privacy</a></li></ul>
     <p>Hava durumu uyarılarındaki “ayrıntılar” bağlantıları ve Apple Hava Durumu veri kaynağı bağlantısı tarayıcınızda başka sitelerde açılır. O siteler kendi gizlilik politikalarına tabidir.</p>
@@ -205,7 +179,7 @@
     <ul><li><strong>Konum:</strong> Yalnızca açık izninize ve rızanıza dayanarak kullanılır. İzni istediğiniz zaman geri alabilirsiniz.</li><li><strong>Bildirim kaydı:</strong> Bildirimleri açarak istediğiniz hizmeti sunmak için kullanılır. Bildirimleri kapattığınızda kayıt silinir.</li><li><strong>Hava durumu ve arama istekleri, IP adresi:</strong> Uygulamanın çalışması ve hizmetin kötüye kullanılmaya karşı korunması için gereklidir (meşru menfaat).</li></ul>
 
     <h2>6. Saklama süreleri (özet)</h2>
-    <div class="table"><table><thead><tr><th>Bilgi</th><th>Nerede</th><th>Ne kadar</th></tr></thead><tbody><tr><td>Şehirler, ayarlar, hava durumu</td><td>Telefonunuz</td><td>Siz silene ya da uygulamayı kaldırana kadar</td></tr><tr><td>Hava durumu yanıtı (bölgeye bağlı)</td><td>Sunucu</td><td>1 saat</td></tr><tr><td>Şehir araması sonucu</td><td>Sunucu</td><td>7 gün</td></tr><tr><td>Bildirim kaydı</td><td>Sunucu</td><td>Bildirimleri kapatana kadar, en fazla 90 gün güncellenmeden</td></tr><tr><td>IP adresi</td><td>Sunucu</td><td>Saklanmaz, yalnızca anlık kullanılır</td></tr></tbody></table></div>
+    <table><thead><tr><th>Bilgi</th><th>Nerede</th><th>Ne kadar</th></tr></thead><tbody><tr><td>Şehirler, ayarlar, hava durumu</td><td>Telefonunuz</td><td>Siz silene ya da uygulamayı kaldırana kadar</td></tr><tr><td>Hava durumu yanıtı (bölgeye bağlı)</td><td>Sunucu</td><td>1 saat</td></tr><tr><td>Şehir araması sonucu</td><td>Sunucu</td><td>7 gün</td></tr><tr><td>Bildirim kaydı</td><td>Sunucu</td><td>Bildirimleri kapatana kadar, en fazla 90 gün güncellenmeden</td></tr><tr><td>IP adresi</td><td>Sunucu</td><td>Saklanmaz, yalnızca anlık kullanılır</td></tr></tbody></table>
 
     <h2>7. Haklarınız</h2>
     <p>Bulunduğunuz ülkenin yasaları size bazı haklar tanır. Örneğin Türkiye’de 6698 sayılı KVKK, Avrupa’da GDPR, ABD’de Kaliforniya’nın CCPA/CPRA yasası. Bu haklar şunları kapsar:</p>
