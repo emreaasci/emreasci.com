@@ -235,7 +235,7 @@
 
 /* Kişi kartı (Hakkımda, İletişim) */
 .contact-card { text-align: center; padding: 18px 0 14px; }
-.contact-card__avatar { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 10px; background: #2c2c2e; object-fit: cover; }
+.contact-card__avatar { width: 128px; height: 128px; border-radius: 50%; margin: 0 auto 10px; background: #2c2c2e; object-fit: cover; }
 .contact-card__name { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
 .contact-card__sub { margin: 2px 20px 0; font-size: 15px; color: #8e8e93; }
 .ios-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 18px; }
