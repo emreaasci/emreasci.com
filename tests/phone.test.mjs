@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 
@@ -51,9 +51,22 @@ test('her ikonun bir uygulama ekranı var', () => {
 test('proje uygulamaları: arayüz ve bilgi sayfası', () => {
   for (const slug of PROJECTS) {
     const app = block('data-app-screen', slug);
-    assert.match(app, new RegExp(`data-screen="${slug}"`), `${slug}: stilize arayüz yok`);
+    const shots = app.includes('data-shots');
+    assert.ok(shots || app.includes(`data-screen="${slug}"`), `${slug}: ne gerçek ekran ne stilize arayüz var`);
     assert.match(app, new RegExp(`data-i18n="projects\\.${slug}\\.desc"`), `${slug}: açıklama yok`);
   }
+});
+
+test('gerçek ekranlı uygulamalar: görseller var, her görsele bir nokta, ayrıca bilgi sayfası', () => {
+  const app = block('data-app-screen', 'adilpazar');
+  const imgs = [...app.matchAll(/<img class="shots__slide" src="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(imgs.length, 5);
+  for (const src of imgs) assert.ok(existsSync(join(root, src)), `${src} yok`);
+  const dots = block('class', 'shots__dots');
+  assert.equal([...app.matchAll(/class="shots__slide/g)].length, [...app.slice(app.indexOf('shots__dots')).matchAll(/<button/g)].length);
+  assert.match(app, /class="shots__slide shots__info/);
+  assert.match(app, /data-close-app/, 'geri düğmesi yok');
+  assert.ok(dots);
 });
 
 test('hakkımda: rakamlar ve avatar', () => {

@@ -381,3 +381,70 @@
   .app-icon__tile { transition: none; }
   .lock__unlock { animation: none; }
 }
+
+/* Gerçek ekran görüntülü uygulamalar: tam ekran, yana kaydırmalı; son sayfa uygulama bilgisi */
+.phone-ui.is-fullscreen-app .phone-ui__status { opacity: 0; }
+.phone-ui.is-fullscreen-app .phone-ui__homebar { background: transparent; }
+.app--shots { background: #fff; }
+.shots {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.shots::-webkit-scrollbar { display: none; }
+.shots__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+img.shots__slide { display: block; object-fit: cover; object-position: top center; cursor: pointer; -webkit-user-drag: none; }
+.shots__info { overflow-y: auto; padding-top: 60px !important; background: #000; }
+.app__back--float {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  left: 16px;
+  padding: 4px 10px 4px 4px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, .38);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 600;
+}
+.app__back--float svg { width: 18px; height: 18px; }
+.shots__dots {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, .38);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+}
+.shots__dots button { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .45); cursor: pointer; }
+.shots__dots button.is-active { background: #fff; }
+.shots__dots .shots__dot-info {
+  display: grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  font: italic 700 10px/1 Georgia, serif !important;
+  color: #000 !important;
+}
+.phone-ui__homebar { pointer-events: none; }
+.phone-ui.has-app .phone-ui__homebar { pointer-events: auto; cursor: pointer; touch-action: none; }
+.phone-ui__homebar::before { content: ""; position: absolute; inset: -16px -24px -9px; }

@@ -11,18 +11,18 @@
   <meta property="og:url" content="https://emreasci.com/">
   <meta name="theme-color" content="#0b1020">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=20261101120830">
-  <link rel="stylesheet" href="css/anim.css?v=20261101120830">
-  <link rel="stylesheet" href="css/hero.css?v=20261101120830">
-  <link rel="stylesheet" href="css/phone-ui.css?v=20261101120830">
+  <link rel="stylesheet" href="css/style.css?v=20261101121735">
+  <link rel="stylesheet" href="css/anim.css?v=20261101121735">
+  <link rel="stylesheet" href="css/hero.css?v=20261101121735">
+  <link rel="stylesheet" href="css/phone-ui.css?v=20261101121735">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="js/i18n.js?v=20261101120830" defer></script>
-  <script src="js/main.js?v=20261101120830" defer></script>
-  <script src="js/hero.js?v=20261101120830" defer></script>
-  <script src="js/phone-ui.js?v=20261101120830" defer></script>
+  <script src="js/i18n.js?v=20261101121735" defer></script>
+  <script src="js/main.js?v=20261101121735" defer></script>
+  <script src="js/hero.js?v=20261101121735" defer></script>
+  <script src="js/phone-ui.js?v=20261101121735" defer></script>
 </head>
 <body>
   <main>
@@ -229,33 +229,15 @@
                   </ul>
                 </div>
               </section>
-              <section class="app app--project" data-app-screen="adilpazar" aria-label="AdilPazar" hidden>
-                <header class="app__bar">
-                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                  <span class="app__title">AdilPazar</span>
-                </header>
-                <div class="app__tabs" role="tablist">
-                  <button class="is-active" type="button" role="tab" aria-selected="true" data-tab="ui" data-i18n="phone.tab.app">Uygulama</button>
-                  <button type="button" role="tab" aria-selected="false" data-tab="info" data-i18n="phone.tab.info">Hakkında</button>
-                </div>
-                <div class="app__page is-active" data-page="ui">
-                    <div class="app__device phone__screens">
-                      <div class="phone__screen screen--shop is-active" data-screen="adilpazar" style="--brand:#ea580c">
-                        <div class="ui-status"><span>9:41</span><span class="ui-status__icons"></span></div>
-                        <div class="ui-bar"><span class="ui-bar__title">AdilPazar</span><span class="ui-cart"><b>3</b></span></div>
-                        <div class="ui-search"></div>
-                        <div class="ui-banner"><strong>%30</strong><span>indirim</span></div>
-                        <div class="ui-products">
-                          <div class="ui-product"><i></i><b></b><span>₺129</span></div>
-                          <div class="ui-product"><i style="--h:30"></i><b></b><span>₺89</span></div>
-                          <div class="ui-product"><i style="--h:200"></i><b></b><span>₺349</span></div>
-                          <div class="ui-product"><i style="--h:150"></i><b></b><span>₺59</span></div>
-                        </div>
-                        <div class="ui-tabbar"><i class="on"></i><i></i><i></i><i></i></div>
-                      </div>
-                    </div>
-                  </div>
-                <div class="app__page" data-page="info">
+              <section class="app app--project app--shots" data-app-screen="adilpazar" aria-label="AdilPazar" hidden>
+                <button class="app__back app__back--float" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                <div class="shots" data-shots>
+                  <img class="shots__slide" src="assets/apps/adilpazar/1.webp" alt="AdilPazar ekranı 1" width="780" height="1695" loading="lazy" decoding="async">
+                  <img class="shots__slide" src="assets/apps/adilpazar/2.webp" alt="AdilPazar ekranı 2" width="780" height="1695" loading="lazy" decoding="async">
+                  <img class="shots__slide" src="assets/apps/adilpazar/3.webp" alt="AdilPazar ekranı 3" width="780" height="1695" loading="lazy" decoding="async">
+                  <img class="shots__slide" src="assets/apps/adilpazar/4.webp" alt="AdilPazar ekranı 4" width="780" height="1695" loading="lazy" decoding="async">
+                  <img class="shots__slide" src="assets/apps/adilpazar/5.webp" alt="AdilPazar ekranı 5" width="780" height="1695" loading="lazy" decoding="async">
+                  <div class="shots__slide shots__info app__body">
                   <div class="store-head">
                     <span class="app-icon__tile" style="--c:#ea580c">AP</span>
                     <div><h2>AdilPazar</h2><p>React Native</p></div>
@@ -274,6 +256,8 @@
                     <li class="row"><a class="row__link row__link--full" href="https://play.google.com/store/apps/details?id=com.adilpazar.adilpazarapp" target="_blank" rel="noopener">Google Play<svg class="row__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>
                   </ul>
                 </div>
+                </div>
+                <div class="shots__dots"><button type="button" aria-label="1" class="is-active"></button><button type="button" aria-label="2"></button><button type="button" aria-label="3"></button><button type="button" aria-label="4"></button><button type="button" aria-label="5"></button><button type="button" class="shots__dot-info" aria-label="Info">i</button></div>
               </section>
               <section class="app app--project" data-app-screen="yeni-nesil-ik" aria-label="Yeni Nesil İK" hidden>
                 <header class="app__bar">
