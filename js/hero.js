@@ -69,39 +69,59 @@
     if (finePointer) initCursor(hero, reducedMotion);
   });
 
-  // Klip blob olarak alınır; böylece her atlama ağ beklemeden anında olur.
-  // Safari preload="none" ile blob kaynağı askıya alır, bu yüzden "auto" şart.
-  function loadVideo(src) {
-    const video = document.createElement('video');
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = 'auto';
-    video.setAttribute('aria-hidden', 'true');
-    fetch(src)
-      .then((r) => (r.ok ? r.blob() : Promise.reject(r.status)))
-      .then((blob) => { video.src = URL.createObjectURL(blob); })
-      .catch(() => { video.src = src; });
-    return video;
+  // Kafa ve kamera kareleri tek dosyada paketlenmiş WebP olarak gelir, resim olarak çözülüp canvas'a
+  // çizilir. Video kullanılmaz: Safari duraklatılmış videoda kare atlamayı askıya alıp (özellikle
+  // sekmeye/uygulamaya geri dönünce) animasyonu donduruyordu.
+  function loadFrames(url) {
+    // Meta dosyası küçük; her açılışta doğrulanır ki önbellekte kalan eski sürüm olmayan dosyayı istemesin
+    return fetch(url, { cache: 'no-cache' })
+      .then((r) => r.json())
+      .then((meta) => fetch(meta.src)
+        .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)))
+        .then((buf) => {
+          let at = 0;
+          const images = meta.sizes.map((size) => {
+            const img = new Image();
+            img.src = URL.createObjectURL(new Blob([buf.slice(at, at + size)], { type: 'image/webp' }));
+            at += size;
+            return img;
+          });
+          return { meta, images };
+        }));
+  }
+
+  // i. kareyi canvas'a çizen fonksiyon döndürür; kare henüz çözülmediyse bir öncekinde kalır
+  function frameDrawer(canvas, images, onFirst) {
+    const ctx = canvas.getContext('2d');
+    let drawn = -1;
+    return (i) => {
+      const img = images[i];
+      if (i === drawn || !img.complete || !img.naturalWidth) return;
+      if (drawn < 0) {
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        if (onFirst) onFirst();
+      }
+      ctx.drawImage(img, 0, 0);
+      drawn = i;
+    };
   }
 
   function initHead(hero) {
     const box = document.getElementById('hero-head');
     if (!box) return;
 
-    fetch(box.dataset.look)
-      .then((r) => r.json())
-      .then((look) => {
-        const video = loadVideo(look.src);
-        video.className = 'hero__row hero__row--mid';
-        box.appendChild(video);
-        video.addEventListener('seeked', () => video.classList.add('is-ready'), { once: true });
-        video.addEventListener('loadedmetadata', () => { video.currentTime = 0.25 / look.fps; });
-        run(hero, box, video, look);
+    loadFrames(box.dataset.look)
+      .then(({ meta, images }) => {
+        const canvas = document.createElement('canvas');
+        canvas.className = 'hero__row hero__row--mid';
+        box.appendChild(canvas);
+        run(hero, box, frameDrawer(canvas, images, () => canvas.classList.add('is-ready')), meta);
       })
       .catch(() => {});
   }
 
-  function run(hero, box, video, { fps, frames, front, anchors }) {
+  function run(hero, box, draw, { frames, front, anchors }) {
     let target = front, shown = front, response = 1;
     let lastMove = performance.now(), enteredFace = 0;
     let pointerInside = false; // fare sahnedeyken (dursa bile) kafa kendi kendine bakınmaz
@@ -124,10 +144,14 @@
       lastMove = now;
       pointerInside = true;
     });
-    hero.addEventListener('pointerleave', () => {
+    const leave = () => {
       pointerInside = false;
       lastMove = performance.now();
-    });
+    };
+    hero.addEventListener('pointerleave', leave);
+    // Sekme ya da uygulama değişince pointerleave gelmez; yoksa kafa son yöne bakıp donar
+    document.addEventListener('visibilitychange', leave);
+    global.addEventListener('blur', leave);
 
     const tick = (now) => {
       if (enteredFace && now - enteredFace > 400) target = front;
@@ -136,15 +160,14 @@
       const goal = idle ? angleToFrame(anchors, 90 + Math.sin((now - lastMove) / 1800) * 80) : target;
       // En fazla ~1.4 kare/kare: yarım tur yaklaşık 1 saniye, asla zıplamaz
       shown = loopStep(shown, goal, frames, 0.1 * (idle ? 1 : response), 1.4);
-      const t = (Math.round(shown) % frames + 0.25) / fps;
-      if (video.duration && !video.seeking && Math.abs(video.currentTime - t) > 1 / (fps * 2)) video.currentTime = t;
+      draw(Math.round(shown) % frames);
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }
 
-  // Kaydırma hikâyesi: kamera videosu kaydırmayla karelenir (oynatılmaz), sonra masa katmanı gelir
-  // ve telefona yakınlaşılır. Video yoksa ya da hareket azaltılmışsa masa çapraz geçişle gelir.
+  // Kaydırma hikâyesi: kamera kareleri kaydırmayla çizilir, sonra masa katmanı gelir ve telefona
+  // yakınlaşılır. Kareler yoksa ya da hareket azaltılmışsa masa çapraz geçişle gelir.
   function initStory(hero, reducedMotion) {
     const story = document.getElementById('story');
     const desk = document.getElementById('desk-layer');
@@ -155,21 +178,15 @@
     const end = document.getElementById('desk');
     if (!story || !desk || !frame) return;
     const fading = hero.querySelectorAll('.hero__copy, .hero__caption, .hero__scroll, .hero > .header');
-    const fps = 24;
-    let camReady = false;
+    let drawCam = null, camFrames = 0;
 
     if (cam && !reducedMotion) {
-      fetch(cam.dataset.src, { method: 'HEAD' })
-        .then((r) => {
-          if (!r.ok) return;
-          const v = loadVideo(cam.dataset.src);
-          v.addEventListener('loadedmetadata', () => { cam.src = v.src; });
-          cam.addEventListener('loadeddata', () => { camReady = true; update(); }, { once: true });
-          // iOS Safari oynatılmamış videonun yalnızca meta verisini yükler; kısa bir oynat-durdur kareleri getirir
-          cam.addEventListener('loadedmetadata', () => {
-            if (cam.readyState < 2) cam.play().then(() => cam.pause()).catch(() => {});
-          }, { once: true });
-          cam.addEventListener('seeked', () => update());
+      loadFrames(cam.dataset.frames)
+        .then(({ images }) => {
+          const draw = frameDrawer(cam, images);
+          // Kaydırmanın istediği kare sonradan çözülürse yeniden çizilir
+          images.forEach((img) => img.addEventListener('load', queue, { once: true }));
+          images[0].addEventListener('load', () => { drawCam = draw; camFrames = images.length; update(); }, { once: true });
         })
         .catch(() => {});
     }
@@ -181,17 +198,16 @@
       // sonundaki bekleme payı (--hold) ilerlemeye sayılmaz: orada telefon hazır bekler
       const hold = end ? end.offsetHeight - window.innerHeight : 0;
       const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight - hold)));
-      const st = storyState(p, camReady);
+      const st = storyState(p, !!drawCam);
       fading.forEach((el) => {
         el.style.opacity = st.copy;
         // Tamamen solmuş üst bar ve yazılar altındaki telefonun tıklamalarını yutmasın
         el.style.visibility = st.copy > 0.01 ? '' : 'hidden';
       });
       if (head) head.style.opacity = st.head;
-      if (camReady) {
+      if (drawCam) {
         cam.style.opacity = p > 0.005 && st.desk < 1 ? '1' : '0';
-        const t = st.camera * (cam.duration - 1 / fps);
-        if (!cam.seeking && Math.abs(cam.currentTime - t) > 1 / (fps * 2)) cam.currentTime = t;
+        drawCam(Math.round(st.camera * (camFrames - 1)));
       }
       desk.style.opacity = st.desk;
       if (phone) phone.style.opacity = st.phone;

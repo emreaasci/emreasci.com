@@ -21,17 +21,52 @@ test('hero sahnesi: plaka ve bakış döngüsü', () => {
   assert.match(html, /id="hero-head"[^>]+data-look="assets\/hero\/look\.json"/);
 });
 
-test('look.json: döngü videosu ve yön çapaları', () => {
+test('look.json: tek dosyada paketlenmiş WebP kareleri ve yön çapaları', () => {
   const look = JSON.parse(readFileSync(join(root, 'assets/hero/look.json'), 'utf8'));
-  assert.equal(look.src, 'assets/hero/look.mp4');
-  assert.ok(look.frames > 100);
+  // Safari duraklatılmış videoda kare atlamayı askıya alıyordu; kafa video değil, resim kareleri
+  assert.equal(look.src, 'assets/hero/look.frames');
+  checkPacked('assets/hero/look.json', 100);
   for (let i = 1; i < look.anchors.length; i++) {
     assert.ok(look.anchors[i][0] < look.anchors[i - 1][0], 'açılar azalan sırada');
     assert.ok(look.anchors[i][1] > look.anchors[i - 1][1], 'kareler artan sırada');
   }
 });
 
-const ANCHORS = [[180, 27], [135, 45], [90, 60], [45, 76], [0, 90], [-45, 106], [-90, 120], [-135, 135], [-150, 144]];
+function checkPacked(metaPath, minFrames) {
+  const meta = JSON.parse(readFileSync(join(root, metaPath), 'utf8'));
+  assert.ok(meta.frames >= minFrames);
+  assert.equal(meta.sizes.length, meta.frames);
+  const buf = readFileSync(join(root, meta.src));
+  assert.equal(meta.sizes.reduce((a, b) => a + b, 0), buf.length, `${metaPath}: boyutlar dosyayla uyuşmuyor`);
+  let at = 0;
+  for (const size of meta.sizes) {
+    assert.equal(buf.toString('latin1', at, at + 4) + buf.toString('latin1', at + 8, at + 12), 'RIFFWEBP', `${metaPath}: kare ${at} WebP değil`);
+    at += size;
+  }
+}
+
+test('kamera: video değil, paketlenmiş WebP kareleri canvas\'a çizilir', () => {
+  assert.match(html, /<canvas[^>]+class="hero__camera"[^>]+id="hero-camera"[^>]+data-frames="assets\/desk\/camera\.json"/);
+  assert.ok(!/<video/.test(html), 'sayfada hâlâ video var');
+  checkPacked('assets/desk/camera.json', 200);
+});
+
+test('sitede video kare atlaması kalmadı; kafa ve kamera ortak kare çiziciyi kullanır', () => {
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  // Safari duraklatılmış videoda kare atlamayı askıya alıp animasyonu donduruyordu
+  assert.ok(!/loadVideo|currentTime|createElement\('video'\)/.test(js), 'hâlâ videoya bağlı kod var');
+  const head = js.slice(js.indexOf('function initHead'), js.indexOf('function initStory'));
+  const story = js.slice(js.indexOf('function initStory'), js.indexOf('function initCursor'));
+  assert.match(head, /loadFrames\(/);
+  assert.match(head, /frameDrawer\(/);
+  assert.match(story, /loadFrames\(cam\.dataset\.frames\)/);
+  assert.match(story, /frameDrawer\(cam,/);
+  // Sekme/uygulama değişince pointerleave gelmez; kafa son yöne bakarak donup kalıyordu
+  assert.match(head, /visibilitychange/, 'sayfadan ayrılınca imleç sahneden çıkmış sayılmıyor');
+  assert.match(head, /'blur'/);
+});
+
+const ANCHORS =[[180, 27], [135, 45], [90, 60], [45, 76], [0, 90], [-45, 106], [-90, 120], [-135, 135], [-150, 144]];
 
 test('angleToFrame: çapalar arasında doğrusal, boşlukta en yakın çapa', () => {
   const { angleToFrame } = loadHero();
