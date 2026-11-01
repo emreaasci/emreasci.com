@@ -11,27 +11,159 @@
   <meta property="og:url" content="https://emreasci.com/">
   <meta name="theme-color" content="#0b1020">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/anim.css">
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/phone-ui.css">
+  <link rel="stylesheet" href="css/style.css?v=20261101113652">
+  <link rel="stylesheet" href="css/anim.css?v=20261101113652">
+  <link rel="stylesheet" href="css/hero.css?v=20261101113652">
+  <link rel="stylesheet" href="css/phone-ui.css?v=20261101113652">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="js/i18n.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/hero.js" defer></script>
-  <script src="js/phone-ui.js" defer></script>
+  <script src="js/i18n.js?v=20261101113652" defer></script>
+  <script src="js/main.js?v=20261101113652" defer></script>
+  <script src="js/hero.js?v=20261101113652" defer></script>
+  <script src="js/phone-ui.js?v=20261101113652" defer></script>
 </head>
 <body>
   <main>
+    <div class="story" id="story">
     <section class="hero" id="about" aria-label="Emre Aşcı">
       <div class="hero__frame">
         <img class="hero__plate" src="assets/hero/plate.webp" alt="" width="1670" height="941" fetchpriority="high">
+        <video class="hero__camera" id="hero-camera" data-src="assets/desk/camera.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
         <div class="hero__head" id="hero-head" data-look="assets/hero/look.json" aria-hidden="true"></div>
 
       </div>
+
+      <div class="desk" id="desk-layer" aria-label="Emre'nin masası">
+        <div class="desk__frame">
+          <img class="desk__plate" src="assets/desk/pov.webp" alt="" width="1672" height="941" loading="lazy">
+          <div class="desk__screen" id="desk-screen" data-quad="729,363 939,363 939,834 729,834" data-src-width="1672">
+            <div class="phone-ui" id="phone-ui">
+              <div class="phone-ui__status" aria-hidden="true"><span>9:41</span><span class="phone-ui__icons"><i></i><i></i><i></i></span></div>
+              <div class="home">
+                <div class="home__widget">
+                  <img src="assets/desk/avatar.webp" alt="" width="48" height="48">
+                  <div><strong>Emre Aşcı</strong><span>React Native Developer</span></div>
+                </div>
+                <div class="home__grid">
+                <button class="app-icon" type="button" data-app="about">
+                  <span class="app-icon__tile app-icon__tile--avatar"><img src="assets/desk/avatar.webp" alt="" width="64" height="64"></span>
+                  <span class="app-icon__label" data-i18n="nav.about">Hakkımda</span>
+                </button>
+                <button class="app-icon" type="button" data-app="experience">
+                  <span class="app-icon__tile" style="--c:#0ea5e9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+                  <span class="app-icon__label" data-i18n="nav.experience">Deneyim</span>
+                </button>
+                <button class="app-icon" type="button" data-app="contact">
+                  <span class="app-icon__tile" style="--c:#22c55e"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l9 6 9-6"/></svg></span>
+                  <span class="app-icon__label" data-i18n="nav.contact">İletişim</span>
+                </button>
+                <button class="app-icon" type="button" data-app="intime-ik">
+                  <span class="app-icon__tile" style="--c:#0284c7">İK</span>
+                  <span class="app-icon__label">Intime İK</span>
+                </button>
+                <button class="app-icon" type="button" data-app="adilpazar">
+                  <span class="app-icon__tile" style="--c:#ea580c">AP</span>
+                  <span class="app-icon__label">AdilPazar</span>
+                </button>
+                <button class="app-icon" type="button" data-app="yeni-nesil-ik">
+                  <span class="app-icon__tile" style="--c:#059669">YN</span>
+                  <span class="app-icon__label">Yeni Nesil İK</span>
+                </button>
+                <button class="app-icon" type="button" data-app="nika-ik">
+                  <span class="app-icon__tile" style="--c:#7c3aed">Nİ</span>
+                  <span class="app-icon__label">Nika İK</span>
+                </button>
+                <button class="app-icon" type="button" data-app="intime-takip">
+                  <span class="app-icon__tile" style="--c:#0d9488">IT</span>
+                  <span class="app-icon__label">Intime Takip</span>
+                </button>
+                <button class="app-icon" type="button" data-app="zaferzone">
+                  <span class="app-icon__tile" style="--c:#dc2626">ZZ</span>
+                  <span class="app-icon__label">ZaferZone</span>
+                </button>
+                <button class="app-icon" type="button" data-app="nikachat">
+                  <span class="app-icon__tile" style="--c:#4f46e5">NC</span>
+                  <span class="app-icon__label">NikaChat</span>
+                </button>
+                <button class="app-icon" type="button" data-app="nikaconnect">
+                  <span class="app-icon__tile" style="--c:#2563eb">NX</span>
+                  <span class="app-icon__label">NikaConnect</span>
+                </button>
+                <button class="app-icon" type="button" data-app="nikaphone">
+                  <span class="app-icon__tile" style="--c:#16a34a">NP</span>
+                  <span class="app-icon__label">NikaPhone</span>
+                </button>
+                </div>
+                <p class="home__hint" data-i18n="phone.hint">Bir uygulamaya dokun</p>
+              </div>
+              <div class="apps">
+                <section class="app" data-app-screen="about" aria-label="Hakkımda" hidden>
+                  <header class="app__bar">
+                    <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
+                    <span class="app__title" data-i18n="nav.about">Hakkımda</span>
+                  </header>
+                  <div class="app__body">
+                    <div class="about__head">
+                      <img class="about__avatar" src="assets/desk/avatar.webp" alt="Emre Aşcı" width="96" height="96">
+                      <h2 class="about__name">Emre Aşcı</h2>
+                      <p class="about__role">React Native Developer · İstanbul</p>
+                    </div>
+                    <p class="about__summary" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
+                    <ul class="stats">
+                      <li class="stat">
+                        <span class="stat__num" data-count="20" data-suffix="K+">20K+</span>
+                        <span class="stat__label" data-i18n="stats.downloads">indirme</span>
+                      </li>
+                      <li class="stat">
+                        <span class="stat__num" data-count="10" data-suffix="K+">10K+</span>
+                        <span class="stat__label" data-i18n="stats.users">aktif kullanıcı</span>
+                      </li>
+                      <li class="stat">
+                        <span class="stat__num" data-count="2" data-suffix="+">2+</span>
+                        <span class="stat__label" data-i18n="stats.years">yıl deneyim</span>
+                      </li>
+                      <li class="stat">
+                        <span class="stat__num" data-count="9" data-suffix="">9</span>
+                        <span class="stat__label" data-i18n="stats.projects">yayınlanan proje</span>
+                      </li>
+                    </ul>
+                    <article class="edu">
+                      <div>
+                        <h3 class="edu__degree" data-i18n="education.degree">Bilgisayar Mühendisliği, Lisans</h3>
+                        <p class="edu__school">Bandırma Onyedi Eylül Üniversitesi</p>
+                      </div>
+                      <p class="edu__date">2020 — 2024 · Balıkesir</p>
+                    </article>
+                    <div class="skill-groups">
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.mobile">Mobil</h3>
+                        <p>React Native, Expo, TypeScript, Swift, Kotlin, Expo Modules API, Config Plugins, Expo Router</p>
+                      </div>
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.ui">Arayüz ve durum</h3>
+                        <p>Reanimated, Skia, Lottie, NativeWind, React Native Paper, Redux Toolkit, Zustand, TanStack Query</p>
+                      </div>
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.realtime">Gerçek zamanlı iletişim</h3>
+                        <p>SignalR, WebSocket, WebRTC, LiveKit, SIP / Linphone, Asterisk, CallKit, PushKit</p>
+                      </div>
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.device">Cihaz özellikleri</h3>
+                        <p data-i18n="skills.device.list">Bluetooth Low Energy, NFC (HCE), kamera ve QR, harita, arka plan konum, SQLite ile çevrimdışı</p>
+                      </div>
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.devops">Yayın ve DevOps</h3>
+                        <p>EAS Build / Submit / Update, App Store Connect, Google Play Console, Docker, Nginx, GitLab CI, GitHub Actions</p>
+                      </div>
+                      <div class="skill-group">
+                        <h3 data-i18n="skills.ai">Yapay zekâ</h3>
+                        <p data-i18n="skills.ai.list">Python, PaddleOCR, Whisper ve Faster-Whisper fine-tuning, Claude Code ile yapay zekâ destekli geliştirme</p>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
 
       <div class="hero__copy">
         <p class="hero__eyebrow">React Native Developer</p>
@@ -63,136 +195,9 @@
       <div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
       <a class="hero__scroll" href="#desk" data-i18n="hero.scroll">Aşağı kaydır</a>
     </section>
+    <span class="story__end" id="desk" aria-hidden="true"></span>
+    </div>
 
-    <section class="desk" id="desk" aria-label="Emre'nin masası">
-      <div class="desk__frame">
-        <img class="desk__plate" src="assets/desk/pov.webp" alt="" width="1672" height="941" loading="lazy">
-        <div class="desk__screen" id="desk-screen" data-quad="729,363 939,363 939,834 729,834" data-src-width="1672">
-          <div class="phone-ui" id="phone-ui">
-            <div class="phone-ui__status" aria-hidden="true"><span>9:41</span><span class="phone-ui__icons"><i></i><i></i><i></i></span></div>
-            <div class="home">
-              <div class="home__widget">
-                <img src="assets/desk/avatar.webp" alt="" width="48" height="48">
-                <div><strong>Emre Aşcı</strong><span>React Native Developer</span></div>
-              </div>
-              <div class="home__grid">
-              <button class="app-icon" type="button" data-app="about">
-                <span class="app-icon__tile app-icon__tile--avatar"><img src="assets/desk/avatar.webp" alt="" width="64" height="64"></span>
-                <span class="app-icon__label" data-i18n="nav.about">Hakkımda</span>
-              </button>
-              <button class="app-icon" type="button" data-app="experience">
-                <span class="app-icon__tile" style="--c:#0ea5e9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
-                <span class="app-icon__label" data-i18n="nav.experience">Deneyim</span>
-              </button>
-              <button class="app-icon" type="button" data-app="contact">
-                <span class="app-icon__tile" style="--c:#22c55e"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l9 6 9-6"/></svg></span>
-                <span class="app-icon__label" data-i18n="nav.contact">İletişim</span>
-              </button>
-              <button class="app-icon" type="button" data-app="intime-ik">
-                <span class="app-icon__tile" style="--c:#0284c7">İK</span>
-                <span class="app-icon__label">Intime İK</span>
-              </button>
-              <button class="app-icon" type="button" data-app="adilpazar">
-                <span class="app-icon__tile" style="--c:#ea580c">AP</span>
-                <span class="app-icon__label">AdilPazar</span>
-              </button>
-              <button class="app-icon" type="button" data-app="yeni-nesil-ik">
-                <span class="app-icon__tile" style="--c:#059669">YN</span>
-                <span class="app-icon__label">Yeni Nesil İK</span>
-              </button>
-              <button class="app-icon" type="button" data-app="nika-ik">
-                <span class="app-icon__tile" style="--c:#7c3aed">Nİ</span>
-                <span class="app-icon__label">Nika İK</span>
-              </button>
-              <button class="app-icon" type="button" data-app="intime-takip">
-                <span class="app-icon__tile" style="--c:#0d9488">IT</span>
-                <span class="app-icon__label">Intime Takip</span>
-              </button>
-              <button class="app-icon" type="button" data-app="zaferzone">
-                <span class="app-icon__tile" style="--c:#dc2626">ZZ</span>
-                <span class="app-icon__label">ZaferZone</span>
-              </button>
-              <button class="app-icon" type="button" data-app="nikachat">
-                <span class="app-icon__tile" style="--c:#4f46e5">NC</span>
-                <span class="app-icon__label">NikaChat</span>
-              </button>
-              <button class="app-icon" type="button" data-app="nikaconnect">
-                <span class="app-icon__tile" style="--c:#2563eb">NX</span>
-                <span class="app-icon__label">NikaConnect</span>
-              </button>
-              <button class="app-icon" type="button" data-app="nikaphone">
-                <span class="app-icon__tile" style="--c:#16a34a">NP</span>
-                <span class="app-icon__label">NikaPhone</span>
-              </button>
-              </div>
-              <p class="home__hint" data-i18n="phone.hint">Bir uygulamaya dokun</p>
-            </div>
-            <div class="apps">
-              <section class="app" data-app-screen="about" aria-label="Hakkımda" hidden>
-                <header class="app__bar">
-                  <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>
-                  <span class="app__title" data-i18n="nav.about">Hakkımda</span>
-                </header>
-                <div class="app__body">
-                  <div class="about__head">
-                    <img class="about__avatar" src="assets/desk/avatar.webp" alt="Emre Aşcı" width="96" height="96">
-                    <h2 class="about__name">Emre Aşcı</h2>
-                    <p class="about__role">React Native Developer · İstanbul</p>
-                  </div>
-                  <p class="about__summary" data-i18n="hero.summary">React Native ve Expo ile iOS ve Android uygulamaları geliştiren, 2+ yıl deneyimli Bilgisayar Mühendisiyim. Kurumsal İK uygulamalarından e-ticarete, gerçek zamanlı iletişimden OCR'a kadar fikirleri mağazada yayında olan ürünlere dönüştürüyorum.</p>
-                  <ul class="stats">
-                    <li class="stat">
-                      <span class="stat__num" data-count="20" data-suffix="K+">20K+</span>
-                      <span class="stat__label" data-i18n="stats.downloads">indirme</span>
-                    </li>
-                    <li class="stat">
-                      <span class="stat__num" data-count="10" data-suffix="K+">10K+</span>
-                      <span class="stat__label" data-i18n="stats.users">aktif kullanıcı</span>
-                    </li>
-                    <li class="stat">
-                      <span class="stat__num" data-count="2" data-suffix="+">2+</span>
-                      <span class="stat__label" data-i18n="stats.years">yıl deneyim</span>
-                    </li>
-                    <li class="stat">
-                      <span class="stat__num" data-count="9" data-suffix="">9</span>
-                      <span class="stat__label" data-i18n="stats.projects">yayınlanan proje</span>
-                    </li>
-                  </ul>
-                  <article class="edu">
-                    <div>
-                      <h3 class="edu__degree" data-i18n="education.degree">Bilgisayar Mühendisliği, Lisans</h3>
-                      <p class="edu__school">Bandırma Onyedi Eylül Üniversitesi</p>
-                    </div>
-                    <p class="edu__date">2020 — 2024 · Balıkesir</p>
-                  </article>
-                  <div class="skill-groups">
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.mobile">Mobil</h3>
-                      <p>React Native, Expo, TypeScript, Swift, Kotlin, Expo Modules API, Config Plugins, Expo Router</p>
-                    </div>
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.ui">Arayüz ve durum</h3>
-                      <p>Reanimated, Skia, Lottie, NativeWind, React Native Paper, Redux Toolkit, Zustand, TanStack Query</p>
-                    </div>
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.realtime">Gerçek zamanlı iletişim</h3>
-                      <p>SignalR, WebSocket, WebRTC, LiveKit, SIP / Linphone, Asterisk, CallKit, PushKit</p>
-                    </div>
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.device">Cihaz özellikleri</h3>
-                      <p data-i18n="skills.device.list">Bluetooth Low Energy, NFC (HCE), kamera ve QR, harita, arka plan konum, SQLite ile çevrimdışı</p>
-                    </div>
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.devops">Yayın ve DevOps</h3>
-                      <p>EAS Build / Submit / Update, App Store Connect, Google Play Console, Docker, Nginx, GitLab CI, GitHub Actions</p>
-                    </div>
-                    <div class="skill-group">
-                      <h3 data-i18n="skills.ai">Yapay zekâ</h3>
-                      <p data-i18n="skills.ai.list">Python, PaddleOCR, Whisper ve Faster-Whisper fine-tuning, Claude Code ile yapay zekâ destekli geliştirme</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
               <section class="app" data-app-screen="experience" aria-label="Deneyim" hidden>
                 <header class="app__bar">
                   <button class="app__back" type="button" data-close-app><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><span data-i18n="phone.back">Geri</span></button>

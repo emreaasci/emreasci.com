@@ -31,7 +31,8 @@ function block(attr, value) {
 }
 
 test('masa sahnesi: tepeden kare ve telefon arayüzü', () => {
-  assert.match(html, /<section[^>]+id="desk"/);
+  assert.match(html, /id="desk"/);
+  assert.match(html, /class="story"/);
   assert.match(html, /<img[^>]+class="desk__plate"[^>]+src="assets\/desk\/pov\.webp"/);
   assert.match(html, /id="phone-ui"/);
 });

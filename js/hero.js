@@ -22,6 +22,22 @@
     return (((f + step) % n) + n) % n;
   }
 
+  // Kaydırma hikâyesi: p = sabit sahnenin kaydırılan oranı (0..1). Her katmanın 0..1 durumu.
+  // Kamera videosu yoksa masa karesi açılış karesinin üstüne çapraz geçişle gelir.
+  const ramp = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+  const ease = (t) => t * t * (3 - 2 * t);
+  function storyState(p, hasVideo) {
+    return {
+      copy: 1 - ramp(p, 0, 0.08),
+      head: 1 - ramp(p, 0.01, 0.05),
+      camera: hasVideo ? ramp(p, 0.04, 0.72) : 0,
+      desk: hasVideo ? ramp(p, 0.7, 0.74) : ramp(p, 0.08, 0.6),
+      zoom: ease(ramp(p, 0.74, 0.95)),
+      phone: ramp(p, 0.86, 0.96),
+      interactive: p >= 0.95,
+    };
+  }
+
   // w×h dikdörtgeni verilen dörtgene eşleyen CSS matrix3d (Heckbert kareden dörtgene dönüşümü)
   function quadMatrix(w, h, quad) {
     const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = quad;
@@ -35,7 +51,7 @@
     return [a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1];
   }
 
-  global.Hero = { angleToFrame, loopStep, quadMatrix };
+  global.Hero = { angleToFrame, loopStep, storyState, quadMatrix };
 
   if (typeof document === 'undefined') return;
 
@@ -49,6 +65,7 @@
       initHead(hero);
       entrance(hero);
     }
+    initStory(hero, reducedMotion);
     if (finePointer) initCursor(hero, reducedMotion);
   });
 
@@ -118,6 +135,64 @@
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+  }
+
+  // Kaydırma hikâyesi: kamera videosu kaydırmayla karelenir (oynatılmaz), sonra masa katmanı gelir
+  // ve telefona yakınlaşılır. Video yoksa ya da hareket azaltılmışsa masa çapraz geçişle gelir.
+  function initStory(hero, reducedMotion) {
+    const story = document.getElementById('story');
+    const desk = document.getElementById('desk-layer');
+    const frame = desk && desk.querySelector('.desk__frame');
+    const phone = document.getElementById('phone-ui');
+    const head = document.getElementById('hero-head');
+    const cam = document.getElementById('hero-camera');
+    if (!story || !desk || !frame) return;
+    const fading = hero.querySelectorAll('.hero__copy, .hero__caption, .hero__scroll, .hero > .header');
+    const fps = 24;
+    let camReady = false;
+
+    if (cam && !reducedMotion) {
+      fetch(cam.dataset.src, { method: 'HEAD' })
+        .then((r) => {
+          if (!r.ok) return;
+          const v = loadVideo(cam.dataset.src);
+          v.addEventListener('loadedmetadata', () => { cam.src = v.src; });
+          cam.addEventListener('loadeddata', () => { camReady = true; update(); }, { once: true });
+          cam.addEventListener('seeked', () => update());
+        })
+        .catch(() => {});
+    }
+
+    let queued = false;
+    function update() {
+      queued = false;
+      const r = story.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - window.innerHeight)));
+      const st = storyState(p, camReady);
+      fading.forEach((el) => { el.style.opacity = st.copy; });
+      if (head) head.style.opacity = st.head;
+      if (camReady) {
+        cam.style.opacity = p > 0.005 && st.desk < 1 ? '1' : '0';
+        const t = st.camera * (cam.duration - 1 / fps);
+        if (!cam.seeking && Math.abs(cam.currentTime - t) > 1 / (fps * 2)) cam.currentTime = t;
+      }
+      desk.style.opacity = st.desk;
+      if (phone) phone.style.opacity = st.phone;
+      desk.classList.toggle('is-interactive', st.interactive);
+
+      // Yakınlaşma: düzen telefon yakın planında; başta tüm kare ekranı kaplayacak şekilde küçültülür
+      const uPhone = frame.offsetWidth / 1440;
+      const uFull = Math.max(window.innerWidth / 1440, window.innerHeight / 810);
+      const s0 = Math.min(1, uFull / uPhone);
+      const k = 1 - st.zoom;
+      const s = s0 + (1 - s0) * st.zoom;
+      frame.style.transform = `translate(${(-1.7 * uPhone * s0 * k).toFixed(2)}px, ${(110.2 * uPhone * s0 * k).toFixed(2)}px) scale(${s.toFixed(4)})`;
+      global.Story = { p, interactive: st.interactive };
+    }
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    global.addEventListener('scroll', queue, { passive: true });
+    global.addEventListener('resize', queue);
+    update();
   }
 
   function initCursor(hero, reducedMotion) {

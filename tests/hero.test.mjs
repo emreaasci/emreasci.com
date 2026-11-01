@@ -75,3 +75,25 @@ test('quadMatrix: dikdörtgenin köşeleri dörtgenin köşelerine gider', () =>
     assert.ok(close(X, quad[i][0]) && close(Y, quad[i][1]), `köşe ${i}: ${X},${Y}`);
   });
 });
+
+test('storyState: kaydırma oranına göre katmanlar', () => {
+  const { storyState } = loadHero();
+  const s0 = storyState(0, true);
+  assert.equal(s0.copy, 1); assert.equal(s0.head, 1); assert.equal(s0.camera, 0); assert.equal(s0.desk, 0);
+  assert.equal(s0.interactive, false);
+  const mid = storyState(0.4, true);
+  assert.equal(mid.copy, 0); assert.equal(mid.head, 0);
+  assert.ok(mid.camera > 0.4 && mid.camera < 0.6, `kamera ${mid.camera}`);
+  assert.equal(mid.desk, 0);
+  const end = storyState(1, true);
+  assert.equal(end.camera, 1); assert.equal(end.desk, 1); assert.equal(end.zoom, 1); assert.equal(end.phone, 1);
+  assert.equal(end.interactive, true);
+  // video yokken masa karesi kamera yerine çapraz geçişle gelir
+  const fb = storyState(0.4, false);
+  assert.ok(fb.desk > 0 && fb.desk < 1, `yedek geçiş ${fb.desk}`);
+  for (const p of [0, 0.2, 0.5, 0.8, 1]) {
+    for (const v of Object.values(storyState(p, true))) {
+      if (typeof v === 'number') assert.ok(v >= 0 && v <= 1, `p=${p} aralık dışı`);
+    }
+  }
+});

@@ -85,7 +85,14 @@
 
     // Menüdeki linkler masaya kaydırır ve ilgili uygulamayı açar
     document.querySelectorAll('[data-open-app]').forEach((link) => {
-      link.addEventListener('click', () => setTimeout(() => openApp(link.dataset.openApp), reducedMotion ? 0 : 600));
+      link.addEventListener('click', () => {
+        const started = performance.now();
+        const wait = () => {
+          if ((window.Story && window.Story.interactive) || performance.now() - started > 4000) openApp(link.dataset.openApp);
+          else setTimeout(wait, 100);
+        };
+        wait();
+      });
     });
 
     window.PhoneUI = { openApp, closeApp };

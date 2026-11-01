@@ -1,19 +1,29 @@
-/* Masa sahnesi: tepeden kare telefona yakınlaşmış halde; telefon ekran yüksekliğinin ~%88'i.
-   Kare 1440×810 çerçeve birimiyle (--u) yerleşir, merkez telefonun ortası (718.3, 515.2). */
+/* Kaydırma hikâyesi: hero sahnesi sabit kalır, kaydırdıkça kamera iner ve masa katmanı gelir. */
+.story { position: relative; height: 380svh; }
+.story > .hero { position: sticky; top: 0; }
+.story__end { position: absolute; left: 0; bottom: 0; width: 1px; height: 100svh; pointer-events: none; }
+
+/* Masa katmanı: tepeden kare, telefona yakınlaşmış halde yerleşir (telefon ekran yüksekliğinin ~%88'i).
+   Yakınlaşma öncesi tam kare görünümü JS'in transform'uyla verilir; düzen hep aynı kalır. */
 .desk {
   --u: max(calc(88svh / 407), calc(100vw / 1440));
-  position: relative;
-  height: 100svh;
-  min-height: 560px;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   overflow: hidden;
   background: #120c08;
+  opacity: 0;
+  pointer-events: none;
 }
+.desk.is-interactive { pointer-events: auto; }
 .desk__frame {
   position: absolute;
   width: calc(1440 * var(--u));
   height: calc(810 * var(--u));
   left: calc(50% - 718.3 * var(--u));
   top: calc(50% - 515.2 * var(--u));
+  transform-origin: calc(718.3 * var(--u)) calc(515.2 * var(--u));
+  will-change: transform;
 }
 .desk__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; user-select: none; }
 .desk__screen { position: absolute; inset: 0; }

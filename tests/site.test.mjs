@@ -15,7 +15,8 @@ export const readHtml = () => read('index.html');
 export const localRefs = (html) =>
   [...html.matchAll(/\s(?:src|href)="([^"]+)"/g)]
     .map((m) => m[1])
-    .filter((v) => !/^(https?:|mailto:|#|data:)/.test(v) && v !== '/');
+    .filter((v) => !/^(https?:|mailto:|#|data:)/.test(v) && v !== '/')
+    .map((v) => v.split('?')[0]);
 
 const SECTIONS = ['about', 'desk'];
 
