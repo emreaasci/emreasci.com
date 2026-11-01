@@ -75,6 +75,5 @@ html.js .marquee--reverse .marquee__track { animation-direction: reverse; animat
     scroll-behavior: auto !important;
   }
   html.js .reveal { opacity: 1; transform: none; }
-  .phone { transform: none !important; }
   .marquee { overflow-x: auto; }
 }

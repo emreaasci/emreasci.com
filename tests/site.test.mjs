@@ -17,7 +17,7 @@ export const localRefs = (html) =>
     .map((m) => m[1])
     .filter((v) => !/^(https?:|mailto:|#|data:)/.test(v) && v !== '/');
 
-const SECTIONS = ['about', 'experience', 'projects', 'skills', 'education', 'contact'];
+const SECTIONS = ['about', 'desk'];
 
 test('CNAME içeriği emreasci.com', () => {
   assert.equal(read('CNAME').trim(), 'emreasci.com');
@@ -68,10 +68,10 @@ test('Pages yalnız site dosyalarını yayınlar', () => {
   assert.ok(!/cp[^\n]*\bdocs\b/.test(wf) && !/cp[^\n]*\btests\b/.test(wf), 'docs/tests yayınlanmamalı');
 });
 
-test('hero ikinci CTA GitHub', () => {
+test('hero GitHub linki', () => {
   const html = readHtml();
-  const cta = html.slice(html.indexOf('class="hero__cta'), html.indexOf('</div>', html.indexOf('class="hero__cta')));
-  assert.ok(cta.includes('href="https://github.com/emreaasci"'), 'hero CTA GitHub linki yok');
+  const hero = html.slice(html.indexOf('class="hero"'), html.indexOf('id="desk"'));
+  assert.ok(hero.includes('href="https://github.com/emreaasci"'), 'hero GitHub linki yok');
 });
 
 test('hareketi azalt: mini telefon ölçeği korunur', () => {
@@ -99,13 +99,6 @@ test('404 ana sayfaya link verir', () => {
   assert.ok(read('404.html').includes('href="/"'));
 });
 
-const SLUGS = ['intime-ik', 'adilpazar', 'yeni-nesil-ik', 'nika-ik', 'intime-takip', 'zaferzone', 'nikachat', 'nikaconnect', 'nikaphone'];
-
-test('9 proje kartı', () => {
-  const found = [...readHtml().matchAll(/data-project="([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(found, SLUGS);
-});
-
 test('rakamlar', () => {
   const found = [...readHtml().matchAll(/data-count="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(found, ['20', '10', '2', '9']);
@@ -118,12 +111,3 @@ test('iletişim linkleri', () => {
   }
 });
 
-test('projeler telefonu 9 ekran', () => {
-  const html = readHtml();
-  const start = html.indexOf('id="projects-phone"');
-  assert.ok(start > -1, '#projects-phone yok');
-  const end = html.indexOf('<!-- /projects-phone -->', start);
-  assert.ok(end > -1, 'projects-phone bitiş işareti yok');
-  const screens = [...html.slice(start, end).matchAll(/data-screen="([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(screens, SLUGS);
-});

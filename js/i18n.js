@@ -24,8 +24,6 @@
     'stats.years': 'years of experience',
     'stats.projects': 'shipped projects',
 
-    'experience.kicker': 'Experience',
-    'experience.title': 'Where I work',
     'experience.date': '09/2024 — Present',
     'experience.location': 'Istanbul',
     'experience.b1': 'Built the Intime HR app with 20 modules including time tracking, leave and expenses: 20,000+ downloads and 10,000+ active users.',
@@ -34,10 +32,6 @@
     'experience.b4': 'Built real-time messaging with SignalR/WebSocket, VoIP with Linphone SDK, and location tracking that keeps working while the app is closed.',
     'experience.b5': 'Fine-tuned Whisper into a speech-to-text model for PBX calls, and ran release pipelines with EAS, TestFlight and Google Play.',
 
-    'projects.kicker': 'Projects',
-    'projects.title': 'Apps live in the stores',
-    'projects.lead': 'Scroll and the phone switches to each project.',
-    'projects.featured': 'Featured',
     'projects.kpi.downloads': 'downloads',
     'projects.kpi.users': 'active users',
     'projects.kpi.solo': 'development',
@@ -53,8 +47,6 @@
     'projects.nikaconnect.desc': 'A communication app combining messaging, voice and video calls.',
     'projects.nikaphone.desc': 'A native-module based voice and video calling app that connects to an Asterisk PBX over SIP.',
 
-    'skills.kicker': 'Skills',
-    'skills.title': 'Tools I use',
     'skills.mobile': 'Mobile',
     'skills.ui': 'UI and state',
     'skills.realtime': 'Real-time communication',
@@ -64,13 +56,15 @@
     'skills.ai': 'AI',
     'skills.ai.list': 'Python, PaddleOCR, Whisper and Faster-Whisper fine-tuning, AI-assisted development with Claude Code',
 
-    'education.kicker': 'Education',
-    'education.title': 'Where I studied',
     'education.degree': "Computer Engineering, Bachelor's",
 
-    'contact.kicker': 'Contact',
     'contact.title': "Let's build something together",
     'contact.lead': 'Write to me about a new app idea, a job offer, or just to say hi.',
+
+    'phone.back': 'Back',
+    'phone.tab.app': 'App',
+    'phone.tab.info': 'About',
+    'phone.hint': 'Tap an app',
 
     'footer.top': 'Back to top ↑',
   };
