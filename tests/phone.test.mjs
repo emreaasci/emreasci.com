@@ -164,3 +164,10 @@ test('Waddle: Hakkında sayfasında yeni sekmede açılan gizlilik politikası',
   assert.match(page, /id="tr"/, 'Türkçe bölüm yok');
   assert.match(page, /href="\/"/, 'siteye dönüş linki yok');
 });
+
+test('iOS Safari: kamera videosu kaydırmadan önce oynat-durdur ile kare yükler', () => {
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  const story = js.slice(js.indexOf('function initStory'), js.indexOf('function initCursor'));
+  // iOS yalnızca meta veri yükler (readyState 1); loadeddata hiç gelmez ve eski çapraz geçişe düşülür
+  assert.match(story, /cam\.play\(\)\.then\(\(\) => cam\.pause\(\)\)/, 'kamera videosu iOS için uyandırılmıyor');
+});

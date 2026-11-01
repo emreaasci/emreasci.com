@@ -165,6 +165,10 @@
           const v = loadVideo(cam.dataset.src);
           v.addEventListener('loadedmetadata', () => { cam.src = v.src; });
           cam.addEventListener('loadeddata', () => { camReady = true; update(); }, { once: true });
+          // iOS Safari oynatılmamış videonun yalnızca meta verisini yükler; kısa bir oynat-durdur kareleri getirir
+          cam.addEventListener('loadedmetadata', () => {
+            if (cam.readyState < 2) cam.play().then(() => cam.pause()).catch(() => {});
+          }, { once: true });
           cam.addEventListener('seeked', () => update());
         })
         .catch(() => {});
