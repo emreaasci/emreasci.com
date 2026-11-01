@@ -117,8 +117,9 @@ test('kilit ekranı telefonun içinde, ana ekranın üstünde', () => {
 test('formatLockDate: TR ve EN', () => {
   const { formatLockDate } = loadLock();
   const d = new Date(2026, 10, 1, 21, 5); // 1 Kasım 2026, Pazar
-  assert.equal(formatLockDate(d, 'tr'), '1 Kasım Pazar');
-  assert.equal(formatLockDate(d, 'en'), 'Sunday, November 1');
+  // iOS kilit ekranındaki kısa biçim
+  assert.equal(formatLockDate(d, 'tr'), '1 Kas Paz');
+  assert.equal(formatLockDate(d, 'en'), 'Sun, Nov 1');
 });
 
 test('formatClock: iki haneli saat', () => {
@@ -134,4 +135,12 @@ test('shouldUnlock: mesafe ya da hız eşiği', () => {
   assert.equal(shouldUnlock(-100, 0, H), false, 'kısa ve yavaş');
   assert.equal(shouldUnlock(-80, -0.9, H), true, 'kısa ama hızlı fırlatma');
   assert.equal(shouldUnlock(40, -2, H), false, 'aşağı çekmek açmaz');
+});
+
+test('duvar kağıdı: kilit ve ana ekran aynı görseli kullanır, kilitte bildirim yok', () => {
+  const css = readFileSync(join(root, 'css/phone-ui.css'), 'utf8');
+  assert.ok(existsSync(join(root, 'assets/desk/wallpaper.webp')));
+  const uses = css.match(/url\("?\.\.\/assets\/desk\/wallpaper\.webp"?\)/g) || [];
+  assert.ok(uses.length >= 1, 'duvar kağıdı CSS\'te kullanılmıyor');
+  assert.ok(!block('id', 'lock-screen').includes('class="note"'), 'kilitte eski bildirimler kalmış');
 });

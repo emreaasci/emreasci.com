@@ -6,7 +6,7 @@
   const LOCALE = { tr: 'tr-TR', en: 'en-US' };
 
   function formatLockDate(date, lang) {
-    return new Intl.DateTimeFormat(LOCALE[lang] || LOCALE.tr, { weekday: 'long', day: 'numeric', month: 'long' }).format(date);
+    return new Intl.DateTimeFormat(LOCALE[lang] || LOCALE.tr, { weekday: 'short', day: 'numeric', month: 'short' }).format(date);
   }
 
   function formatClock(date) {

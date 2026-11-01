@@ -57,10 +57,6 @@
     'contact.lead': 'Write to me about a new app idea, a job offer, or just to say hi.',
 
     'lock.hint': "Swipe up to open",
-    'lock.note1': "20,000+ downloads and 10,000+ active users",
-    'lock.note2': "Live on the App Store and Google Play",
-    'lock.now': "now",
-    'lock.ago': "2m",
     'phone.sec.numbers': 'Numbers',
     'phone.sec.education': 'Education',
     'phone.sec.skills': 'Skills',

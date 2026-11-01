@@ -56,10 +56,8 @@
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font);
   font-size: 15px;
   line-height: 1.45;
-  background:
-    radial-gradient(120% 60% at 20% 0%, rgba(124, 92, 255, .45), transparent 60%),
-    radial-gradient(90% 50% at 100% 100%, rgba(34, 211, 238, .28), transparent 60%),
-    linear-gradient(180deg, #0d1330, #070a18);
+  /* duvar kağıdı; ana ekranda iOS gibi biraz karartılmış */
+  background: #0b1a6b url("../assets/desk/wallpaper.webp") center / cover no-repeat;
   -webkit-font-smoothing: antialiased;
   /* gerçek telefondaki gibi: sürüklerken metin seçilmez (uygulama gövdeleri hariç) */
   user-select: none;
@@ -137,7 +135,7 @@
 .app-icon__tile--avatar img { width: 100%; height: 100%; object-fit: cover; }
 .app-icon:active .app-icon__tile { transform: scale(.9); }
 .app-icon:focus-visible .app-icon__tile { outline: 3px solid #fff; outline-offset: 3px; }
-.app-icon__label { max-width: 82px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: #fff; }
+.app-icon__label { max-width: 82px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .6); }
 
 /* Uygulama ekranları */
 .apps { position: absolute; inset: 0; pointer-events: none; }
@@ -267,11 +265,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 58px 22px 0;
-  background:
-    radial-gradient(90% 55% at 30% 15%, rgba(124, 92, 255, .55), transparent 65%),
-    radial-gradient(80% 45% at 85% 90%, rgba(34, 211, 238, .35), transparent 60%),
-    linear-gradient(180deg, #151b46, #070a18);
+  padding: 82px 22px 0;
+  background: #0b1a6b url("../assets/desk/wallpaper.webp") center / cover no-repeat;
   touch-action: none;
   cursor: grab;
   user-select: none;
@@ -279,50 +274,33 @@
 }
 .lock[hidden] { display: none; }
 .lock:active { cursor: grabbing; }
-.lock__icon { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
-.lock__date { margin: 14px 0 0; font-size: 19px; font-weight: 600; color: rgba(255, 255, 255, .9); text-transform: capitalize; }
+.lock__date { margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.01em; color: rgba(255, 255, 255, .92); text-shadow: 0 1px 6px rgba(0, 10, 60, .35); }
+/* iOS 26 kilit saati: uzun, dar, duvar kağıdının renginden camsı rakamlar */
 .lock__time {
-  margin: -6px 0 0;
-  font-size: 96px;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  margin: -12px 0 0;
+  font-family: "SF Pro Rounded", ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 130px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  color: #fff;
+  color: rgba(138, 160, 255, .78);
+  -webkit-text-stroke: 1px rgba(225, 232, 255, .45);
+  text-shadow: 0 2px 10px rgba(10, 20, 90, .35);
+  transform: scaleY(2.08);
+  transform-origin: 50% 0;
 }
-.lock__notes { width: 100%; margin-top: auto; margin-bottom: 26px; display: flex; flex-direction: column; gap: 8px; }
-.note {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, .14);
-  border: 1px solid rgba(255, 255, 255, .1);
-}
-.note__icon {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 9px;
-  background: var(--c);
-  font-size: 13px;
-  font-weight: 800;
-}
-.note__body { flex: 1; min-width: 0; }
-.note__body strong { display: block; font-size: 14px; }
-.note__body span { display: block; font-size: 13px; color: rgba(255, 255, 255, .8); }
-.note__time { align-self: flex-start; font-size: 12px; color: rgba(255, 255, 255, .6); }
-.lock__bottom { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 34px; }
+.lock__bottom { width: 100%; margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 0 22px 40px; }
 .lock__btn {
   display: grid;
   place-items: center;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, .16);
+  background: rgba(20, 30, 90, .28);
+  border: 1px solid rgba(255, 255, 255, .22);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 .lock__btn svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linejoin: round; }
 .lock__unlock {
@@ -349,3 +327,8 @@
 /* Mağazadaki gerçek uygulama ikonları */
 .app-icon__tile--img { overflow: hidden; padding: 0; background: #fff; }
 .app-icon__tile--img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Ana ekranda duvar kağıdı iOS gibi biraz karartılır; kilit ekranındaki saat zaten büyük olduğu için durum çubuğundaki saat gizlenir */
+.home::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(0, 0, 20, .28); }
+.home { isolation: isolate; }
+.phone-ui:not(.is-unlocked) .phone-ui__clock { opacity: 0; }
