@@ -41,11 +41,6 @@ test('Safari çubukları: şeritler görselin üst kenarının rengini alır, sa
   const hero = css.slice(css.indexOf('.hero {'), css.indexOf('}', css.indexOf('.hero {')));
   assert.match(hero, /height:\s*100lvh/, 'sahne uzayan ekranı kaplamıyor');
   assert.match(hero, /--u:[^;]*100lvh/, 'görsel tam yüksekliği kaplamıyor');
-  // Alttaki yazılar açık adres çubuğunun arkasında kalmasın
-  for (const sel of ['.hero__scroll {', '.hero__caption {']) {
-    const rule = css.slice(css.indexOf(sel), css.indexOf('}', css.indexOf(sel)));
-    assert.match(rule, /bottom:[^;]*100lvh - 100svh/, `${sel} çubuk payı kadar yukarı alınmamış`);
-  }
   const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
   assert.ok(!/uFull = [^;]*window\.innerHeight/.test(js), 'uzak masa karesi yalnız görünen alanı kaplıyor');
 });
@@ -62,6 +57,17 @@ test('kafa kendi kendine bakınmaz: imleç/dokunma yokken kameraya dönüp sabit
   // Telefonda imleç olmadığı için kafa hiç durmadan sağa sola bakınıyordu
   assert.ok(!/Math\.sin/.test(run), 'kafa hâlâ kendi kendine bakınıyor');
   assert.match(run, /idle \? front : target/, 'boştayken kafa kameraya dönmüyor');
+});
+
+test('üst satır İngilizce işaretli: Türkçe sayfada büyük harfe çevrilince "NATİVE" yazmaz', () => {
+  assert.match(html, /<p class="hero__eyebrow" lang="en">React Native Developer<\/p>/);
+});
+
+test('sahnenin altında yazı yok: ipucu, kullanıcı adı ve kaydır yazısı kaldırıldı', () => {
+  assert.ok(!/hero__caption|hero__scroll/.test(html), 'alttaki yazılar hâlâ sayfada');
+  for (const f of ['css/hero.css', 'js/hero.js', 'js/i18n.js']) {
+    assert.ok(!/hero__caption|hero__scroll|hero\.hint|hero\.scroll/.test(readFileSync(join(root, f), 'utf8')), `${f} içinde artık kullanılmayan alt yazı kalmış`);
+  }
 });
 
 function checkPacked(metaPath, minFrames) {

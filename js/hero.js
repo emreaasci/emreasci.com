@@ -178,7 +178,7 @@
     const cam = document.getElementById('hero-camera');
     const end = document.getElementById('desk');
     if (!story || !desk || !frame) return;
-    const fading = hero.querySelectorAll('.hero__copy, .hero__caption, .hero__scroll, .hero > .header');
+    const fading = hero.querySelectorAll('.hero__copy, .hero > .header');
     let drawCam = null, camFrames = 0;
 
     if (cam && !reducedMotion) {
@@ -258,9 +258,6 @@
       [q('.hero__actions'), [{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'none' }], 80],
       [q('.hero__eyebrow'), [{ opacity: 0, letterSpacing: '.9em' }, { opacity: 1, letterSpacing: '.46em' }], 300],
       [q('.hero__title'), [{ opacity: 0, filter: 'blur(14px)', transform: 'translateY(24px)' }, { opacity: 1, filter: 'blur(0)', transform: 'none' }], 520],
-      [q('.hero__caption--left'), [{ opacity: 0 }, { opacity: 1 }], 1100],
-      [q('.hero__caption--right'), [{ opacity: 0 }, { opacity: 1 }], 1150],
-      [q('.hero__scroll'), [{ opacity: 0 }, { opacity: 0.8 }], 1300],
     ];
     for (const [el, frames, delay] of items) {
       if (el) el.animate(frames, { duration: 700, delay, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' });

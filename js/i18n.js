@@ -16,8 +16,6 @@
 
     'hero.summary': "I'm a computer engineer with 2+ years of experience building iOS and Android apps with React Native and Expo. From enterprise HR apps to e-commerce, real-time communication to OCR, I turn ideas into products that ship to the stores.",
 
-    'hero.hint': 'Move your mouse',
-    'hero.scroll': 'Scroll down',
 
 
     'experience.date': '09/2024 — Present',
