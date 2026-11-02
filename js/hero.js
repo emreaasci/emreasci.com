@@ -51,7 +51,35 @@
     return [a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1];
   }
 
-  global.Hero = { angleToFrame, loopStep, storyState, quadMatrix };
+  // Yanıtı parça parça okur, her parçada o ana kadar inen bayt sayısını bildirir
+  function readProgress(res, onProgress) {
+    if (!res.body || !res.body.getReader) {
+      return res.arrayBuffer().then((buf) => { onProgress(buf.byteLength); return buf; });
+    }
+    const reader = res.body.getReader();
+    const chunks = [];
+    let got = 0;
+    const pump = () => reader.read().then(({ done, value }) => {
+      if (done) {
+        const out = new Uint8Array(got);
+        let at = 0;
+        chunks.forEach((c) => { out.set(c, at); at += c.length; });
+        return out.buffer;
+      }
+      chunks.push(value);
+      got += value.length;
+      onProgress(got);
+      return pump();
+    });
+    return pump();
+  }
+
+  const progressText = (f, lang) => {
+    const n = Math.round(Math.min(1, Math.max(0, f)) * 100);
+    return lang === 'tr' ? `%${n}` : `${n}%`;
+  };
+
+  global.Hero = { angleToFrame, loopStep, storyState, quadMatrix, readProgress, progressText };
 
   if (typeof document === 'undefined') return;
 
@@ -61,24 +89,29 @@
     const reducedMotion = global.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const finePointer = global.matchMedia('(pointer: fine)').matches;
 
+    const loader = initLoader();
     if (!reducedMotion) {
       // Kafa fareyi takip eder; dokunmatik ekranda takip edecek imleç yok, plakadaki sabit yüz kalır
-      if (finePointer) initHead(hero);
+      if (finePointer) initHead(hero, loader.track);
       entrance(hero);
     }
-    initStory(hero, reducedMotion);
+    initStory(hero, reducedMotion, loader.track);
     if (finePointer) initCursor(hero, reducedMotion);
   });
 
   // Kafa ve kamera kareleri tek dosyada paketlenmiş WebP olarak gelir, resim olarak çözülüp canvas'a
   // çizilir. Video kullanılmaz: Safari duraklatılmış videoda kare atlamayı askıya alıp (özellikle
   // sekmeye/uygulamaya geri dönünce) animasyonu donduruyordu.
-  function loadFrames(url) {
+  function loadFrames(url, onProgress = () => {}) {
     // Meta dosyası küçük; her açılışta doğrulanır ki önbellekte kalan eski sürüm olmayan dosyayı istemesin
     return fetch(url, { cache: 'no-cache' })
       .then((r) => r.json())
       .then((meta) => fetch(meta.src)
-        .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)))
+        .then((r) => {
+          if (!r.ok) return Promise.reject(r.status);
+          const total = meta.sizes.reduce((a, b) => a + b, 0);
+          return readProgress(r, (got) => onProgress(got, total));
+        })
         .then((buf) => {
           let at = 0;
           const images = meta.sizes.map((size) => {
@@ -108,18 +141,68 @@
     };
   }
 
-  function initHead(hero) {
+  // Kareler inene kadar kaydırma kilitlenir; yoksa gizli sekmede (önbellek boş) hemen kaydırınca
+  // kamera animasyonu yerine düz geçiş görünüyordu. Kısa sürede ya da önbellekten inerse gösterge hiç
+  // çıkmaz; yavaş bağlantıda en fazla GIVE_UP bekler, sonra hikâye düz geçişle oynar.
+  function initLoader() {
+    const SHOW_AFTER = 300, GIVE_UP = 10000;
+    const el = document.getElementById('hero-loader');
+    const root = document.documentElement;
+    const parts = [];
+    let waiting = 0, done = false;
+
+    const paint = () => {
+      if (!el || el.hidden) return;
+      let got = 0, total = 0;
+      parts.forEach((p) => { got += p.got; total += p.total; });
+      const f = total ? got / total : 0;
+      el.style.setProperty('--p', f.toFixed(3));
+      el.querySelector('.hero__loader-num').textContent = progressText(f, root.lang);
+    };
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(showTimer);
+      clearTimeout(giveUp);
+      root.classList.remove('is-loading');
+      if (el) el.classList.remove('is-visible');
+    };
+    const showTimer = setTimeout(() => {
+      if (!waiting) return finish();
+      // Sayfa ortadan açıldıysa (yenileme, #desk linki) olduğu yerde kilitlenmesin
+      if (global.scrollY > 10) return;
+      root.classList.add('is-loading');
+      if (!el) return;
+      el.hidden = false;
+      paint();
+      requestAnimationFrame(() => el.classList.add('is-visible'));
+    }, SHOW_AFTER);
+    const giveUp = setTimeout(finish, GIVE_UP);
+
+    return {
+      // load(onProgress) bir söz döndürür; başarılı ya da başarısız, bitince beklenenden düşer
+      track(load) {
+        const part = { got: 0, total: 0 };
+        parts.push(part);
+        waiting++;
+        load((got, total) => { part.got = got; part.total = total; paint(); })
+          .catch(() => {})
+          .then(() => { if (--waiting === 0) finish(); });
+      },
+    };
+  }
+
+  function initHead(hero, track) {
     const box = document.getElementById('hero-head');
     if (!box) return;
 
-    loadFrames(box.dataset.look)
+    track((onProgress) => loadFrames(box.dataset.look, onProgress)
       .then(({ meta, images }) => {
         const canvas = document.createElement('canvas');
         canvas.className = 'hero__row hero__row--mid';
         box.appendChild(canvas);
         run(hero, box, frameDrawer(canvas, images, () => canvas.classList.add('is-ready')), meta);
-      })
-      .catch(() => {});
+      }));
   }
 
   function run(hero, box, draw, { frames, front, anchors }) {
@@ -169,7 +252,7 @@
 
   // Kaydırma hikâyesi: kamera kareleri kaydırmayla çizilir, sonra masa katmanı gelir ve telefona
   // yakınlaşılır. Kareler yoksa ya da hareket azaltılmışsa masa çapraz geçişle gelir.
-  function initStory(hero, reducedMotion) {
+  function initStory(hero, reducedMotion, track) {
     const story = document.getElementById('story');
     const desk = document.getElementById('desk-layer');
     const frame = desk && desk.querySelector('.desk__frame');
@@ -182,14 +265,15 @@
     let drawCam = null, camFrames = 0;
 
     if (cam && !reducedMotion) {
-      loadFrames(cam.dataset.frames)
-        .then(({ images }) => {
+      track((onProgress) => loadFrames(cam.dataset.frames, onProgress)
+        .then(({ images }) => new Promise((ready) => {
           const draw = frameDrawer(cam, images);
           // Kaydırmanın istediği kare sonradan çözülürse yeniden çizilir
           images.forEach((img) => img.addEventListener('load', queue, { once: true }));
-          images[0].addEventListener('load', () => { drawCam = draw; camFrames = images.length; update(); }, { once: true });
-        })
-        .catch(() => {});
+          // Kilit ilk kare çizilebilir olunca kalkar
+          images[0].addEventListener('load', () => { drawCam = draw; camFrames = images.length; update(); ready(); }, { once: true });
+          images[0].addEventListener('error', ready, { once: true });
+        })));
     }
 
     let queued = false;

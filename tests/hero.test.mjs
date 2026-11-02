@@ -48,7 +48,7 @@ test('Safari çubukları: şeritler görselin üst kenarının rengini alır, sa
 test('kafa yalnız fareli cihazlarda hareket eder; mobilde kareler hiç yüklenmez', () => {
   const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
   const boot = js.slice(js.indexOf("addEventListener('DOMContentLoaded'"), js.indexOf('function loadFrames'));
-  assert.match(boot, /if \(finePointer\) initHead\(hero\)/, 'kafa dokunmatik ekranda da başlıyor');
+  assert.match(boot, /if \(finePointer\) initHead\(hero, loader\.track\)/, 'kafa dokunmatik ekranda da başlıyor');
 });
 
 test('kafa kendi kendine bakınmaz: imleç/dokunma yokken kameraya dönüp sabit durur', () => {
@@ -97,7 +97,7 @@ test('sitede video kare atlaması kalmadı; kafa ve kamera ortak kare çiziciyi 
   const story = js.slice(js.indexOf('function initStory'), js.indexOf('function initCursor'));
   assert.match(head, /loadFrames\(/);
   assert.match(head, /frameDrawer\(/);
-  assert.match(story, /loadFrames\(cam\.dataset\.frames\)/);
+  assert.match(story, /loadFrames\(cam\.dataset\.frames, onProgress\)/);
   assert.match(story, /frameDrawer\(cam,/);
   // Sekme/uygulama değişince pointerleave gelmez; kafa son yöne bakarak donup kalıyordu
   assert.match(head, /visibilitychange/, 'sayfadan ayrılınca imleç sahneden çıkmış sayılmıyor');
@@ -169,4 +169,54 @@ test('storyState: kaydırma oranına göre katmanlar', () => {
       if (typeof v === 'number') assert.ok(v >= 0 && v <= 1, `p=${p} aralık dışı`);
     }
   }
+});
+
+test('readProgress: parçalar geldikçe ilerleme bildirir, hepsini tek tamponda döndürür', async () => {
+  const { readProgress } = loadHero();
+  const chunks = [new Uint8Array([1, 2]), new Uint8Array([3, 4, 5])];
+  let i = 0;
+  const res = { ok: true, body: { getReader: () => ({ read: async () => (i < chunks.length ? { done: false, value: chunks[i++] } : { done: true }) }) } };
+  const seen = [];
+  const buf = await readProgress(res, (n) => seen.push(n));
+  assert.deepEqual([...new Uint8Array(buf)], [1, 2, 3, 4, 5]);
+  assert.deepEqual(seen, [2, 5]);
+});
+
+test('readProgress: akış okunamıyorsa dosyayı tek seferde alır', async () => {
+  const { readProgress } = loadHero();
+  const res = { ok: true, body: null, arrayBuffer: async () => new Uint8Array([7, 8]).buffer };
+  const seen = [];
+  const buf = await readProgress(res, (n) => seen.push(n));
+  assert.deepEqual([...new Uint8Array(buf)], [7, 8]);
+  assert.deepEqual(seen, [2]);
+});
+
+test('progressText: Türkçede yüzde işareti önde, 0-100 aralığında', () => {
+  const { progressText } = loadHero();
+  assert.equal(progressText(0.423, 'tr'), '%42');
+  assert.equal(progressText(0.423, 'en'), '42%');
+  assert.equal(progressText(1.3, 'tr'), '%100');
+  assert.equal(progressText(-1, 'en'), '0%');
+});
+
+test('yükleme göstergesi: kareler inene kadar kaydırma kilitli, kısa sürede inerse hiç görünmez', () => {
+  // Gizli sekmede kareler inmeden aşağı kaydırınca animasyon yerine düz geçiş görünüyordu
+  assert.match(html, /<div class="hero__loader" id="hero-loader"[^>]*hidden/);
+  const css = readFileSync(join(root, 'css/hero.css'), 'utf8');
+  assert.match(css, /html\.is-loading[^{]*\{[^}]*overflow:\s*hidden/, 'yüklenirken kaydırma kilitlenmiyor');
+  const js = readFileSync(join(root, 'js/hero.js'), 'utf8');
+  const loader = js.slice(js.indexOf('function initLoader'), js.indexOf('function initHead'));
+  assert.ok(loader.length > 0, 'initLoader yok');
+  assert.match(loader, /SHOW_AFTER = 300\b/, 'gösterge hemen çıkıp yanıp sönüyor');
+  assert.match(loader, /GIVE_UP = 10000\b/, 'yavaş bağlantıda kilit kalkmıyor');
+  assert.match(loader, /is-loading/);
+});
+
+test('kareler sayfa açılır açılmaz inmeye başlar; kafa kareleri yalnız fareli cihazda', () => {
+  for (const meta of ['assets/desk/camera.json', 'assets/hero/look.json']) {
+    const { src } = JSON.parse(readFileSync(join(root, meta), 'utf8'));
+    // fetch() ön yüklenen dosyayı ancak adres ve crossorigin birebir aynıysa kullanır
+    assert.match(html, new RegExp(`<link rel="preload" href="${src}" as="fetch" crossorigin`), `${src} ön yüklenmiyor`);
+  }
+  assert.match(html, /<link rel="preload" href="assets\/hero\/look\.frames"[^>]+media="\(pointer: fine\)[^"]*"/, 'telefonda kullanılmayan kafa kareleri iniyor');
 });

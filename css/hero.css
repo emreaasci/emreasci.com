@@ -159,6 +159,43 @@ html, body { background: #040922; }
 .cursor__dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: #fff; }
 .cursor__ring { width: 44px; height: 44px; margin: -22px 0 0 -22px; border: 1.5px solid #fff; }
 
+/* Yükleme: kareler inene kadar sahnenin altında ince çizgi ve yüzde, kaydırma kilitli.
+   Gövdedeki overflow-x kilit sırasında görünür olmalı; yoksa gövde kendi kaydırıcısı olur ve
+   yapışkan sahne bozulur. Kaydırma çubuğunun yeri ayrılır ki kilit kalkınca sayfa kaymasın. */
+html.is-loading { overflow: hidden; scrollbar-gutter: stable; }
+html.is-loading body { overflow: visible; }
+.hero__loader {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  bottom: calc(32px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, .8);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.hero__loader[hidden] { display: none; }
+.hero__loader.is-visible { opacity: 1; }
+.hero__loader-bar { position: relative; width: 120px; height: 2px; overflow: hidden; border-radius: 1px; background: rgba(255, 255, 255, .2); }
+.hero__loader-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  transition: transform .2s linear;
+}
+.hero__loader-num { min-width: 4ch; }
+
 #intro .intro__lead {
   font-size: clamp(22px, 3vw, 34px);
   line-height: 1.35;
