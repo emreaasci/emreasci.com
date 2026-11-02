@@ -48,8 +48,10 @@
       const icon = iconOf(id);
       if (!icon) return '50% 50%';
       const tile = icon.querySelector('.app-icon__tile');
-      const x = tile.offsetLeft + icon.offsetLeft + tile.offsetWidth / 2;
-      const y = tile.offsetTop + icon.offsetTop + tile.offsetHeight / 2 + icon.offsetParent.offsetTop;
+      // Telefonun kendisi dönüşümlü; ekran koordinatı yerine telefona kadar üst kapların konumları toplanır
+      let x = tile.offsetWidth / 2, y = tile.offsetHeight / 2;
+      let el = tile;
+      while (el && el !== ui) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
       return `${x}px ${y}px`;
     };
 

@@ -14,18 +14,20 @@
   <!-- Kaydırma ve bakış kareleri sayfa açılır açılmaz inmeye başlasın (hero.js aynı adresi fetch eder) -->
   <link rel="preload" href="assets/desk/camera.frames" as="fetch" crossorigin media="(prefers-reduced-motion: no-preference)">
   <link rel="preload" href="assets/hero/look.frames" as="fetch" crossorigin media="(pointer: fine) and (prefers-reduced-motion: no-preference)">
-  <link rel="stylesheet" href="css/style.css?v=20261102213446">
-  <link rel="stylesheet" href="css/anim.css?v=20261102213446">
-  <link rel="stylesheet" href="css/hero.css?v=20261102213446">
-  <link rel="stylesheet" href="css/phone-ui.css?v=20261102213446">
+  <link rel="stylesheet" href="css/style.css?v=20261102233619">
+  <link rel="stylesheet" href="css/anim.css?v=20261102233619">
+  <link rel="stylesheet" href="css/hero.css?v=20261102233619">
+  <link rel="stylesheet" href="css/phone-ui.css?v=20261102233619">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Kilit saati için yalnız rakamlar: iPhone'daki uzun, dar saat -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@144,25,500&text=0123456789:&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,62..125,900&family=Urbanist:wght@500;600;700&display=swap">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <script src="js/i18n.js?v=20261102213446" defer></script>
-  <script src="js/main.js?v=20261102213446" defer></script>
-  <script src="js/hero.js?v=20261102213446" defer></script>
-  <script src="js/phone-ui.js?v=20261102213446" defer></script>
+  <script src="js/i18n.js?v=20261102233619" defer></script>
+  <script src="js/main.js?v=20261102233619" defer></script>
+  <script src="js/hero.js?v=20261102233619" defer></script>
+  <script src="js/phone-ui.js?v=20261102233619" defer></script>
 </head>
 <body>
   <main>
@@ -45,21 +47,10 @@
           <img class="desk__plate" src="assets/desk/pov.webp" alt="" width="1916" height="1080" loading="lazy">
           <div class="desk__screen" id="desk-screen" data-quad="838,417 1073,417 1080.4,956.8 834.6,957.3" data-src-width="1916">
             <div class="phone-ui" id="phone-ui">
-              <div class="phone-ui__status" aria-hidden="true"><span class="phone-ui__clock">9:41</span><span class="phone-ui__icons"><svg class="sb-signal" viewBox="0 0 17 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.6" y="5.5" width="3" height="6.5" rx="1"/><rect x="9.2" y="3" width="3" height="9" rx="1"/><rect x="13.8" y="0" width="3" height="12" rx="1"/></svg><svg class="sb-wifi" viewBox="0 0 16 12"><path d="M1.3 4.8A9.5 9.5 0 0 1 14.7 4.8M3.9 7.4A5.8 5.8 0 0 1 12.1 7.4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/><path d="M8 11.6L5.6 9.1A3.4 3.4 0 0 1 10.4 9.1Z"/></svg><svg class="sb-battery" viewBox="0 0 28 13"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2.2"/><path d="M26 4.5a1.6 1.6 0 0 1 0 4z" opacity=".45"/></svg></span></div>
+              <div class="phone-ui__island" aria-hidden="true"></div>
+              <div class="phone-ui__status" aria-hidden="true"><span class="phone-ui__clock">9:41</span><span class="phone-ui__icons"><svg class="sb-signal" viewBox="0 0 19 12"><rect x="0" y="7.6" width="3.7" height="4.4" rx="1.1"/><rect x="5.1" y="5.1" width="3.7" height="6.9" rx="1.1"/><rect x="10.2" y="2.6" width="3.7" height="9.4" rx="1.1"/><rect x="15.3" y="0" width="3.7" height="12" rx="1.1"/></svg><svg class="sb-wifi" viewBox="0 0 17 12"><path d="M1.5 4.6A10 10 0 0 1 15.5 4.6M4.3 7.4A6 6 0 0 1 12.7 7.4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M8.5 11.8L5.9 9.2A3.7 3.7 0 0 1 11.1 9.2Z"/></svg><svg class="sb-battery" viewBox="0 0 28 13"><rect x=".6" y=".6" width="23.8" height="11.8" rx="3.8" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2.2"/><path d="M26 4.5a1.6 1.6 0 0 1 0 4z" opacity=".45"/></svg></span></div>
               <div class="home">
                 <div class="home__grid">
-                <button class="app-icon" type="button" data-app="about">
-                  <span class="app-icon__tile app-icon__tile--avatar"><img src="assets/desk/avatar.webp" alt="" width="64" height="64"></span>
-                  <span class="app-icon__label" data-i18n="nav.about">Hakkımda</span>
-                </button>
-                <button class="app-icon" type="button" data-app="experience">
-                  <span class="app-icon__tile" style="--c:#0ea5e9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
-                  <span class="app-icon__label" data-i18n="nav.experience">Deneyim</span>
-                </button>
-                <button class="app-icon" type="button" data-app="contact">
-                  <span class="app-icon__tile" style="--c:#22c55e"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l9 6 9-6"/></svg></span>
-                  <span class="app-icon__label" data-i18n="nav.contact">İletişim</span>
-                </button>
                 <button class="app-icon" type="button" data-app="intime-ik">
                   <span class="app-icon__tile app-icon__tile--img"><img src="assets/icons/intime-ik.webp" alt="" width="64" height="64"></span>
                   <span class="app-icon__label">Intime İK</span>
@@ -101,7 +92,21 @@
                   <span class="app-icon__label">Waddle</span>
                 </button>
                 </div>
-                <p class="home__hint" data-i18n="phone.hint">Bir uygulamaya dokun</p>
+                <div class="home__search" aria-hidden="true"><svg viewBox="0 0 16 16"><circle cx="6.8" cy="6.8" r="4.8"/><path d="M10.4 10.4l3.6 3.6"/></svg><span data-i18n="phone.search">Ara</span></div>
+                <div class="home__dock">
+                  <button class="app-icon" type="button" data-app="about">
+                    <span class="app-icon__tile app-icon__tile--avatar"><img src="assets/desk/avatar.webp" alt="" width="64" height="64"></span>
+                    <span class="app-icon__label" data-i18n="nav.about">Hakkımda</span>
+                  </button>
+                  <button class="app-icon" type="button" data-app="experience">
+                    <span class="app-icon__tile" style="--c:#0ea5e9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+                    <span class="app-icon__label" data-i18n="nav.experience">Deneyim</span>
+                  </button>
+                  <button class="app-icon" type="button" data-app="contact">
+                    <span class="app-icon__tile" style="--c:#22c55e"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l9 6 9-6"/></svg></span>
+                    <span class="app-icon__label" data-i18n="nav.contact">İletişim</span>
+                  </button>
+                </div>
               </div>
               <div class="apps">
               <section class="app" data-app-screen="about" aria-label="Hakkımda" hidden>
@@ -397,9 +402,9 @@
               <p class="lock__date">1 Kas Paz</p>
               <p class="lock__time">9:41</p>
               <div class="lock__bottom">
-                <span class="lock__btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 2h6l-1 7h-4zM10 9h4v13h-4z"/></svg></span>
+                <span class="lock__btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 2h8v3.5l-2 3V21a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V8.5l-2-3zM11.2 11.5h1.6v3h-1.6z"/></svg></span>
                 <button class="lock__unlock" type="button" data-i18n="lock.hint">Açmak için yukarı kaydır</button>
-                <span class="lock__btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>
+                <span class="lock__btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2A1.5 1.5 0 0 1 10 4.2h4a1.5 1.5 0 0 1 1.2.6L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5zM12 17.2a3.7 3.7 0 1 0 0-7.4 3.7 3.7 0 0 0 0 7.4zM12 15.6a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z"/></svg></span>
               </div>
             </div>
             <div class="phone-ui__homebar" aria-hidden="true"></div>

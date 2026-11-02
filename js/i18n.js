@@ -69,7 +69,7 @@
     'about.years': 'Years of experience',
     'about.projects': 'Shipped projects',
     'phone.back': 'Back',
-    'phone.hint': 'Tap an app',
+    'phone.search': 'Search',
 
     'footer.top': 'Back to top ↑',
   };

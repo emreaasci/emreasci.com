@@ -37,11 +37,51 @@ test('masa sahnesi: tepeden kare ve telefon arayüzü', () => {
   assert.match(html, /id="phone-ui"/);
 });
 
-test('ana ekranda tüm uygulama ikonları doğru sırada', () => {
-  const home = block('class', 'home__grid');
-  const icons = [...home.matchAll(/data-app="([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(icons, APPS);
+test('ana ekranda tüm uygulama ikonları doğru sırada: projeler ızgarada, kişisel üçü dock\'ta', () => {
+  const ids = (b) => [...b.matchAll(/data-app="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(ids(block('class', 'home__grid')), PROJECTS);
+  assert.deepEqual(ids(block('class', 'home__dock')), APPS.slice(0, 3));
+  const home = block('class', 'home');
   for (const id of APPS) assert.match(home, new RegExp(`<button[^>]+data-app="${id}"`), `${id} buton değil`);
+});
+
+const phoneCss = readFileSync(join(root, 'css/phone-ui.css'), 'utf8');
+// CSS'teki bir seçicinin kural gövdesi (ilk eşleşme)
+const rule = (sel) => {
+  const at = phoneCss.indexOf(`${sel} {`);
+  return at < 0 ? '' : phoneCss.slice(at, phoneCss.indexOf('}', at));
+};
+
+test('gerçek iPhone ana ekranı: Dynamic Island, buzlu dock, arama kutusu', () => {
+  const ui = block('id', 'phone-ui');
+  assert.match(ui, /<div class="phone-ui__island" aria-hidden="true"><\/div>/, 'Dynamic Island yok');
+  assert.match(rule('.phone-ui__island'), /z-index/, 'ada kilit ekranının ve uygulamaların altında kalıyor');
+  assert.match(rule('.home__dock'), /backdrop-filter/, 'dock buzlu cam değil');
+  // Dock'ta etiket görünmez ama ekran okuyucu ve dil değişimi için yerinde kalır
+  assert.match(rule('.home__dock .app-icon__label'), /clip/, 'dock etiketleri görünüyor ya da tamamen silinmiş');
+  assert.match(block('class', 'home'), /class="home__search"[^>]*>[\s\S]*data-i18n="phone\.search">Ara</, 'arama kutusu yok');
+  assert.match(readFileSync(join(root, 'js/i18n.js'), 'utf8'), /'phone\.search': 'Search'/);
+});
+
+test('iOS\'ta olmayan şeyler yok: ipucu yazısı, bulanık ana ekran, ana ekranda ev çubuğu', () => {
+  assert.ok(!/home__hint|phone\.hint/.test(html + readFileSync(join(root, 'js/i18n.js'), 'utf8') + phoneCss), '"Bir uygulamaya dokun" kalmış');
+  assert.ok(!/blur/.test(rule('.home::before')), 'ana ekran duvar kağıdı hâlâ bulanık');
+  assert.match(phoneCss, /\.phone-ui\.is-unlocked:not\(\.has-app\) \.phone-ui__homebar \{[^}]*opacity:\s*0/, 'ana ekranda ev çubuğu görünüyor');
+});
+
+test('ekran camı: üstte tıklamayı engellemeyen hafif parlama', () => {
+  const glass = rule('.phone-ui::after');
+  assert.match(glass, /pointer-events:\s*none/);
+  assert.match(glass, /linear-gradient/);
+  assert.match(glass, /z-index/);
+});
+
+test('uygulama, dock\'taki ikonundan da büyüyerek açılır', () => {
+  const js = readFileSync(join(root, 'js/phone-ui.js'), 'utf8');
+  const origin = js.slice(js.indexOf('const originFor'), js.indexOf('function openApp'));
+  // Dock kendi konumlandırma kabı; ikonun yeri telefona kadar tüm üst kaplar toplanarak bulunur
+  assert.match(origin, /offsetParent/);
+  assert.match(origin, /while \(/, 'yalnız bir üst kap sayılıyor; dock ikonları yanlış yerden açılır');
 });
 
 test('her ikonun bir uygulama ekranı var', () => {
@@ -189,3 +229,50 @@ test('Waddle: App Store destek sayfası, önce Türkçe sonra İngilizce', () =>
   }
 });
 
+
+test('ekran fotoğraftaki telefona oturur: kasa ile ekran arasında ince siyah çerçeve kalır', () => {
+  // İçerik neredeyse metal kasaya kadar uzanıyordu; gerçek iPhone'da ~8px siyah çerçeve görünür
+  const inset = +rule('.phone-ui').match(/clip-path:\s*inset\((\d+)px/)[1];
+  assert.ok(inset >= 7, `çerçeve ${inset}px`);
+});
+
+test('durum çubuğu ve ada birlikte aşağıda, aynı hizada', () => {
+  const px = (r, prop) => +r.match(new RegExp(`\\b${prop}:\\s*(\\d+)px`))[1];
+  const island = rule('.phone-ui__island'), status = rule('.phone-ui__status');
+  assert.ok(px(island, 'top') > 11, 'ada yukarıda kalmış');
+  // Adanın ortası durum çubuğu satırının ortasıyla aynı
+  assert.equal(px(island, 'top') + px(island, 'height') / 2, px(status, 'top') + px(status, 'height') / 2);
+});
+
+test('duvar kağıdı: kilitte gerçek iPhone gibi neredeyse olduğu gibi, ana ekranda biraz karartılmış', () => {
+  // Fotoğraf zaten koyu ve sisli; gerçek kilit ekranında üstüne karartma yok
+  const a = +rule('.lock').match(/rgba\(\d+, \d+, \d+, ([\d.]+)\)/)[1];
+  assert.ok(a <= 0.2, `kilit karartması ${a}`);
+  const b = +rule('.home::before').match(/brightness\(([\d.]+)\)/)[1];
+  assert.ok(b >= 0.7 && b <= 0.85, `ana ekran parlaklığı ${b}`);
+  // Saat iOS gibi duvar kağıdının renginden: sisin açık camgöbeği, eski çizimin moru değil
+  assert.ok(!/138, 160, 255/.test(rule('.lock__time')), 'saat hâlâ eski duvar kağıdının renginde');
+});
+
+test('kilit saati gerçek iPhone gibi: uzun ve dar yazı tipi, uzatılmış değil', () => {
+  // Gerçek kilit ekranında "23:13" ekran genişliğinin ~%80'i, rakamlar ekran yüksekliğinin ~%22'si
+  assert.match(html, /<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com\/css2\?family=Roboto\+Flex:[^"]*wdth[^"]*&text=0123456789:/, 'yalnız rakamları içeren dar yazı tipi yüklenmiyor');
+  const time = rule('.lock__time');
+  assert.match(time, /font-family:\s*"Roboto Flex"/);
+  assert.match(time, /font-stretch:\s*25%/);
+  assert.ok(!/scaleY/.test(time), 'saat hâlâ dikey uzatılıyor; yatay çizgiler kalınlaşıyordu');
+});
+
+test('kilit ekranında "yukarı kaydır" yazısı görünmez, klavyeyle odaklanınca çıkar', () => {
+  assert.match(rule('.lock__unlock'), /clip/, 'ipucu yazısı hâlâ görünüyor');
+  assert.match(phoneCss, /\.lock__unlock:focus-visible \{/, 'klavyeyle odaklanınca görünmüyor');
+  assert.match(rule('.lock__btn'), /width:\s*54px/, 'el feneri ve kamera düğmeleri gerçek boyutta değil');
+});
+
+test('durum çubuğu gerçek iPhone kadar kalın: saat ve simgeler', () => {
+  assert.match(rule('.phone-ui__status'), /font-weight:\s*700/, 'saat ince kalıyor');
+  const status = block('class', 'phone-ui__status');
+  // Wi-Fi yayları ve sinyal çubukları gerçekteki gibi kalın
+  assert.match(status, /class="sb-wifi"[\s\S]*stroke-width="2\.6"/, 'Wi-Fi yayları ince');
+  assert.match(status, /class="sb-signal" viewBox="0 0 19 12"/, 'sinyal çubukları ince');
+});
