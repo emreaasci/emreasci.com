@@ -64,6 +64,7 @@
     'phone.sec.work': 'What I did',
     'phone.sec.stack': 'Tech stack',
     'phone.privacy': 'Privacy Policy',
+    'phone.support': 'Support',
     'phone.act.mail': 'email',
     'about.downloads': 'Downloads',
     'about.users': 'Active users',

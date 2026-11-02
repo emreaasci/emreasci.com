@@ -165,3 +165,27 @@ test('Waddle: Hakkında sayfasında yeni sekmede açılan gizlilik politikası',
   assert.match(page, /href="\/"/, 'siteye dönüş linki yok');
 });
 
+test('Waddle: Hakkında sayfasında gizliliğin altında yeni sekmede açılan destek linki', () => {
+  const app = block('data-app-screen', 'waddle');
+  assert.match(app, /<a[^>]+href="apps\/waddle\/support\/"[^>]+target="_blank"/, 'destek linki yok ya da yeni sekmede açılmıyor');
+  assert.ok(app.indexOf('apps/waddle/support/') > app.indexOf('apps/waddle/privacy/'), 'destek gizliliğin altında değil');
+  assert.match(app, /data-i18n="phone\.support"/);
+  assert.match(readFileSync(join(root, 'js/i18n.js'), 'utf8'), /'phone\.support': 'Support'/);
+});
+
+test('Waddle: App Store destek sayfası, önce Türkçe sonra İngilizce', () => {
+  const page = readFileSync(join(root, 'apps/waddle/support/index.html'), 'utf8');
+  const tr = page.indexOf('id="tr"'), en = page.indexOf('id="en"');
+  assert.ok(tr > 0 && en > tr, 'Türkçe bölüm İngilizceden önce değil');
+  assert.match(page, /href="#tr"/, 'Türkçe bölüme atlama linki yok');
+  assert.match(page, /href="#en"/, 'İngilizce bölüme atlama linki yok');
+  assert.match(page, /href="\/"/, 'siteye dönüş linki yok');
+  assert.ok(!page.includes('[E-POSTA]'), 'e-posta yer tutucusu kalmış');
+  assert.equal((page.match(/href="mailto:emreaasci@gmail\.com"/g) || []).length, 2, 'her bölümde e-posta linki yok');
+  assert.equal((page.match(/href="https:\/\/emreasci\.com\/apps\/waddle\/privacy\/"/g) || []).length, 2, 'gizlilik linki eksik');
+  assert.equal((page.match(/<h3>/g) || []).length, 14, 'her dilde 7 soru olmalı');
+  for (const s of ['Waddle Destek', 'Sık sorulan sorular', 'Waddle Support', 'Frequently asked questions', 'WeatherKit', 'Havaya uy', 'Match the weather']) {
+    assert.ok(page.includes(s), `destek metninde ${s} yok`);
+  }
+});
+
