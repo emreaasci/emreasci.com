@@ -112,3 +112,13 @@ test('iletişim linkleri', () => {
   }
 });
 
+
+test('ziyaretçi sayacı: yayındaki her sayfada Cloudflare Web Analytics, aynı site anahtarıyla', () => {
+  // Çerez kullanmaz; çerez onayı penceresi gerekmez
+  const beacon = `<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "93e00fd59190427faca7448471e89382"}'></script>`;
+  for (const page of ['index.html', '404.html', 'apps/waddle/privacy/index.html', 'apps/waddle/support/index.html']) {
+    const src = readFileSync(join(root, page), 'utf8');
+    assert.equal(src.split(beacon).length - 1, 1, `${page}: sayaç yok ya da iki kez eklenmiş`);
+    assert.ok(src.indexOf(beacon) < src.indexOf('</head>'), `${page}: sayaç <head> içinde değil`);
+  }
+});
